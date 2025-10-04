@@ -6,25 +6,30 @@ import Footer from './components/Footer';
 import Navbar from './components/Navbar'; 
 import RegistrationPage from './components/RegistrationPage';
 import LoginPage from './components/LoginPage';
+import ProfilePage from './components/ProfilePage';
+import { UserProvider } from './contexts/UserContext';
 
 function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<LandingPage />} />
-        <Route path="/movies" element={<LandingPage />} />
-        <Route path="/about" element={
-          <>
-            <Navbar />
-            <Footer />
-          </>
-        } />
-        <Route path="/movie/:id" element={<><Navbar />
-        <MovieDescription /></>} />
-        <Route path="/register" element={<RegistrationPage />} />
-        <Route path="/login" element={<LoginPage />} />
-      </Routes>
-    </BrowserRouter>
+    <UserProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<LandingPage />} />
+          <Route path="/movies" element={<LandingPage />} />
+          <Route path="/about" element={
+            <>
+              <Navbar />
+              <Footer />
+            </>
+          } />
+          <Route path="/movie/:id" element={<><Navbar />
+          <MovieDescription /></>} />
+          <Route path="/register" element={<RegistrationPage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/profile" element={<ProfilePage />} />
+        </Routes>
+      </BrowserRouter>
+    </UserProvider>
   );
 }
 

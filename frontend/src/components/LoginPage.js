@@ -1,7 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { UserContext } from '../contexts/UserContext';
 
 const LoginPage = () => {
+  const { setUser } = useContext(UserContext);
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     email: '',
     password: ''
@@ -22,10 +27,12 @@ const LoginPage = () => {
       const response = await axios.post('http://localhost:5000/api/login', formData);
       if (response.status === 200) {
         setMessage('Login successful!');
+        setUser(response.data.user);
         setFormData({
           email: '',
           password: ''
         });
+        navigate('/');
       }
     } catch (error) {
       if (error.response && error.response.data && error.response.data.error) {

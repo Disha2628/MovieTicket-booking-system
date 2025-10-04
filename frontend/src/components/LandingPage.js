@@ -1,20 +1,20 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import Navbar from './Navbar';
 import Sidebar from './Sidebar';
 import MovieGrid from './MovieGrid';
 import Footer from './Footer';
 import axios from 'axios';
+import { UserContext } from '../contexts/UserContext';
 import './LandingPage.css';
 import './Homepage.css';
 
 const LandingPage = () => {
+  const { user } = useContext(UserContext);
   const [movies, setMovies] = useState([]);
   const [genreFilter, setGenreFilter] = useState('');
   const [languageFilter, setLanguageFilter] = useState('');
   const [genres, setGenres] = useState([]);
   const [languages, setLanguages] = useState([]);
-
-  const user = null;
 
   useEffect(() => {
     fetchMovies();
