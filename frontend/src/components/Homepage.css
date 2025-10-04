@@ -71,3 +71,17 @@
     gap: 10px;
   }
 }
+
+.landing-page-title {
+  font-size: 5rem;
+  letter-spacing: 35px;
+  font-weight: 1300;
+  color: #d4af37;
+  text-align: center;
+  margin: 10px 0 10px 0;
+  font-family: 'Arial Black', Arial, sans-serif;
+  text-shadow: 2px 2px 8px rgba(212, 175, 55, 0.8);
+  background: linear-gradient(90deg, #d4af37, #ffd700);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}

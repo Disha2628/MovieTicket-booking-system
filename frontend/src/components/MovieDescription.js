@@ -6,9 +6,10 @@ const styles = {
   container: {
     maxWidth: '900px',
     margin: '40px auto',
-    padding: '20px',
-    backgroundColor: 'rgba(31, 41, 55, 0.9)',
+    padding: '50px',
+    backgroundColor: '#1f2937',
     borderRadius: '12px',
+    border: '5px solid hsl(47, 80.90%, 61.00%)',
     color: 'white',
     fontFamily: 'Arial, sans-serif',
     display: 'flex',
@@ -22,6 +23,7 @@ const styles = {
     flex: 1,
   },
   title: {
+    color: '#d4af37',
     fontSize: '3rem',
     fontWeight: '700',
     marginBottom: '25px',

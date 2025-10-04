@@ -24,20 +24,6 @@ const dbConfig = {
 // Create a connection pool
 const pool = mysql.createPool(dbConfig);
 
-// Poster URLs mapping by movie_id
-const posterUrls = {
-  6: 'http://localhost:3000/Movies_posters/IMG-20251004-WA0002.jpg',
-  7: 'http://localhost:3000/Movies_posters/IMG-20251004-WA0001.jpg',
-  8: 'http://localhost:3000/Movies_posters/IMG-20251004-WA0003.jpg',
-  9: 'http://localhost:3000/Movies_posters/IMG-20251004-WA0004.jpg',
-  10: 'http://localhost:3000/Movies_posters/IMG-20251004-WA0007.jpg',
-  11: 'http://localhost:3000/Movies_posters/IMG-20251004-WA0009.jpg',
-  12: 'http://localhost:3000/Movies_posters/IMG-20251004-WA0010.jpg',
-  13: 'http://localhost:3000/Movies_posters/IMG-20251004-WA0008.jpg',
-  14: 'http://localhost:3000/Movies_posters/IMG-20251004-WA0005.jpg',
-  15: 'http://localhost:3000/Movies_posters/IMG-20251004-WA0006.jpg',
-};
-
 // Route to get all movies (filtered by genre/language if needed)
 app.get('/api/movies', async (req, res) => {
   try {
@@ -46,7 +32,8 @@ app.get('/api/movies', async (req, res) => {
       SELECT 
         Movie_Id AS id, 
         Title AS title, 
-        Rating AS rating
+        Rating AS rating,
+        poster_url AS poster
       FROM movies
       WHERE Movie_Id > 5
     `;
@@ -63,12 +50,7 @@ app.get('/api/movies', async (req, res) => {
     }
 
     const [rows] = await pool.execute(query, params);
-    // Add poster URL from mapping
-    const moviesWithPosters = rows.map(movie => ({
-      ...movie,
-      poster: posterUrls[movie.id] || null,
-    }));
-    res.json(moviesWithPosters);
+    res.json(rows);
   } catch (error) {
     console.error('Error fetching movies:', error);
     res.status(500).json({ error: 'Failed to fetch movies' });
@@ -87,14 +69,14 @@ app.get('/api/movies/:id', async (req, res) => {
         Genre AS genre,
         Language AS language,
         Release_date AS release_date,
-        Duration AS duration
+        Duration AS duration,
+        poster_url AS poster
       FROM movies
       WHERE Movie_Id = ?
     `, [req.params.id]);
 
     if (rows.length > 0) {
       const movie = rows[0];
-      movie.poster = posterUrls[movie.id] || null;
       res.json(movie);
     } else {
       res.status(404).json({ error: 'Movie not found' });

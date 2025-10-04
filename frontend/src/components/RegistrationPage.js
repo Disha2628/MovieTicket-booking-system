@@ -43,8 +43,8 @@ const RegistrationPage = () => {
   };
 
   return (
-    <div style={{ maxWidth: '600px', margin: '80px auto', padding: '30px', backgroundColor: '#1f2937', borderRadius: '12px', color: 'white' }}>
-      <h2 style={{ textAlign: 'center', marginBottom: '40px', fontSize: '2rem' }}>Register To Book Tickets !</h2>
+    <div style={{ maxWidth: '600px', margin: '80px auto', padding: '30px', backgroundColor: '#1f2937', borderRadius: '12px',border: '5px solid hsl(47, 80.90%, 61.00%)', color: 'white' }}>
+      <h2 style={{ textAlign: 'center',color: '#d4af37', marginBottom: '40px', fontSize: '2rem' }}>Register To Book Tickets !</h2>
       <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
         <input
           type="text"

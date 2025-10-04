@@ -3,15 +3,17 @@ import axios from 'axios';
 
 const styles = {
   movieGrid: {
-    paddingLeft : '60px',
     display: 'grid',
-    gridTemplateColumns: 'repeat(5, 1fr)',
-    gap: '20px',
+    gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))',
+    gap: '10px',
     justifyItems: 'center',
+    width: '98%',
+    boxSizing: 'border-box',
   },
   movieCard: {
     backgroundColor: 'rgba(31, 41, 55, 0.9)',
     borderRadius: '12px',
+    border: '2px solid hsl(47, 80.90%, 61.00%)',
     boxShadow: '0 4px 15px rgba(0,0,0,0.5)',
     overflow: 'hidden',
     transition: 'transform 0.3s ease, box-shadow 0.3s ease',
@@ -21,7 +23,9 @@ const styles = {
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-between',
+    height: '420px',   // ✅ add this (fix consistent height)
   },
+  
   movieCardHover: {
     transform: 'scale(1.05)',
     boxShadow: '0 8px 25px rgba(0,0,0,0.7)',
@@ -39,18 +43,13 @@ const styles = {
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-between',
-    height: '160px',
+    height: '120px',
   },
   title: {
     fontSize: '1.2rem',
     fontWeight: '700',
-    marginBottom: '10px',
+    marginBottom: '0px',
     color: 'white',
-  },
-  rating: {
-    fontSize: '0.9rem',
-    color: '#cbd5e0',
-    marginBottom: '10px',
   },
   bookButton: {
     background: 'linear-gradient(to right, #f56565, #ed64a6)',
@@ -93,14 +92,14 @@ const MovieGrid = ({ movies: propMovies }) => {
       {movies.map(movie => (
         <div
           key={movie.id}
-          style={hoveredCard === movie.id ? {...styles.movieCard, ...styles.movieCardHover} : styles.movieCard}
+          style={styles.movieCard}
           onMouseEnter={() => setHoveredCard(movie.id)}
           onMouseLeave={() => setHoveredCard(null)}
         >
           <img src={movie.poster} alt={movie.title} style={styles.poster} />
           <div style={styles.movieCardContent}>
             <h3 style={styles.title}>{movie.title}</h3>
-            <p style={styles.rating}>Rating: {movie.rating.toFixed(1)}</p>
+            
             <button
               style={hoveredButton === movie.id ? {...styles.bookButton, ...styles.bookButtonHover} : styles.bookButton}
               onMouseEnter={() => setHoveredButton(movie.id)}

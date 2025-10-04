@@ -58,6 +58,7 @@ const LandingPage = () => {
   return (
     <div className="landing-page-container">
       <Navbar user={user} />
+      <h1 className="landing-page-title">Movie-Matrix</h1>
       <div className="filter-bar" style={{ display: 'flex', alignItems: 'center', padding: '10px 20px', gap: '20px', backgroundColor: '#1f2937', color: 'white' }}>
         <button onClick={resetFilters} style={{ backgroundColor: '#ef4444', color: 'white', border: 'none', padding: '8px 16px', borderRadius: '8px', cursor: 'pointer' }}>
           Back / Reset
@@ -74,13 +75,10 @@ const LandingPage = () => {
             <option key={language} value={language}>{language}</option>
           ))}
         </select>
-        <button onClick={fetchMovies} style={{ backgroundColor: '#3b82f6', color: 'white', border: 'none', padding: '8px 16px', borderRadius: '8px', cursor: 'pointer' }}>
-          Apply
-        </button>
       </div>
-      <main className="main-content">
-        <MovieGrid movies={movies} />
-      </main>
+      <main className="main-content" style={{ width: '100%', padding: '20px' }}>
+  <MovieGrid movies={movies} />
+</main>
       <Footer />
     </div>
   );
