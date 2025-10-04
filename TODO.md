@@ -1,0 +1,2 @@
+- [x] Add route for /book/:id in App.js to render ShowSelectionPage with Navbar
+- [x] Update MovieDescription.js button onClick to check user login and navigate to /book/:id if logged in, else to /login

@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
+import { UserContext } from '../contexts/UserContext';
 
 const styles = {
   container: {
@@ -43,6 +44,8 @@ const styles = {
 
 const MovieDescription = () => {
   const { id } = useParams();
+  const { user } = useContext(UserContext);
+  const navigate = useNavigate();
   const [movie, setMovie] = useState(null);
   const [error, setError] = useState('');
 
@@ -90,7 +93,13 @@ const MovieDescription = () => {
             marginTop: '20px',
             fontSize: '1rem',
           }}
-          onClick={() => window.location.href = `/book/${movie.id}`}
+          onClick={() => {
+            if (user) {
+              navigate(`/book/${movie.title}`);
+            } else {
+              navigate('/login');
+            }
+          }}
         >
           Book Tickets Now
         </button>
