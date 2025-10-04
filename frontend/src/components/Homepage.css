@@ -1,0 +1,73 @@
+/* Homepage container */
+.landing-page-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: #1f2937;
+  color: white;
+}
+
+/* Main content area */
+.main-content {
+  display: flex;
+  flex-grow: 1;
+  padding: 20px;
+  gap: 20px;
+}
+
+/* Filter bar styles */
+.filter-bar {
+  background-color: #334155;
+  border-radius: 12px;
+  border: 3px solid #ecc94b;
+  padding: 10px 20px;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.filter-bar button {
+  cursor: pointer;
+  font-weight: 600;
+  border-radius: 8px;
+  padding: 8px 16px;
+  border: none;
+  transition: background-color 0.3s ease;
+}
+
+.filter-bar button:hover {
+  opacity: 0.9;
+}
+
+.filter-bar button.reset {
+  background-color: #ef4444;
+  color: white;
+}
+
+.filter-bar button.apply {
+  background-color: #3b82f6;
+  color: white;
+}
+
+.filter-bar select {
+  padding: 8px;
+  border-radius: 8px;
+  border: none;
+  background-color: #1e293b;
+  color: white;
+  font-weight: 500;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .main-content {
+    flex-direction: column;
+  }
+  .filter-bar {
+    flex-direction: column;
+    gap: 10px;
+  }
+}

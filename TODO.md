@@ -1,0 +1,1 @@
+- Test the fixes by running the app (restart frontend server after adding proxy)
