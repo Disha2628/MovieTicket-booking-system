@@ -9,6 +9,8 @@ import LoginPage from './components/LoginPage';
 import ProfilePage from './components/ProfilePage';
 import ShowSelectionPage from './components/ShowSelectionPage';
 import SeatLayoutPage from './components/SeatLayoutPage';
+import BookingConfirmationPage from './components/BookingConfirmationPage';
+import PaymentPage from './components/PaymentPage';
 import { UserProvider } from './contexts/UserContext';
 
 function App() {
@@ -31,6 +33,8 @@ function App() {
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/book/:id" element={<><Navbar /><ShowSelectionPage /></>} />
           <Route path="/seat-layout" element={<><Navbar /><SeatLayoutPage /></>} />
+          <Route path="/booking-confirmation" element={<><Navbar /><BookingConfirmationPage /></>} />
+          <Route path="/payment" element={<><Navbar /><PaymentPage /></>} />
         </Routes>
       </BrowserRouter>
     </UserProvider>

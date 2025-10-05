@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const SeatLayoutPage = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const { selectedShow, selectedSeatType, selectedSeatCount, movieName } = location.state || {};
 
   const seatCategories = [
@@ -73,7 +74,7 @@ const SeatLayoutPage = () => {
       }}
     >
       <h2 style={{ color: '#d4af37', marginBottom: '20px' }}>
-        {movieName} - {selectedShow.theatre} - {selectedShow.show.time}
+        {movieName} - {selectedShow.theatre} - {selectedShow.show.fullDate?.toLocaleDateString('en-US', { weekday: 'short', day: '2-digit', month: 'short' })} - {selectedShow.show.time}
       </h2>
 
       <div
@@ -194,6 +195,36 @@ const SeatLayoutPage = () => {
         <div style={{ marginTop: '8px', color: '#aaa', fontWeight: '600' }}>
           All eyes this way please
         </div>
+      </div>
+
+      {/* Confirm Button */}
+      <div style={{ textAlign: 'center', marginTop: '30px' }}>
+        <button
+          disabled={selectedSeats.length !== selectedSeatCount}
+          onClick={() => {
+            navigate('/booking-confirmation', {
+              state: {
+                selectedShow,
+                selectedSeatType,
+                selectedSeatCount,
+                movieName,
+                selectedSeats,
+              },
+            });
+          }}
+          style={{
+            padding: '12px 24px',
+            backgroundColor: selectedSeats.length === selectedSeatCount ? '#d4af37' : '#555',
+            color: 'white',
+            border: 'none',
+            borderRadius: '8px',
+            fontSize: '16px',
+            fontWeight: 'bold',
+            cursor: selectedSeats.length === selectedSeatCount ? 'pointer' : 'not-allowed',
+          }}
+        >
+          Confirm Seats
+        </button>
       </div>
     </div>
   );
