@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+import DateSelector from '../components/DateSelector';
+import TheatreShows from '../components/TheatreShows';
+import SeatSelection from '../components/SeatSelection';
 
 const getNextSevenDays = () => {
   const days = [];
@@ -154,134 +157,18 @@ const ShowSelectionPage = () => {
         </h2>
       )}
       <h1 style={{ color: '#d4af37', fontWeight: '700', fontSize: '2.5rem', marginBottom: '20px' }}>Select Date and Show</h1>
-      <div style={{ display: 'flex', gap: '15px', marginBottom: '30px' }}>
-        {days.map((day, index) => (
-          <div
-            key={day.label}
-            onClick={() => setSelectedDateIndex(index)}
-            style={{
-              cursor: 'pointer',
-              padding: '10px 15px',
-              borderRadius: '8px',
-              backgroundColor: selectedDateIndex === index ? '#d4af37' : 'transparent',
-              color: selectedDateIndex === index ? '#1f2937' : 'white',
-              fontWeight: '700',
-              userSelect: 'none',
-              textAlign: 'center',
-              minWidth: '60px',
-            }}
-          >
-            <div>{day.label}</div>
-            <div style={{ fontSize: '0.8rem' }}>{day.date}</div>
-          </div>
-        ))}
-      </div>
-      {rawData.map(({ theatre, shows }) => (
-        <div key={theatre} style={{ borderBottom: '1px solid #444', padding: '20px 0' }}>
-          <h2 style={{ color: '#d4af37', fontWeight: '700', fontSize: '1.5rem', marginBottom: '15px' }}>{theatre}</h2>
-          <div style={{ display: 'flex', gap: '15px', flexWrap: 'wrap' }}>
-            {shows.map((show) => (
-              <button
-                key={show.time}
-                onClick={() => handleSelectShow(theatre, show)}
-                style={{
-                  border: '2px solid ' + (statusColors[show.status] || 'gray'),
-                  backgroundColor: 'white',
-                  color: 'black',
-                  padding: '12px 20px',
-                  borderRadius: '10px',
-                  cursor: 'pointer',
-                  position: 'relative',
-                  fontWeight: '700',
-                  fontSize: '1rem',
-                  boxShadow: '0 2px 6px rgba(0,0,0,0.2)',
-                  transition: 'transform 0.2s ease',
-                }}
-                onMouseEnter={e => e.currentTarget.style.transform = 'scale(1.05)'}
-                onMouseLeave={e => e.currentTarget.style.transform = 'scale(1)'}
-              >
-                <>
-                  {show.time}
-                  {show.label && (
-                    <span
-                      style={{
-                        position: 'absolute',
-                        bottom: '-20px',
-                        left: '50%',
-                        transform: 'translateX(-50%)',
-                        fontSize: '0.75rem',
-                        color: '#555',
-                        fontWeight: '600',
-                      }}
-                    >
-                      {show.label}
-                    </span>
-                  )}
-                </>
-              </button>
-            ))}
-          </div>
-          <p style={{ fontSize: '0.9rem', color: '#aaa', marginTop: '40px' }}>Cancellation available</p>
-        </div>
-      ))}
+      <DateSelector days={days} selectedDateIndex={selectedDateIndex} onDateSelect={setSelectedDateIndex} />
+      <TheatreShows rawData={rawData} onSelectShow={handleSelectShow} />
       {selectedShow && (
-        <div id="seat-selection" style={{ marginTop: '30px', padding: '20px', backgroundColor: '#2d3748', borderRadius: '12px' }}>
-          <h2 style={{ color: '#d4af37', marginBottom: '15px' }}>Select Seats for {selectedShow.show.time} {selectedShow.show.label ? `(${selectedShow.show.label})` : ''}</h2>
-          <div style={{ display: 'flex', justifyContent: 'space-around', marginBottom: '20px' }}>
-            {seatTypes.map((seat) => (
-              <div
-                key={seat.type}
-                onClick={() => setSelectedSeatType(seat)}
-                style={{
-                  cursor: 'pointer',
-                  padding: '10px 15px',
-                  borderRadius: '8px',
-                  backgroundColor: selectedSeatType?.type === seat.type ? '#d4af37' : 'transparent',
-                  color: selectedSeatType?.type === seat.type ? '#1f2937' : 'white',
-                  fontWeight: '700',
-                  textAlign: 'center',
-                  minWidth: '100px',
-                  border: '2px solid #d4af37',
-                  userSelect: 'none',
-                }}
-              >
-                <div>{seat.type}</div>
-                <div>₹{seat.price}</div>
-                <div style={{ color: 'lightgreen', fontWeight: '600' }}>AVAILABLE</div>
-              </div>
-            ))}
-          </div>
-          <div style={{ marginBottom: '20px' }}>
-            <label htmlFor="seatCount" style={{ marginRight: '10px' }}>How many seats?</label>
-            <select
-              id="seatCount"
-              value={selectedSeatCount}
-              onChange={(e) => setSelectedSeatCount(Number(e.target.value))}
-              style={{ padding: '5px 10px', borderRadius: '6px', fontSize: '1rem' }}
-            >
-              {[...Array(10).keys()].map((num) => (
-                <option key={num + 1} value={num + 1}>{num + 1}</option>
-              ))}
-            </select>
-          </div>
-          <button
-            onClick={handleNext}
-            disabled={!selectedSeatType}
-            style={{
-              backgroundColor: selectedSeatType ? '#d4af37' : '#999',
-              color: selectedSeatType ? '#1f2937' : '#666',
-              padding: '15px 30px',
-              borderRadius: '10px',
-              border: 'none',
-              cursor: selectedSeatType ? 'pointer' : 'not-allowed',
-              fontWeight: '700',
-              fontSize: '1.2rem',
-              width: '100%',
-            }}
-          >
-            Next
-          </button>
-        </div>
+        <SeatSelection
+          seatTypes={seatTypes}
+          selectedSeatType={selectedSeatType}
+          setSelectedSeatType={setSelectedSeatType}
+          selectedSeatCount={selectedSeatCount}
+          setSelectedSeatCount={setSelectedSeatCount}
+          selectedShow={selectedShow}
+          onNext={handleNext}
+        />
       )}
     </div>
   );

@@ -1,8 +1,8 @@
 import React, { useEffect, useState, useContext } from 'react';
-import Navbar from './Navbar';
-import Sidebar from './Sidebar';
-import MovieGrid from './MovieGrid';
-import Footer from './Footer';
+import Navbar from '../components/Navbar';
+import Sidebar from '../components/Sidebar';
+import MovieGrid from '../components/MovieGrid';
+import Footer from '../components/Footer';
 import axios from 'axios';
 import { UserContext } from '../contexts/UserContext';
 import './LandingPage.css';

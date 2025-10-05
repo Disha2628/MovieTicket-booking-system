@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import SelectedSeatsDisplay from '../components/SelectedSeatsDisplay';
+import SeatCategory from '../components/SeatCategory';
+import Screen from '../components/Screen';
 
 const SeatLayoutPage = () => {
   const location = useLocation();
@@ -77,17 +80,7 @@ const SeatLayoutPage = () => {
         {movieName} - {selectedShow.theatre} - {selectedShow.show.fullDate?.toLocaleDateString('en-US', { weekday: 'short', day: '2-digit', month: 'short' })} - {selectedShow.show.time}
       </h2>
 
-      <div
-        style={{
-          marginBottom: '25px',
-          padding: '10px',
-          backgroundColor: '#374151',
-          borderRadius: '8px',
-        }}
-      >
-        <strong>Selected Seats: </strong>
-        {selectedSeats.join(', ') || 'None'}
-      </div>
+      <SelectedSeatsDisplay selectedSeats={selectedSeats} />
 
       <div style={{ display: 'flex', justifyContent: 'center', gap: '40px' }}>
         {/* Row Labels */}
@@ -110,92 +103,17 @@ const SeatLayoutPage = () => {
         {/* Seat Layout */}
         <div style={{ flex: 1 }}>
           {seatCategories.map((category) => (
-            <div
+            <SeatCategory
               key={category.name}
-              style={{ marginBottom: '40px', textAlign: 'center' }}
-            >
-              <div
-                style={{
-                  fontWeight: '700',
-                  color: '#d4af37',
-                  marginBottom: '15px',
-                }}
-              >
-                ₹{category.price} {category.name}
-              </div>
-
-              {category.rows.map(({ row, groups, seats }) => (
-                <div
-                  key={row}
-                  style={{
-                    display: 'flex',
-                    justifyContent: 'center',
-                    gap: '40px',
-                    marginBottom: '10px',
-                  }}
-                >
-                  {/* If groups exist (Gold/Silver), use them. Otherwise render seats directly (Platinum). */}
-                  {(groups || [seats]).map((group, gIndex) => (
-                    <div
-                      key={gIndex}
-                      style={{ display: 'flex', gap: '8px' }}
-                    >
-                      {group.map((seatNum) => {
-                        const seatId = `${row}${seatNum}`;
-                        const isBooked = category.bookedSeats.includes(seatNum);
-                        const isSelected = selectedSeats.includes(seatId);
-                        const seatColor = isBooked
-                          ? '#dc2626'
-                          : isSelected
-                          ? '#3b82f6'
-                          : '#22c55e';
-                        return (
-                          <button
-                            key={seatId}
-                            disabled={isBooked}
-                            onClick={() => toggleSeatSelection(seatId)}
-                            style={{
-                              width: '28px',
-                              height: '25px',
-                              backgroundColor: seatColor,
-                              border: '2px solid #d4af37',
-                              borderRadius: '6px',
-                              color: 'white',
-                              cursor: isBooked ? 'not-allowed' : 'pointer',
-                              fontWeight: '600',
-                            }}
-                            title={seatId}
-                          >
-                            {seatNum}
-                          </button>
-                        );
-                      })}
-                    </div>
-                  ))}
-                </div>
-              ))}
-            </div>
+              category={category}
+              selectedSeats={selectedSeats}
+              onSeatClick={toggleSeatSelection}
+            />
           ))}
         </div>
       </div>
 
-      {/* Screen */}
-      <div style={{ marginTop: '60px', textAlign: 'center' }}>
-        <div
-          style={{
-            margin: '0 auto',
-            marginLeft: '300px',
-            width: '45%',
-            height: '15px',
-            backgroundColor: '#93c5fd',
-            borderRadius: '12px',
-            boxShadow: '0 0 15px #60a5fa',
-          }}
-        />
-        <div style={{ marginTop: '8px', color: '#aaa', fontWeight: '600' }}>
-          All eyes this way please
-        </div>
-      </div>
+      <Screen />
 
       {/* Confirm Button */}
       <div style={{ textAlign: 'center', marginTop: '30px' }}>

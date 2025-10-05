@@ -13,8 +13,7 @@ const ProfilePage = () => {
     last_name: '',
     phn_no: ''
   });
-  const [bookings, setBookings] = useState([]);
-  const [showBookings, setShowBookings] = useState(false);
+
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
@@ -67,17 +66,7 @@ const ProfilePage = () => {
     setIsEditing(false);
   };
 
-  const handleShowBookings = async () => {
-    if (!showBookings) {
-      try {
-        const response = await axios.get(`http://localhost:5000/api/bookings/${user.id}`);
-        setBookings(response.data);
-      } catch (error) {
-        setError('Failed to load booking history');
-      }
-    }
-    setShowBookings(!showBookings);
-  };
+
 
   const handleLogout = () => {
     setUser(null);
@@ -161,26 +150,9 @@ const ProfilePage = () => {
         </div>
 
         <div style={{ marginTop: '40px' }}>
-          <button onClick={handleShowBookings} style={{ backgroundColor: '#f59e0b', color: 'white', padding: '10px 20px', border: 'none', borderRadius: '5px', cursor: 'pointer' }}>
-            {showBookings ? 'Hide Booking History' : 'Show Booking History'}
+          <button onClick={() => navigate('/booking-history')} style={{ backgroundColor: '#f59e0b', color: 'white', padding: '10px 20px', border: 'none', borderRadius: '5px', cursor: 'pointer' }}>
+            Booking History
           </button>
-
-          {showBookings && (
-            <div style={{ marginTop: '20px' }}>
-              <h3>Booking History</h3>
-              {bookings.length > 0 ? (
-                <ul>
-                  {bookings.map(booking => (
-                    <li key={booking.id} style={{ marginBottom: '10px', padding: '10px', backgroundColor: '#374151', borderRadius: '5px' }}>
-                      <strong>{booking.movie}</strong> - {booking.date} at {booking.time}
-                    </li>
-                  ))}
-                </ul>
-              ) : (
-                <p>No bookings found.</p>
-              )}
-            </div>
-          )}
         </div>
       </div>
     </div>
