@@ -8,6 +8,7 @@ import RegistrationPage from './components/RegistrationPage';
 import LoginPage from './components/LoginPage';
 import ProfilePage from './components/ProfilePage';
 import ShowSelectionPage from './components/ShowSelectionPage';
+import SeatLayoutPage from './components/SeatLayoutPage';
 import { UserProvider } from './contexts/UserContext';
 
 function App() {
@@ -29,6 +30,7 @@ function App() {
           <Route path="/login" element={<LoginPage />} />
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/book/:id" element={<><Navbar /><ShowSelectionPage /></>} />
+          <Route path="/seat-layout" element={<><Navbar /><SeatLayoutPage /></>} />
         </Routes>
       </BrowserRouter>
     </UserProvider>

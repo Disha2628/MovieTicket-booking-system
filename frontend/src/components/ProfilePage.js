@@ -1,9 +1,11 @@
 import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 import { UserContext } from '../contexts/UserContext';
 
 const ProfilePage = () => {
   const { user, setUser } = useContext(UserContext);
+  const navigate = useNavigate();
   const [profile, setProfile] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
   const [editForm, setEditForm] = useState({
@@ -77,6 +79,11 @@ const ProfilePage = () => {
     setShowBookings(!showBookings);
   };
 
+  const handleLogout = () => {
+    setUser(null);
+    navigate('/');
+  };
+
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
   if (!profile) return <div>No profile data</div>;
@@ -148,6 +155,9 @@ const ProfilePage = () => {
               Edit Profile
             </button>
           )}
+          <button onClick={handleLogout} style={{ backgroundColor: '#dc2626', color: 'white', padding: '10px 20px', border: 'none', borderRadius: '5px', cursor: 'pointer' }}>
+            Logout
+          </button>
         </div>
 
         <div style={{ marginTop: '40px' }}>

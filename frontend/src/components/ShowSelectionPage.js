@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const getNextSevenDays = () => {
   const days = [];
@@ -88,7 +89,9 @@ const rawData = [
 
 const ShowSelectionPage = () => {
   const location = useLocation();
-  const movieName = location.state?.movieName;
+  const { movieName } = useParams();
+  const movieNameFromState = location.state?.movieName;
+  const finalMovieName = movieNameFromState || movieName;
 
   const [selectedShow, setSelectedShow] = useState(null);
   const [selectedDateIndex, setSelectedDateIndex] = useState(0);
@@ -116,16 +119,38 @@ const ShowSelectionPage = () => {
     }, 100);
   };
 
+ 
+
+  const navigate = useNavigate();
+
   const handleNext = () => {
-    alert(`Proceeding with booking:\nMovie: ${movieName}\nTheatre: ${selectedShow.theatre}\nShow: ${selectedShow.show.time} ${selectedShow.show.label ? '(' + selectedShow.show.label + ')' : ''}\nSeat Type: ${selectedSeatType.type}\nSeats: ${selectedSeatCount}`);
-    // Implement navigation or booking logic here
+    if (!selectedShow || !selectedSeatType || !selectedSeatCount) {
+      alert('Please select show, seat type, and number of seats before proceeding.');
+      return;
+    }
+    const selectedDate = days[selectedDateIndex]?.fullDate || null;
+    const selectedShowWithDate = {
+      ...selectedShow,
+      show: {
+        ...selectedShow.show,
+        fullDate: selectedDate,
+      },
+    };
+    navigate('/seat-layout', {
+      state: {
+        selectedShow: selectedShowWithDate,
+        selectedSeatType,
+        selectedSeatCount,
+        movieName: finalMovieName,
+      },
+    });
   };
 
   return (
     <div style={{ maxWidth: '900px', margin: '40px auto', padding: '40px 30px', fontFamily: 'Arial, sans-serif', backgroundColor: '#1f2937', borderRadius: '12px', border: '5px solid hsl(47, 80.90%, 61.00%)', color: 'white' }}>
-      {movieName && (
-        <h2 style={{ color: '#f0e68c', fontWeight: '700', fontSize: '1.8rem', marginBottom: '10px', textAlign: 'center' }}>
-          {movieName}
+      {finalMovieName && (
+        <h2 style={{ color: '#f0e68c', fontWeight: '700', fontSize: '2rem', marginBottom: '10px', textAlign: 'center' }}>
+          {finalMovieName}
         </h2>
       )}
       <h1 style={{ color: '#d4af37', fontWeight: '700', fontSize: '2.5rem', marginBottom: '20px' }}>Select Date and Show</h1>

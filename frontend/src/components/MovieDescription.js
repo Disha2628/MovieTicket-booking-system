@@ -95,11 +95,14 @@ const MovieDescription = () => {
           }}
           onClick={() => {
             if (user) {
-              navigate(`/book/${movie.title}`);
+              navigate(`/book/${movie.title}`, {
+                state: { movieName: movie.title }  // ✅ pass movie title through location state
+              });
             } else {
               navigate('/login');
             }
           }}
+          
         >
           Book Tickets Now
         </button>
