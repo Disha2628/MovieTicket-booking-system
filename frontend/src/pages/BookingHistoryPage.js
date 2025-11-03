@@ -1,74 +1,120 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import { UserContext } from '../contexts/UserContext';
+import jsPDF from 'jspdf';
+
+const API_BASE_URL = 'http://localhost:5000/api';
 
 const BookingHistoryPage = () => {
+  const { user, token } = useContext(UserContext);
+  const navigate = useNavigate();
   const [bookings, setBookings] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
 
   useEffect(() => {
-    // Load bookings from localStorage
-    const storedBookings = localStorage.getItem('bookingHistory');
-    if (storedBookings) {
-      setBookings(JSON.parse(storedBookings));
-    } else {
-      // Initialize with sample data if no data exists
-      const sampleBookings = [
-        {
-          id: 1,
-          movieName: 'Inception',
-          theatre: 'PVR Cinemas',
-          date: '2023-10-15',
-          time: '18:00',
-          seats: 'A1, A2',
-          totalAmount: 440
-        },
-        {
-          id: 2,
-          movieName: 'The Dark Knight',
-          theatre: 'INOX',
-          date: '2023-10-10',
-          time: '20:30',
-          seats: 'B3, B4, B5',
-          totalAmount: 660
-        },
-        {
-          id: 3,
-          movieName: 'Interstellar',
-          theatre: 'Cinepolis',
-          date: '2023-09-25',
-          time: '15:00',
-          seats: 'C1',
-          totalAmount: 280
-        }
-      ];
-      localStorage.setItem('bookingHistory', JSON.stringify(sampleBookings));
-      setBookings(sampleBookings);
+    if (!user || !user.id) {
+      navigate('/login');
+      return;
     }
-  }, []);
+    if (!token) {
+      setError('Authentication required. Please log in again.');
+      setLoading(false);
+      return;
+    }
+    fetchBookingHistory();
+  }, [user, token, navigate]);
+
+  const fetchBookingHistory = async () => {
+    try {
+      const response = await axios.get(`${API_BASE_URL}/customers/${user.id}/bookings`, {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
+      setBookings(response.data);
+    } catch (error) {
+      setError('Failed to load booking history');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const downloadTicket = (booking) => {
+    const doc = new jsPDF();
+    doc.setFontSize(20);
+    doc.text('Movie Ticket', 105, 20, null, null, 'center');
+    doc.setFontSize(12);
+    doc.text(`Booking ID: ${booking.id}`, 20, 40);
+    doc.text(`Movie: ${booking.movieName}`, 20, 50);
+    doc.text(`Theatre: ${booking.theatre}`, 20, 60);
+    doc.text(`City: ${booking.city}`, 20, 70);
+    doc.text(`Screen: ${booking.screenName}`, 20, 80);
+    doc.text(`Date: ${new Date(booking.date).toLocaleDateString('en-IN')}`, 20, 90);
+    doc.text(`Time: ${booking.time}`, 20, 100);
+    doc.text(`Seats: ${booking.seats}`, 20, 110);
+    doc.text(`Total Amount: ₹${booking.totalAmount}`, 20, 120);
+    doc.save(`ticket_${booking.id}.pdf`);
+  };
 
   return (
-    <div style={{ maxWidth: '1200px', margin: '120px auto', padding: '30px', backgroundColor: '#1f2937', borderRadius: '12px', border: '5px solid hsl(47, 80.90%, 61.00%)', color: 'white' }}>
+    <div style={{ maxWidth: '1200px', margin: '120px auto', padding: '30px', backgroundColor: '#1f2937', borderRadius: '12px', border: '5px solid #ffd700', color: 'white' }}>
       <h2 style={{ textAlign: 'center', color: '#d4af37', marginBottom: '40px', fontSize: '2rem' }}>Booking History</h2>
 
-      {bookings.length > 0 ? (
+      {loading ? (
+        <p style={{ textAlign: 'center', color: '#9ca3af' }}>Loading booking history...</p>
+      ) : error ? (
+        <p style={{ textAlign: 'center', color: '#ef4444' }}>{error}</p>
+      ) : bookings.length > 0 ? (
         <table style={{ width: '100%', borderCollapse: 'collapse', backgroundColor: '#374151', borderRadius: '8px', overflow: 'hidden' }}>
           <thead>
             <tr style={{ backgroundColor: '#d4af37', color: '#1f2937' }}>
               <th style={{ padding: '15px', textAlign: 'left', fontWeight: 'bold' }}>Movie Title</th>
               <th style={{ padding: '15px', textAlign: 'left', fontWeight: 'bold' }}>Theatre Name</th>
+              <th style={{ padding: '15px', textAlign: 'left', fontWeight: 'bold' }}>City</th>
+              <th style={{ padding: '15px', textAlign: 'left', fontWeight: 'bold' }}>Screen Name</th>
               <th style={{ padding: '15px', textAlign: 'left', fontWeight: 'bold' }}>Date & Show Time</th>
               <th style={{ padding: '15px', textAlign: 'left', fontWeight: 'bold' }}>Seats</th>
               <th style={{ padding: '15px', textAlign: 'left', fontWeight: 'bold' }}>Total Amount</th>
+              <th style={{ padding: '15px', textAlign: 'left', fontWeight: 'bold' }}>Ticket Details</th>
             </tr>
           </thead>
           <tbody>
-            {bookings.map((booking, index) => (
-              <tr key={booking.id} style={{ borderBottom: index !== bookings.length - 1 ? '1px solid #4b5563' : 'none' }}>
-                <td style={{ padding: '15px' }}>{booking.movieName}</td>
-                <td style={{ padding: '15px' }}>{booking.theatre}</td>
-                <td style={{ padding: '15px' }}>{booking.date} at {booking.time}</td>
-                <td style={{ padding: '15px' }}>{booking.seats}</td>
-                <td style={{ padding: '15px' }}>₹{booking.totalAmount}</td>
-              </tr>
-            ))}
+            {bookings.map((booking, index) => {
+              const formattedDate = new Date(booking.date).toLocaleDateString('en-IN', {
+                year: 'numeric',
+                month: 'short',
+                day: 'numeric'
+              });
+              return (
+                <tr key={booking.id} style={{ borderBottom: index !== bookings.length - 1 ? '1px solid #4b5563' : 'none' }}>
+                  <td style={{ padding: '15px' }}>{booking.movieName}</td>
+                  <td style={{ padding: '15px' }}>{booking.theatre}</td>
+                  <td style={{ padding: '15px' }}>{booking.city}</td>
+                  <td style={{ padding: '15px' }}>{booking.screenName}</td>
+                  <td style={{ padding: '15px' }}>{formattedDate} at {booking.time}</td>
+                  <td style={{ padding: '15px' }}>{booking.seats}</td>
+                  <td style={{ padding: '15px' }}>₹{booking.totalAmount}</td>
+                  <td style={{ padding: '15px' }}>
+                    <button
+                      onClick={() => downloadTicket(booking)}
+                      style={{
+                        backgroundColor: '#d4af37',
+                        color: '#1f2937',
+                        border: 'none',
+                        padding: '8px 16px',
+                        borderRadius: '4px',
+                        cursor: 'pointer',
+                        fontWeight: 'bold'
+                      }}
+                    >
+                      Download Ticket
+                    </button>
+                  </td>
+                </tr>
+              );
+            })}
           </tbody>
         </table>
       ) : (

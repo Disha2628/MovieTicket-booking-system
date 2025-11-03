@@ -11,19 +11,26 @@ const styles = {
     boxSizing: 'border-box',
   },
   movieCard: {
-    backgroundColor: 'rgba(31, 41, 55, 0.9)',
-    borderRadius: '12px',
-    border: '2px solid hsl(47, 80.90%, 61.00%)',
-    boxShadow: '0 4px 15px rgba(0,0,0,0.5)',
+    backgroundColor: 'rgba(12, 18, 32, 0.9)',
+    borderRadius: '24px',
+    border: '2px solid #ffd700',
+    boxShadow: `
+      inset 0 4px 8px rgba(0,0,0,0.3),
+      0 0 20px rgba(255, 215, 0, 0.3),
+      0 0 40px rgba(255, 215, 0, 0.2),
+      0 0 60px rgba(255, 215, 0, 0.1) inset,
+      0 0 80px rgba(255, 215, 0, 0.1) inset
+    `,
     overflow: 'hidden',
     transition: 'transform 0.3s ease, box-shadow 0.3s ease',
     cursor: 'pointer',
     width: '100%',
     maxWidth: '260px',
+    marginBottom: '50px',
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-between',
-    height: '420px',   // ✅ add this (fix consistent height)
+    height: '450px',   // ✅ add this (fix consistent height)
   },
   
   movieCardHover: {
@@ -32,9 +39,11 @@ const styles = {
   },
   poster: {
     width: '100%',
-    height: '280px',
-    objectFit: 'fill',
-    borderBottom: '2px solid #f6e05e',
+    height: '300px',
+    objectFit: 'cover',
+    borderBottom: '2px solid #ffd700',
+    borderTopLeftRadius: '10px',
+    borderTopRightRadius: '10px',
     display: 'block',
   },
   movieCardContent: {
@@ -52,14 +61,14 @@ const styles = {
     color: 'white',
   },
   bookButton: {
-    background: 'linear-gradient(to right, #f56565, #ed64a6)',
-    color: 'white',
+    backgroundColor: 'transparent',
+    color: '#ffd700',
     fontWeight: '600',
     padding: '10px 20px',
-    borderRadius: '8px',
-    border: 'none',
+    borderRadius: '50px',
+    border: '2px solid #ffd700',
     cursor: 'pointer',
-    transition: 'transform 0.3s ease',
+    transition: 'all 0.3s',
     width: '100%',
     alignSelf: 'center',
   },
@@ -102,8 +111,18 @@ const MovieGrid = ({ movies: propMovies }) => {
             
             <button
               style={hoveredButton === movie.id ? {...styles.bookButton, ...styles.bookButtonHover} : styles.bookButton}
-              onMouseEnter={() => setHoveredButton(movie.id)}
-              onMouseLeave={() => setHoveredButton(null)}
+              onMouseEnter={(e) => {
+                setHoveredButton(movie.id);
+                e.target.style.boxShadow = '0 0 20px rgba(255, 215, 0, 0.5)';
+                e.target.style.transform = 'translateY(-2px)';
+                e.target.style.backgroundColor = 'rgba(255, 215, 0, 0.1)';
+              }}
+              onMouseLeave={(e) => {
+                setHoveredButton(null);
+                e.target.style.boxShadow = 'none';
+                e.target.style.transform = 'none';
+                e.target.style.backgroundColor = 'transparent';
+              }}
               onClick={() => window.location.href = `/movie/${movie.id}`}
             >
               Book Tickets Now

@@ -1,7 +1,7 @@
 import React from 'react';
 import Seat from './Seat';
 
-const SeatRow = ({ row, groups, seats, categoryBookedSeats, selectedSeats, onSeatClick }) => {
+const SeatRow = ({ row, groups, seats, selectedSeats, onSeatClick, dbSeats }) => {
   return (
     <div
       style={{
@@ -19,7 +19,7 @@ const SeatRow = ({ row, groups, seats, categoryBookedSeats, selectedSeats, onSea
         >
           {group.map((seatNum) => {
             const seatId = `${row}${seatNum}`;
-            const isBooked = categoryBookedSeats.includes(seatNum);
+            const isBooked = dbSeats[seatId] === 'unavailable';
             const isSelected = selectedSeats.includes(seatId);
             return (
               <Seat

@@ -6,7 +6,14 @@ export const UserProvider = ({ children }) => {
   const [user, setUser] = useState(() => {
     // Try to get user from localStorage on initial load
     const storedUser = localStorage.getItem('user');
-    return storedUser ? JSON.parse(storedUser) : null;
+    const parsed = storedUser ? JSON.parse(storedUser) : null;
+    return parsed ? parsed : null;
+  });
+
+  const [token, setToken] = useState(() => {
+    // Try to get token from localStorage on initial load
+    const storedToken = localStorage.getItem('token');
+    return storedToken ? storedToken : null;
   });
 
   useEffect(() => {
@@ -17,8 +24,26 @@ export const UserProvider = ({ children }) => {
     }
   }, [user]);
 
+  useEffect(() => {
+    if (token) {
+      localStorage.setItem('token', token);
+    } else {
+      localStorage.removeItem('token');
+    }
+  }, [token]);
+
+  const login = (userData, authToken) => {
+    setUser(userData);
+    setToken(authToken);
+  };
+
+  const logout = () => {
+    setUser(null);
+    setToken(null);
+  };
+
   return (
-    <UserContext.Provider value={{ user, setUser }}>
+    <UserContext.Provider value={{ user, token, setUser, setToken, login, logout }}>
       {children}
     </UserContext.Provider>
   );

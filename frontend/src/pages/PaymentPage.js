@@ -1,6 +1,8 @@
 
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import { UserContext } from '../contexts/UserContext';
 import PaymentOptions from '../components/PaymentOptions';
 import UPIDetails from '../components/UPIDetails';
 import WalletDetails from '../components/WalletDetails';
@@ -8,9 +10,13 @@ import NetBankingDetails from '../components/NetBankingDetails';
 import CardDetails from '../components/CardDetails';
 import OrderSummary from '../components/OrderSummary';
 
+console.log("Frontend Razorpay Key:", process.env.REACT_APP_RAZORPAY_KEY_ID);
+
+
 const PaymentPage = () => {
   const location = useLocation();
   const navigate = useNavigate();
+  const { user } = useContext(UserContext);
   const { selectedShow, selectedSeatType, selectedSeatCount, movieName, selectedSeats } = location.state || {};
 
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState('UPI');
@@ -69,7 +75,7 @@ const PaymentPage = () => {
     return true;
   };
 
-  const handlePayment = () => {
+  const handlePayment = async () => {
     if (!selectedPaymentMethod) {
       alert('Please select a payment method.');
       return;
@@ -78,31 +84,81 @@ const PaymentPage = () => {
       alert('Please complete the payment details before proceeding.');
       return;
     }
-    alert('Payment successful! Booking confirmed.');
-
-    // Add current booking to booking history in localStorage
-    const bookingHistoryStr = localStorage.getItem('bookingHistory');
-    let bookingHistory = [];
-    if (bookingHistoryStr) {
-      try {
-        bookingHistory = JSON.parse(bookingHistoryStr);
-      } catch (e) {
-        bookingHistory = [];
-      }
+    if (!user) {
+      alert('Please log in to proceed with payment.');
+      return;
     }
-    const newBooking = {
-      id: bookingHistory.length > 0 ? bookingHistory[bookingHistory.length - 1].id + 1 : 1,
-      movieName: movieName || 'Unknown Movie',
-      theatre: selectedShow?.theatre || 'Unknown Theatre',
-      date: selectedShow?.show?.fullDate ? selectedShow.show.fullDate.toLocaleDateString() : 'Unknown Date',
-      time: selectedShow?.show?.time || 'Unknown Time',
-      seats: selectedSeats.join(', '),
-      totalAmount: parseFloat(orderTotal)
-    };
-    bookingHistory.push(newBooking);
-    localStorage.setItem('bookingHistory', JSON.stringify(bookingHistory));
 
-    navigate('/booking-history');
+    try {
+      // Create Razorpay order
+      const orderResponse = await axios.post('http://localhost:5000/api/payments/create-order', {
+        amount: parseFloat(orderTotal),
+        currency: 'INR',
+        receipt: `receipt_${Date.now()}`,
+      });
+
+      const { order } = orderResponse.data;
+      const { id: order_id, amount, currency } = order;
+
+      // Load Razorpay script if not loaded
+      if (!window.Razorpay) {
+        const script = document.createElement('script');
+        script.src = 'https://checkout.razorpay.com/v1/checkout.js';
+        script.async = true;
+        document.body.appendChild(script);
+        await new Promise((resolve) => {
+          script.onload = resolve;
+        });
+      }
+
+      const options = {
+        key: process.env.REACT_APP_RAZORPAY_KEY_ID || "rzp_test_RaqZEkZRISullC", // Replace with your Razorpay key
+        amount: amount,
+        currency: currency,
+        name: 'Movie Booking',
+        description: `Booking for ${movieName}`,
+        order_id: order_id,
+        handler: async (response) => {
+          try {
+            // Verify payment
+            await axios.post('http://localhost:5000/api/payments/verify-payment', {
+              razorpay_order_id: response.razorpay_order_id,
+              razorpay_payment_id: response.razorpay_payment_id,
+              razorpay_signature: response.razorpay_signature,
+            });
+
+            // Create booking
+            const bookingResponse = await axios.post('http://localhost:5000/api/bookings', {
+              customerId: user.id,
+              showId: selectedShow.show.show_id,
+              amount: parseFloat(orderTotal),
+              paymentMethod: selectedPaymentMethod,
+              seats: selectedSeats, // Assuming selectedSeats are seat_ids
+            });
+
+            alert('Payment successful! Booking confirmed.');
+            navigate('/booking-history');
+          } catch (error) {
+            console.error('Error processing payment:', error);
+            alert('Payment verification failed. Please try again.');
+          }
+        },
+        prefill: {
+          name: user.first_name + ' ' + user.last_name,
+          email: user.email,
+          contact: user.phn_no,
+        },
+        theme: {
+          color: '#ffd700',
+        },
+      };
+
+      const rzp = new window.Razorpay(options);
+      rzp.open();
+    } catch (error) {
+      console.error('Error creating order:', error);
+      alert('Failed to initiate payment. Please try again.');
+    }
   };
 
   if (!selectedShow || !selectedSeats) {
@@ -123,7 +179,7 @@ const PaymentPage = () => {
         fontFamily: 'Arial, sans-serif',
         backgroundColor: '#1f2937',
         borderRadius: '12px',
-        border: '4px solid hsl(47, 80%, 61%)',
+        border: '4px solid #ffd700',
         display: 'flex',
         gap: '20px',
       }}

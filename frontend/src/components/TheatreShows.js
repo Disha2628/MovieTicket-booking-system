@@ -17,7 +17,7 @@ const TheatreShows = ({ rawData, onSelectShow }) => {
                 key={show.time}
                 onClick={() => onSelectShow(theatre, show)}
                 style={{
-                  border: '2px solid ' + (statusColors[show.status] || 'gray'),
+                  border: '2px solid ' + (statusColors[show.status] || 'green'),
                   backgroundColor: 'white',
                   color: 'black',
                   padding: '12px 20px',

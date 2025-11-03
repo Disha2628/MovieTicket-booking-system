@@ -57,25 +57,77 @@ const LandingPage = () => {
 
   return (
     <div className="landing-page-container">
-      <Navbar user={user} />
       <h1 className="landing-page-title">Movie-Matrix</h1>
-      <div className="filter-bar" style={{ display: 'flex', alignItems: 'center', padding: '10px 20px', gap: '20px', backgroundColor: '#1f2937', color: 'white' }}>
-        <button onClick={resetFilters} style={{ backgroundColor: '#ef4444', color: 'white', border: 'none', padding: '8px 16px', borderRadius: '8px', cursor: 'pointer' }}>
+      <div className="hero-section">
+        <div className="hero-left">
+          <img src="/banner.jpg" alt="Movie Banner" />
+        </div>
+        <div className="hero-right">
+          <h2>Book Your Movie Magic Instantly!</h2>
+          <p>Fast, fun, and secure online movie ticket booking.</p>
+          <button className="book-now-btn">Book Now</button>
+        </div>
+      </div>
+      <div className="filter-bar">
+        <button onClick={resetFilters} style={{
+          backgroundColor: 'transparent',
+          color: '#ffffff',
+          border: '2px solid #ffffff',
+          padding: '8px 16px',
+          borderRadius: '50px',
+          cursor: 'pointer',
+          transition: 'all 0.3s',
+          fontSize: '1rem'
+        }}
+        onMouseEnter={(e) => {
+          e.target.style.boxShadow = '0 0 20px rgba(255, 215, 0, 0.5)';
+          e.target.style.transform = 'translateY(-2px)';
+          e.target.style.backgroundColor = 'rgba(255, 215, 0, 0.1)';
+        }}
+        onMouseLeave={(e) => {
+          e.target.style.boxShadow = 'none';
+          e.target.style.transform = 'none';
+          e.target.style.backgroundColor = 'transparent';
+        }}>
           Back / Reset
         </button>
-        <select value={genreFilter} onChange={e => setGenreFilter(e.target.value)} style={{ padding: '8px', borderRadius: '8px' }}>
+        <select value={genreFilter} onChange={e => setGenreFilter(e.target.value)} style={{
+          padding: '8px',
+          borderRadius: '8px',
+          backgroundColor: 'rgba(12, 18, 32, 0.8)',
+          color: '#ffffff',
+          border: 'none',
+          outline: 'none',
+          fontSize: '1rem'
+        }}>
           <option value="">All Genres</option>
           {genres.map(genre => (
             <option key={genre} value={genre}>{genre}</option>
           ))}
         </select>
-        <select value={languageFilter} onChange={e => setLanguageFilter(e.target.value)} style={{ padding: '8px', borderRadius: '8px' }}>
+        <select value={languageFilter} onChange={e => setLanguageFilter(e.target.value)} style={{
+          padding: '8px',
+          borderRadius: '8px',
+          backgroundColor: 'rgba(12, 18, 32, 0.8)',
+          color: '#ffffff',
+          border: 'none',
+          outline: 'none',
+          fontSize: '1rem'
+        }}>
           <option value="">All Languages</option>
           {languages.map(language => (
             <option key={language} value={language}>{language}</option>
           ))}
         </select>
       </div>
+      <h2 style={{
+        textAlign: 'center',
+        color: '#ffd700',
+        fontSize: '2rem',
+        margin: '20px 0',
+        textShadow: '0 0 15px rgba(255, 215, 0, 0.8), 0 0 30px rgba(255, 215, 0, 0.5)',
+        fontWeight: 'bold'
+      }}>Recommended Movies</h2>
       <main className="main-content" style={{ width: '100%', padding: '20px' }}>
   <MovieGrid movies={movies} />
 </main>

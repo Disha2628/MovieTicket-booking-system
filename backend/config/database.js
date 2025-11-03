@@ -4,7 +4,7 @@ const dbConfig = {
   host: 'localhost',
   user: 'root',
   password: 'Lotusgirl@123',
-  database: 'minor_project'
+  database: 'cinema_database'
 };
 
 const pool = mysql.createPool(dbConfig);

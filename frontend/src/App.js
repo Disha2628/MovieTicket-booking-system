@@ -19,25 +19,26 @@ function AppContent() {
 
   return (
     <BrowserRouter>
+    <Navbar user={user} />
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/movies" element={<LandingPage />} />
         <Route path="/about" element={
           <>
-            <Navbar user={user} />
             <Footer />
           </>
         } />
-        <Route path="/movie/:id" element={<><Navbar user={user} />
+        <Route path="/movie/:id" element={<>
         <MovieDescription /></>} />
-        <Route path="/register" element={<RegistrationPage />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/profile" element={<><Navbar user={user} /><ProfilePage /></>} />
-        <Route path="/book/:id" element={<><Navbar user={user} /><ShowSelectionPage /></>} />
-        <Route path="/seat-layout" element={<><Navbar user={user} /><SeatLayoutPage /></>} />
-        <Route path="/booking-confirmation" element={<><Navbar user={user} /><BookingConfirmationPage /></>} />
-        <Route path="/payment" element={<><Navbar user={user} /><PaymentPage /></>} />
-        <Route path="/booking-history" element={<><Navbar user={user} /><BookingHistoryPage /></>} />
+        <Route path="/register" element={<><RegistrationPage /></>} />
+        <Route path="/login" element={<><LoginPage /></>} />
+        <Route path="/profile" element={<><ProfilePage /></>} />
+        <Route path="/book/:id" element={<><ShowSelectionPage /></>} />
+        <Route path="/seat-layout" element={<><SeatLayoutPage /></>} />
+        <Route path="/booking-confirmation" element={<><BookingConfirmationPage /></>} />
+        <Route path="/payment" element={<><PaymentPage /></>} />
+        <Route path="/forgot-password" element={<><h1 style={{color : "white"}}>IF YOU FORGOT YOUR PASSWORD THEN GET THE FUCK OUT OF HERE BITCH!</h1></>} />
+        <Route path="/booking-history" element={<><BookingHistoryPage /></>} />
       </Routes>
     </BrowserRouter>
   );

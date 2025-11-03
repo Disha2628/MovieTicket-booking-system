@@ -35,7 +35,7 @@ const BookingConfirmationPage = () => {
         fontFamily: 'Arial, sans-serif',
         backgroundColor: '#1f2937',
         borderRadius: '12px',
-        border: '4px solid hsl(47, 80%, 61%)',
+        border: '4px solid #ffd700',
       }}
     >
       <h2 style={{ color: '#d4af37', marginBottom: '20px', textAlign: 'center' }}>

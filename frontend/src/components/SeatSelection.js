@@ -45,15 +45,33 @@ const SeatSelection = ({ seatTypes, selectedSeatType, setSelectedSeatType, selec
         onClick={onNext}
         disabled={!selectedSeatType}
         style={{
-          backgroundColor: selectedSeatType ? '#d4af37' : '#999',
-          color: selectedSeatType ? '#1f2937' : '#666',
+          backgroundColor: selectedSeatType ? 'transparent' : '#999',
+          color: selectedSeatType ? '#ffd700' : '#666',
           padding: '15px 30px',
-          borderRadius: '10px',
-          border: 'none',
+          borderRadius: '50px',
+          border: selectedSeatType ? '2px solid #ffd700' : 'none',
           cursor: selectedSeatType ? 'pointer' : 'not-allowed',
           fontWeight: '700',
           fontSize: '1.2rem',
           width: '100%',
+          transition: 'all 0.3s',
+          position: 'relative',
+          overflow: 'hidden',
+          boxShadow: selectedSeatType ? '0 0 20px rgba(255, 215, 0, 0.5)' : 'none',
+        }}
+        onMouseEnter={(e) => {
+          if (selectedSeatType) {
+            e.target.style.boxShadow = '0 0 20px rgba(255, 215, 0, 0.5)';
+            e.target.style.transform = 'translateY(-2px)';
+            e.target.style.backgroundColor = 'rgba(255, 215, 0, 0.1)';
+          }
+        }}
+        onMouseLeave={(e) => {
+          if (selectedSeatType) {
+            e.target.style.boxShadow = '0 0 20px rgba(255, 215, 0, 0.5)';
+            e.target.style.transform = 'none';
+            e.target.style.backgroundColor = 'transparent';
+          }
         }}
       >
         Next

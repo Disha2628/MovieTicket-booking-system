@@ -1,36 +1,167 @@
+.landing-page-container {
+  background: linear-gradient(135deg, #140101 0%, #751212 50%, #3d0303 100%);
+  min-height: 100vh;
+}
+
 .filter-bar {
-    background-color: #334155;
-    border-radius: 12px;
-    border: 3px solid #ecc94b;
-    padding: 4px 15px;
-    color: white;
-    display: flex;
-    height: '50px';
-    justify-content: center;
-    align-items: center;
-    gap: 140px;  
-    margin: 10px 0;
-    flex-wrap: wrap;  
+  background-color: rgba(12, 18, 32, 0.9);
+  border-radius: 24px;
+  border: 2px solid #ffd700;
+  box-shadow: inset 0 4px 8px rgba(0,0,0,0.3), 0 0 20px rgba(255, 215, 0, 0.3), 0 0 40px rgba(255, 215, 0, 0.2), 0 0 60px rgba(255, 215, 0, 0.1) inset, 0 0 80px rgba(255, 215, 0, 0.1) inset;
+  padding: 10px 20px;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  margin: 20px auto;
+  max-width: 800px;
+  flex-wrap: wrap;
+  position: relative;
+  z-index: 2;
+}
+
+.filter-item {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.filter-item label {
+  font-size: 20px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.filter-item select,
+.filter-item input {
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: none;
+  outline: none;
+  background: #1e293b;
+  color: white;
+}
+
+.hero-section {
+  display: flex;
+  width: 100%;
+  height: 60vh;
+  background: linear-gradient(135deg, #000000 0%, #1a0000 50%, #000000 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle at 30% 40%, rgba(255, 217, 0, 0.149) 0%, transparent 50%),
+              radial-gradient(circle at 70% 60%, rgba(255, 217, 0, 0.049) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+.hero-left {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.hero-left img {
+  max-width: 100%;
+  max-height: 100%;
+  border-radius: 10px;
+  box-shadow: 0 0 30px rgba(255, 215, 0, 0.5);
+}
+
+.hero-right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 40px;
+  color: white;
+  text-align: left;
+}
+
+.hero-right h2 {
+  font-size: 3rem;
+  font-weight: bold;
+  margin-bottom: 20px;
+  text-shadow: 0 0 20px rgba(255, 215, 0, 0.8), 0 0 40px rgba(255, 215, 0, 0.5);
+  animation: glow 2s ease-in-out infinite alternate;
+}
+
+.hero-right p {
+  font-size: 1.5rem;
+  margin-bottom: 30px;
+  text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+}
+
+.book-now-btn {
+  background: linear-gradient(45deg, #ffd700, #ffed4e);
+  color: black;
+  border: none;
+  padding: 15px 30px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  border-radius: 50px;
+  cursor: pointer;
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+  transition: all 0.3s ease;
+}
+
+.book-now-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 30px rgba(255, 215, 0, 0.8);
+}
+
+@keyframes glow {
+  from {
+    text-shadow: 0 0 20px rgba(255, 215, 0, 0.8), 0 0 40px rgba(255, 215, 0, 0.5);
   }
-  
-  .filter-item {
-    display: flex;
-    align-items: center;
-    gap: 20px;  
+  to {
+    text-shadow: 0 0 30px rgba(255, 215, 0, 1), 0 0 60px rgba(255, 215, 0, 0.8);
   }
-  
-  .filter-item label {
-    font-size: 20px;
-    font-weight: 500;
-    white-space: nowrap;  
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
   }
-  
-  .filter-item select,
-  .filter-item input {
-    padding: 6px 10px;
-    border-radius: 6px;
-    border: none;
-    outline: none;
-    background: #1e293b;
-    color: white;
+  to {
+    opacity: 1;
   }
+}
+
+@media (max-width: 768px) {
+  .hero-section {
+    flex-direction: column;
+    height: auto;
+  }
+  .hero-left, .hero-right {
+    flex: none;
+    padding: 20px;
+  }
+  .hero-right h2 {
+    font-size: 2rem;
+  }
+  .hero-right p {
+    font-size: 1.2rem;
+  }
+}
+
+.recommended-movies-title {
+  text-align: left;
+  margin-left: 50px;
+  color: #ffd700;
+  font-size: 2rem;
+  margin: 20px 0;
+  text-shadow: 0 0 15px rgba(255, 215, 0, 0.8), 0 0 30px rgba(255, 215, 0, 0.5);
+  font-weight: bold;
+}

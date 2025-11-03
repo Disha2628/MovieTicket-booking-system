@@ -13,7 +13,7 @@ router.get('/', async (req, res) => {
         Rating AS rating,
         poster_url AS poster
       FROM movies
-      WHERE Movie_Id > 5
+      WHERE Movie_Id > 0
     `;
     const params = [];
 
@@ -61,6 +61,26 @@ router.get('/:id', async (req, res) => {
     }
   } catch (error) {
     console.error('Error fetching movie:', error);
+    res.status(500).json({ error: 'Failed to fetch movie' });
+  }
+});
+
+// Route to get movie by title
+router.get('/by-title/:title', async (req, res) => {
+  try {
+    const [rows] = await pool.execute(`
+      SELECT Movie_Id AS id
+      FROM movies
+      WHERE Title = ?
+    `, [req.params.title]);
+
+    if (rows.length > 0) {
+      res.json(rows[0]);
+    } else {
+      res.status(404).json({ error: 'Movie not found' });
+    }
+  } catch (error) {
+    console.error('Error fetching movie by title:', error);
     res.status(500).json({ error: 'Failed to fetch movie' });
   }
 });

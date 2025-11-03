@@ -1,7 +1,7 @@
 import React from 'react';
 import SeatRow from './SeatRow';
 
-const SeatCategory = ({ category, selectedSeats, onSeatClick }) => {
+const SeatCategory = ({ category, selectedSeats, onSeatClick, dbSeats }) => {
   return (
     <div
       style={{ marginBottom: '40px', textAlign: 'center' }}
@@ -22,9 +22,9 @@ const SeatCategory = ({ category, selectedSeats, onSeatClick }) => {
           row={row}
           groups={groups}
           seats={seats}
-          categoryBookedSeats={category.bookedSeats}
           selectedSeats={selectedSeats}
           onSeatClick={onSeatClick}
+          dbSeats={dbSeats}
         />
       ))}
     </div>

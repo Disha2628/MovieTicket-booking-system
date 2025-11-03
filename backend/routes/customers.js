@@ -33,18 +33,33 @@ router.put('/:id', async (req, res) => {
   }
 });
 
+const authenticateToken = require('../middleware/auth');
+
 // Get customer booking history
-router.get('/:customerId/bookings', async (req, res) => {
+router.get('/:id/bookings', authenticateToken, async (req, res) => {
   try {
-    // Assuming there's a bookings table with customer_id, movie_id, booking_date, show_time, etc.
-    // Adjust query based on actual table structure
     const [rows] = await pool.execute(`
-      SELECT b.Booking_Id AS id, m.Title AS movie, b.Booking_Date AS date, b.Show_Time AS time
-      FROM bookings b
-      JOIN movies m ON b.Movie_Id = m.Movie_Id
-      WHERE b.Customer_Id = ?
-      ORDER BY b.Booking_Date DESC
-    `, [req.params.customerId]);
+      SELECT
+    b.Booking_Id AS id,
+    m.Title AS movieName,
+    t.Name AS theatre,
+    t.Address_City AS city,
+    sc.screen_name AS screenName,
+    s.Show_Date AS date,
+    s.Start_time AS time,
+    GROUP_CONCAT(seat.seat_name SEPARATOR ', ') AS seats,
+    b.Amount AS totalAmount
+    FROM booking b
+    JOIN shows s ON b.show_id = s.Show_Id
+    JOIN movies m ON s.Movie_Id = m.Movie_Id
+    JOIN theatre t ON s.Theatre_Id = t.Theatre_Id
+    JOIN screens sc ON s.screen_no = sc.screen_no AND s.theatre_id = sc.theatre_id
+    JOIN booking_seats bs ON b.Booking_Id = bs.booking_Id
+    JOIN seats seat ON bs.seat_id = seat.seat_id
+    WHERE b.Customer_Id = ?
+    GROUP BY b.Booking_Id, m.Title, t.Name, t.Address_City, sc.screen_name, s.Show_Date, s.Start_Time, b.Amount
+    ORDER BY s.Show_Date DESC, s.Start_Time DESC;
+    `, [req.params.id]);
 
     res.json(rows);
   } catch (error) {
