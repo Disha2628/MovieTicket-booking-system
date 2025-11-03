@@ -17,9 +17,9 @@ const Navbar = ({ user }) => {
   return (
     <nav className="navbar">
       <div>
-        <a href="/">Home</a>
+        <a href="/">Movie-Matrix</a>
         <a href="/movies">Movies</a>
-        <a href="/about">About</a>
+        <a href="/about">About Us</a>
       </div>
       <div>
         {user ? (

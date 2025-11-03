@@ -2,20 +2,33 @@ const express = require('express');
 const router = express.Router();
 const pool = require('../config/database');
 
-// Route to get all movies (filtered by genre/language if needed)
+// Route to get all movies (filtered by genre/language/search/sort/comingSoon)
 router.get('/', async (req, res) => {
   try {
-    const { genre, language } = req.query;
+    const { genre, language, search, sort, comingSoon } = req.query;
     let query = `
       SELECT
         Movie_Id AS id,
         Title AS title,
         Rating AS rating,
-        poster_url AS poster
+        poster_url AS poster,
+        Release_date AS release_date
       FROM movies
-      WHERE Movie_Id > 0
+      WHERE Movie_Id BETWEEN ? AND ?
     `;
     const params = [];
+
+    // Determine movie ID range based on comingSoon
+    if (comingSoon === 'true') {
+      params.push(9, 25); // Coming soon: IDs 9-25
+    } else {
+      params.push(1, 8); // All movies: IDs 1-8
+    }
+
+    if (search) {
+      query += ' AND Title LIKE ?';
+      params.push(`%${search}%`);
+    }
 
     if (genre) {
       query += ' AND (Genre LIKE ? OR Genre LIKE ? OR Genre LIKE ?)';
@@ -25,6 +38,12 @@ router.get('/', async (req, res) => {
     if (language) {
       query += ' AND (Language LIKE ? OR Language LIKE ? OR Language LIKE ?)';
       params.push(`${language}`, `${language},%`, `%,${language}`);
+    }
+
+    if (sort === 'Newest') {
+      query += ' ORDER BY Release_date DESC';
+    } else if (sort === 'Oldest') {
+      query += ' ORDER BY Release_date ASC';
     }
 
     const [rows] = await pool.execute(query, params);

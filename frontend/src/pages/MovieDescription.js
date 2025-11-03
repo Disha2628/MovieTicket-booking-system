@@ -124,6 +124,7 @@ const MovieDescription = ({ movieId }) => {
     return <div style={movieId ? styles.embeddedContainer : styles.container}><p>Loading...</p></div>;
   }
 
+  const isComingSoon = movie.id >= 9 && movie.id <= 25;
   const containerStyle = movieId ? styles.embeddedContainer : styles.container;
 
   if (movieId) {
@@ -134,7 +135,7 @@ const MovieDescription = ({ movieId }) => {
         <div style={styles.content}>
           <h1 style={styles.title}>{movie.title}</h1>
           <p style={styles.description}>{movie.description}</p>
-          <div style={styles.infoRow}><span style={styles.label}>Rating:</span> {movie.rating.toFixed(1)}</div>
+          <div style={styles.infoRow}><span style={styles.label}>{isComingSoon ? 'Trailer Rating:' : 'Rating:'}</span> {movie.rating.toFixed(1)}</div>
           <div style={styles.infoRow}><span style={styles.label}>Genre:</span> {movie.genre}</div>
           <div style={styles.infoRow}><span style={styles.label}>Language:</span> {movie.language}</div>
           <div style={styles.infoRow}><span style={styles.label}>Release Date:</span> {movie.release_date}</div>
@@ -152,48 +153,50 @@ const MovieDescription = ({ movieId }) => {
           <div style={styles.content}>
             <h1 style={styles.title}>{movie.title}</h1>
             <p style={styles.description}>{movie.description}</p>
-            <div style={styles.infoRow}><span style={styles.label}>Rating:</span> {movie.rating.toFixed(1)}</div>
+            <div style={styles.infoRow}><span style={styles.label}>{isComingSoon ? 'Trailer Rating:' : 'Rating:'}</span> {movie.rating.toFixed(1)}</div>
             <div style={styles.infoRow}><span style={styles.label}>Genre:</span> {movie.genre}</div>
             <div style={styles.infoRow}><span style={styles.label}>Language:</span> {movie.language}</div>
             <div style={styles.infoRow}><span style={styles.label}>Release Date:</span> {movie.release_date}</div>
             <div style={styles.infoRow}><span style={styles.label}>Duration:</span> {movie.duration} minutes</div>
-            <button
-              style={{
-                width: '100%',
-                padding: '15px',
-                backgroundColor: 'transparent',
-                border: '2px solid #ffd700',
-                borderRadius: '50px',
-                color: '#ffd700',
-                fontSize: '1.1rem',
-                cursor: 'pointer',
-                transition: 'all 0.3s',
-                position: 'relative',
-                overflow: 'hidden',
-                marginTop: '20px',
-              }}
-              onMouseEnter={(e) => {
-                e.target.style.boxShadow = '0 0 20px rgba(255, 215, 0, 0.5)';
-                e.target.style.transform = 'translateY(-2px)';
-                e.target.style.backgroundColor = 'rgba(255, 215, 0, 0.1)';
-              }}
-              onMouseLeave={(e) => {
-                e.target.style.boxShadow = 'none';
-                e.target.style.transform = 'none';
-                e.target.style.backgroundColor = 'transparent';
-              }}
-              onClick={() => {
-                if (user) {
-                  navigate(`/book/${movie.title}`, {
-                    state: { movieName: movie.title }  // ✅ pass movie title through location state
-                  });
-                } else {
-                  navigate('/login');
-                }
-              }}
-            >
-              Book Tickets Now
-            </button>
+            {!isComingSoon && (
+              <button
+                style={{
+                  width: '100%',
+                  padding: '15px',
+                  backgroundColor: 'transparent',
+                  border: '2px solid #ffd700',
+                  borderRadius: '50px',
+                  color: '#ffd700',
+                  fontSize: '1.1rem',
+                  cursor: 'pointer',
+                  transition: 'all 0.3s',
+                  position: 'relative',
+                  overflow: 'hidden',
+                  marginTop: '20px',
+                }}
+                onMouseEnter={(e) => {
+                  e.target.style.boxShadow = '0 0 20px rgba(255, 215, 0, 0.5)';
+                  e.target.style.transform = 'translateY(-2px)';
+                  e.target.style.backgroundColor = 'rgba(255, 215, 0, 0.1)';
+                }}
+                onMouseLeave={(e) => {
+                  e.target.style.boxShadow = 'none';
+                  e.target.style.transform = 'none';
+                  e.target.style.backgroundColor = 'transparent';
+                }}
+                onClick={() => {
+                  if (user) {
+                    navigate(`/book/${movie.title}`, {
+                      state: { movieName: movie.title }  // ✅ pass movie title through location state
+                    });
+                  } else {
+                    navigate('/login');
+                  }
+                }}
+              >
+                Book Tickets Now
+              </button>
+            )}
           </div>
         </div>
         <MovieGrid />

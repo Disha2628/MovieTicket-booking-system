@@ -12,6 +12,7 @@ import SeatLayoutPage from './pages/SeatLayoutPage';
 import BookingConfirmationPage from './pages/BookingConfirmationPage';
 import PaymentPage from './pages/PaymentPage';
 import BookingHistoryPage from './pages/BookingHistoryPage';
+import About from './components/About';
 import { UserProvider, UserContext } from './contexts/UserContext';
 
 function AppContent() {
@@ -25,6 +26,7 @@ function AppContent() {
         <Route path="/movies" element={<LandingPage />} />
         <Route path="/about" element={
           <>
+            <About />
             <Footer />
           </>
         } />

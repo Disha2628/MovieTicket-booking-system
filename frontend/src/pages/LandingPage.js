@@ -1,8 +1,9 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState, useContext, useRef } from 'react';
 import Navbar from '../components/Navbar';
 import Sidebar from '../components/Sidebar';
 import MovieGrid from '../components/MovieGrid';
 import Footer from '../components/Footer';
+import About from '../components/About';
 import axios from 'axios';
 import { UserContext } from '../contexts/UserContext';
 import './LandingPage.css';
@@ -13,17 +14,24 @@ const LandingPage = () => {
   const [movies, setMovies] = useState([]);
   const [genreFilter, setGenreFilter] = useState('');
   const [languageFilter, setLanguageFilter] = useState('');
+
+  const [comingSoon, setComingSoon] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [dropdownOpen, setDropdownOpen] = useState({ allMovies: false, byCategory: false });
   const [genres, setGenres] = useState([]);
   const [languages, setLanguages] = useState([]);
+  const [heroMovies, setHeroMovies] = useState([]);
+  const heroWrapperRef = useRef(null);
 
   useEffect(() => {
     fetchMovies();
     fetchFilters();
+    fetchHeroMovies();
   }, []);
 
   useEffect(() => {
     fetchMovies();
-  }, [genreFilter, languageFilter]);
+  }, [genreFilter, languageFilter, comingSoon, searchQuery]);
 
   const fetchMovies = async () => {
     try {
@@ -31,6 +39,9 @@ const LandingPage = () => {
       const params = [];
       if (genreFilter) params.push(`genre=${encodeURIComponent(genreFilter)}`);
       if (languageFilter) params.push(`language=${encodeURIComponent(languageFilter)}`);
+
+      if (comingSoon) params.push(`comingSoon=true`);
+      if (searchQuery) params.push(`search=${encodeURIComponent(searchQuery)}`);
       if (params.length) url += '?' + params.join('&');
       const response = await axios.get(url);
       setMovies(response.data);
@@ -50,87 +61,126 @@ const LandingPage = () => {
     }
   };
 
+  const fetchHeroMovies = async () => {
+    try {
+      const titles = ['Interstellar'];
+      const fetchedMovies = [];
+      for (const title of titles) {
+        const response = await axios.get(`/api/movies/by-title/${encodeURIComponent(title)}`);
+        const movieId = response.data.id;
+        const movieResponse = await axios.get(`/api/movies/${movieId}`);
+        fetchedMovies.push(movieResponse.data);
+      }
+      setHeroMovies(fetchedMovies);
+    } catch (error) {
+      console.error('Error fetching hero movies:', error);
+    }
+  };
+
   const resetFilters = () => {
     setGenreFilter('');
     setLanguageFilter('');
+    setComingSoon(false);
+    setSearchQuery('');
   };
+
+  const toggleDropdown = (key) => {
+    setDropdownOpen(prev => ({ ...prev, [key]: !prev[key] }));
+  };
+
+  const selectOption = (key, value) => {
+    if (key === 'allMovies') setGenreFilter(value === 'All Movies' ? '' : value);
+    else if (key === 'byCategory') setLanguageFilter(value === 'by Category' ? '' : value);
+    setDropdownOpen(prev => ({ ...prev, [key]: false }));
+  };
+
+
 
   return (
     <div className="landing-page-container">
-      <h1 className="landing-page-title">Movie-Matrix</h1>
-      <div className="hero-section">
-        <div className="hero-left">
-          <img src="/banner.jpg" alt="Movie Banner" />
+      <div className="hero">
+        <div className="hero-container" ref={heroWrapperRef}>
+          {heroMovies.map((movie, index) => (
+            <div key={movie.id} className="hero-slide">
+              <div className="hero-bg">
+                <img src={`/banner${index + 1}.png`} alt="bg" />
+                <div className="hero-overlay"></div>
+              </div>
+              <div className="hero-content">
+                <div className="poster">
+                  <img src={movie.poster} alt={movie.title} />
+                </div>
+                <div className="details">
+                  <h1>{movie.title}</h1>
+                  <div className="meta">
+                    <span>{new Date(movie.release_date).getFullYear()}</span>
+                    <span>•</span>
+                    <span>{movie.genre}</span>
+                  </div>
+                  <p>{movie.duration} min</p>
+                  <p>Languages: English , Hindi , Tamil , Telugu</p>
+                  <p>IMDB: {Math.floor(movie.rating)}/10</p>
+                  <div className="actions">
+                    <button className="outline-btn">Coming Soon...</button>
+                    <button className="primary-btn">Watch Trailer</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
         </div>
-        <div className="hero-right">
-          <h2>Book Your Movie Magic Instantly!</h2>
-          <p>Fast, fun, and secure online movie ticket booking.</p>
-          <button className="book-now-btn">Book Now</button>
-        </div>
+
       </div>
+
       <div className="filter-bar">
-        <button onClick={resetFilters} style={{
-          backgroundColor: 'transparent',
-          color: '#ffffff',
-          border: '2px solid #ffffff',
-          padding: '8px 16px',
-          borderRadius: '50px',
-          cursor: 'pointer',
-          transition: 'all 0.3s',
-          fontSize: '1rem'
-        }}
-        onMouseEnter={(e) => {
-          e.target.style.boxShadow = '0 0 20px rgba(255, 215, 0, 0.5)';
-          e.target.style.transform = 'translateY(-2px)';
-          e.target.style.backgroundColor = 'rgba(255, 215, 0, 0.1)';
-        }}
-        onMouseLeave={(e) => {
-          e.target.style.boxShadow = 'none';
-          e.target.style.transform = 'none';
-          e.target.style.backgroundColor = 'transparent';
-        }}>
-          Back / Reset
-        </button>
-        <select value={genreFilter} onChange={e => setGenreFilter(e.target.value)} style={{
-          padding: '8px',
-          borderRadius: '8px',
-          backgroundColor: 'rgba(12, 18, 32, 0.8)',
-          color: '#ffffff',
-          border: 'none',
-          outline: 'none',
-          fontSize: '1rem'
-        }}>
-          <option value="">All Genres</option>
-          {genres.map(genre => (
-            <option key={genre} value={genre}>{genre}</option>
-          ))}
-        </select>
-        <select value={languageFilter} onChange={e => setLanguageFilter(e.target.value)} style={{
-          padding: '8px',
-          borderRadius: '8px',
-          backgroundColor: 'rgba(12, 18, 32, 0.8)',
-          color: '#ffffff',
-          border: 'none',
-          outline: 'none',
-          fontSize: '1rem'
-        }}>
-          <option value="">All Languages</option>
-          {languages.map(language => (
-            <option key={language} value={language}>{language}</option>
-          ))}
-        </select>
+        <div className="filter" onClick={() => toggleDropdown('allMovies')}>
+          <span className="dropdown-text">{genreFilter || 'Current Movies'}</span>
+          {dropdownOpen.allMovies && (
+            <div className="dropdown-options">
+              <div onClick={() => selectOption('allMovies', 'All Movies')}>Current Movies</div>
+              {genres.map(genre => (
+                <div key={genre} onClick={() => selectOption('allMovies', genre)}>{genre}</div>
+              ))}
+            </div>
+          )}
+        </div>
+
+        <div className="filter" onClick={() => toggleDropdown('byCategory')}>
+          <span className="dropdown-text">{languageFilter || 'by Language'}</span>
+          {dropdownOpen.byCategory && (
+            <div className="dropdown-options">
+              <div onClick={() => selectOption('byCategory', 'by Language')}>All Languages</div>
+              {languages.map(language => (
+                <div key={language} onClick={() => selectOption('byCategory', language)}>{language}</div>
+              ))}
+            </div>
+          )}
+        </div>
+        <div className="filter" onClick={() => setComingSoon(!comingSoon)}>
+          <span className="dropdown-text">{comingSoon ? 'All Movies' : 'Coming Soon'}</span>
+        </div>
+        <div className="search-bar">
+          <input
+            type="text"
+            placeholder="Search movies..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
+          <span className="search-icon">🔍</span>
+        </div>
       </div>
       <h2 style={{
         textAlign: 'center',
-        color: '#ffd700',
+        color: 'var(--text-primary)',
         fontSize: '2rem',
         margin: '20px 0',
-        textShadow: '0 0 15px rgba(255, 215, 0, 0.8), 0 0 30px rgba(255, 215, 0, 0.5)',
+        textShadow: '0 0 15px rgba(38, 12, 103, 0.8), 0 0 30px rgba(153, 38, 182, 0.5)',
         fontWeight: 'bold'
-      }}>Recommended Movies</h2>
+      }}>{comingSoon ? 'Coming Soon...' : 'Recommended Movies...'}</h2>
       <main className="main-content" style={{ width: '100%', padding: '20px' }}>
-  <MovieGrid movies={movies} />
+  <MovieGrid movies={movies} comingSoon={comingSoon} />
 </main>
+      <About />
       <Footer />
     </div>
   );
