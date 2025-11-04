@@ -9,6 +9,40 @@ import { UserContext } from '../contexts/UserContext';
 import './LandingPage.css';
 import './Homepage.css';
 
+// Trailer Modal Component
+const TrailerModal = ({ isOpen, onClose, trailerUrl }) => {
+  if (!isOpen) return null;
+
+  // Function to convert YouTube URL to embed URL
+  const getEmbedUrl = (url) => {
+    if (!url) return '';
+    const videoIdMatch = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&\n?#]+)/);
+    if (videoIdMatch) {
+      return `https://www.youtube.com/embed/${videoIdMatch[1]}`;
+    }
+    return url; // Return original if not YouTube
+  };
+
+  const embedUrl = getEmbedUrl(trailerUrl);
+
+  return (
+    <div className="trailer-modal-overlay" onClick={onClose}>
+      <div className="trailer-modal-content" onClick={(e) => e.stopPropagation()}>
+        <button className="close-btn" onClick={onClose}>×</button>
+        <iframe
+          width="100%"
+          height="100%"
+          src={embedUrl}
+          title="Movie Trailer"
+          frameBorder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowFullScreen
+        ></iframe>
+      </div>
+    </div>
+  );
+};
+
 const LandingPage = () => {
   const { user } = useContext(UserContext);
   const [movies, setMovies] = useState([]);
@@ -22,6 +56,8 @@ const LandingPage = () => {
   const [languages, setLanguages] = useState([]);
   const [heroMovies, setHeroMovies] = useState([]);
   const heroWrapperRef = useRef(null);
+  const [trailerModalOpen, setTrailerModalOpen] = useState(false);
+  const [currentTrailerUrl, setCurrentTrailerUrl] = useState('');
 
   useEffect(() => {
     fetchMovies();
@@ -94,6 +130,16 @@ const LandingPage = () => {
     setDropdownOpen(prev => ({ ...prev, [key]: false }));
   };
 
+  const openTrailerModal = (trailerUrl) => {
+    setCurrentTrailerUrl(trailerUrl);
+    setTrailerModalOpen(true);
+  };
+
+  const closeTrailerModal = () => {
+    setTrailerModalOpen(false);
+    setCurrentTrailerUrl('');
+  };
+
 
 
   return (
@@ -122,7 +168,7 @@ const LandingPage = () => {
                   <p>IMDB: {Math.floor(movie.rating)}/10</p>
                   <div className="actions">
                     <button className="outline-btn">Coming Soon...</button>
-                    <button className="primary-btn">Watch Trailer</button>
+                    <button className="primary-btn" onClick={() => openTrailerModal(movie.trailer_url)}>Watch Trailer</button>
                   </div>
                 </div>
               </div>
@@ -182,6 +228,7 @@ const LandingPage = () => {
 </main>
       <About />
       <Footer />
+      <TrailerModal isOpen={trailerModalOpen} onClose={closeTrailerModal} trailerUrl={currentTrailerUrl} />
     </div>
   );
 };

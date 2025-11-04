@@ -12,7 +12,8 @@ router.get('/', async (req, res) => {
         Title AS title,
         Rating AS rating,
         poster_url AS poster,
-        Release_date AS release_date
+        Release_date AS release_date,
+        trailer_url AS trailer_url
       FROM movies
       WHERE Movie_Id BETWEEN ? AND ?
     `;
@@ -67,7 +68,8 @@ router.get('/:id', async (req, res) => {
         Language AS language,
         Release_date AS release_date,
         Duration AS duration,
-        poster_url AS poster
+        poster_url AS poster,
+        trailer_url AS trailer_url
       FROM movies
       WHERE Movie_Id = ?
     `, [req.params.id]);

@@ -5,6 +5,7 @@ import TheatreShows from '../components/TheatreShows';
 import MovieDescription from './MovieDescription';
 import SeatSelection from '../components/SeatSelection';
 import axios from 'axios';
+import './ShowSelectionPage.css';
 
 /* ---------- fallback sample data ---------- */
 const rawData = [
@@ -12,26 +13,26 @@ const rawData = [
     theatre: 'INOX: C-21 Mall',
     shows: [
       { time: '08:15 AM', status: 'available' },
-      { time: '10:15 AM', status: 'available', label: 'INSIGNIA' },
+      { time: '10:15 AM', status: 'available' },
       { time: '11:15 AM', status: 'available' },
-      { time: '01:15 PM', status: 'available', label: 'INSIGNIA' },
+      { time: '01:15 PM', status: 'available' },
       { time: '02:15 PM', status: 'available' },
       { time: '02:55 PM', status: 'available' },
-      { time: '04:15 PM', status: 'available', label: 'INSIGNIA' },
+      { time: '04:15 PM', status: 'available' },
       { time: '05:15 PM', status: 'available' },
-      { time: '07:15 PM', status: 'available', label: 'INSIGNIA' },
+      { time: '07:15 PM', status: 'available' },
       { time: '08:15 PM', status: 'available' },
-      { time: '10:15 PM', status: 'available', label: 'INSIGNIA' },
+      { time: '10:15 PM', status: 'available' },
       { time: '11:15 PM', status: 'available' },
     ],
   },
   {
     theatre: 'PVR: Treasure Island Mall, Indore',
     shows: [
-      { time: '09:20 AM', status: 'available', label: 'KOTAK LUXE' },
+      { time: '09:20 AM', status: 'available' },
       { time: '10:15 AM', status: 'available' },
       { time: '11:15 AM', status: 'available' },
-      { time: '12:20 PM', status: 'fast_filling', label: 'KOTAK LUXE' },
+      { time: '12:20 PM', status: 'fast_filling' },
       { time: '01:15 PM', status: 'available' },
       { time: '02:15 PM', status: 'available' },
       { time: '04:15 PM', status: 'available' },
@@ -56,15 +57,15 @@ const rawData = [
   {
     theatre: 'INOX: Phoenix Citadel Mall, Indore',
     shows: [
-      { time: '09:00 AM', status: 'available', label: 'INSIGNIA' },
+      { time: '09:00 AM', status: 'available' },
       { time: '10:00 AM', status: 'available' },
-      { time: '12:00 PM', status: 'available', label: 'INSIGNIA' },
+      { time: '12:00 PM', status: 'available' },
       { time: '01:00 PM', status: 'available' },
-      { time: '03:00 PM', status: 'available', label: 'INSIGNIA' },
+      { time: '03:00 PM', status: 'available' },
       { time: '04:00 PM', status: 'available' },
-      { time: '06:00 PM', status: 'available', label: 'INSIGNIA' },
+      { time: '06:00 PM', status: 'available' },
       { time: '07:00 PM', status: 'available' },
-      { time: '09:00 PM', status: 'available', label: 'INSIGNIA' },
+      { time: '09:00 PM', status: 'available' },
       { time: '10:00 PM', status: 'available' },
     ],
   },
@@ -293,74 +294,20 @@ const ShowSelectionPage = () => {
   };
 
   return (
-    <div style={{
-      minHeight: '100vh',
-      background: 'radial-gradient(circle at top, #8b0000 0%, #1a0000 80%)',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      padding: '20px',
-      position: 'relative',
-      overflow: 'hidden'
-    }}>
-      {/* Faint outer vignette */}
-      <div style={{
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0,
-        background: 'radial-gradient(circle at center, transparent 50%, rgba(0,0,0,0.3) 100%)',
-        pointerEvents: 'none'
-      }}></div>
-      <div style={{
-        width: '100%',
-        maxWidth: '900px',
-        backgroundColor: 'rgba(12, 18, 32, 0.9)',
-        borderRadius: '24px',
-        padding: '40px 30px',
-        boxShadow: `
-          inset 0 4px 8px rgba(0,0,0,0.3),
-          0 0 20px rgba(255, 215, 0, 0.3),
-          0 0 40px rgba(255, 215, 0, 0.2),
-          0 0 60px rgba(255, 215, 0, 0.1) inset,
-          0 0 80px rgba(255, 215, 0, 0.1) inset
-        `,
-        position: 'relative',
-        zIndex: 1,
-        fontFamily: 'Arial, sans-serif',
-        color: 'white'
-      }}>
-         
+    <div className="show-selection-page">
+      <div className="show-selection-container">
         {finalMovieName && (
-          <h1 style={{
-            color: '#ffd700',
-            fontWeight: '700',
-            fontSize: '3rem',
-            marginBottom: '20px',
-            textAlign: 'center',
-            textShadow: '0 0 20px rgba(255, 215, 0, 1), 0 0 40px rgba(255, 215, 0, 0.8), 0 0 60px rgba(255, 215, 0, 0.6)',
-            animation: 'glow 2s ease-in-out infinite alternate',
-            letterSpacing: '2px',
-            textTransform: 'uppercase'
-          }}>
+          <h1 className="page-title">
             {finalMovieName}
           </h1>
         )}
-         
-        <h2 style={{
-          color: '#ffd700',
-          fontWeight: '700',
-          fontSize: '2rem',
-          marginBottom: '20px',
-          textShadow: '0 0 20px rgba(255, 215, 0, 0.8), 0 0 40px rgba(255, 215, 0, 0.5)',
-          animation: 'glow 2s ease-in-out infinite alternate'
-        }}>Select Date and Show</h2>
+
+        <h2 className="page-subtitle">Select Date and Show</h2>
 
         <DateSelector days={days} selectedDateIndex={selectedDateIndex} onDateSelect={setSelectedDateIndex} />
 
         {loading ? (
-          <div style={{ textAlign: 'center', color: 'white' }}>Loading shows...</div>
+          <div className="loading-text">Loading shows...</div>
         ) : (
           <TheatreShows rawData={showsData} onSelectShow={handleSelectShow} />
         )}

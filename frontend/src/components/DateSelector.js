@@ -2,25 +2,15 @@ import React from 'react';
 
 const DateSelector = ({ days, selectedDateIndex, onDateSelect }) => {
   return (
-    <div style={{ display: 'flex', gap: '15px', marginBottom: '30px' }}>
+    <div className="date-selector">
       {days.map((day, index) => (
         <div
           key={day.label}
           onClick={() => onDateSelect(index)}
-          style={{
-            cursor: 'pointer',
-            padding: '10px 15px',
-            borderRadius: '8px',
-            backgroundColor: selectedDateIndex === index ? '#d4af37' : 'transparent',
-            color: selectedDateIndex === index ? '#1f2937' : 'white',
-            fontWeight: '700',
-            userSelect: 'none',
-            textAlign: 'center',
-            minWidth: '60px',
-          }}
+          className={`date-button ${selectedDateIndex === index ? 'active' : ''}`}
         >
           <div>{day.label}</div>
-          <div style={{ fontSize: '0.8rem' }}>{day.date}</div>
+          <div className="date-date">{day.date}</div>
         </div>
       ))}
     </div>
