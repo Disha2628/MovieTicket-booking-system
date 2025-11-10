@@ -1,1 +1,4 @@
- 
+- [ ] Install Twilio package for SMS OTP sending
+- [ ] Update auth.js to integrate Twilio for sending OTP via SMS
+- [ ] Ensure phone number formatting for Indian numbers (+91)
+- [ ] Test OTP sending to Indian phone numbers

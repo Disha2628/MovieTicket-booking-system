@@ -1,12 +1,16 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 const ForgotPasswordPage = () => {
   const [formData, setFormData] = useState({
     email: '',
-    phone: ''
+    phone: '',
+    otp: '',
+    newPassword: ''
   });
 
+  const [step, setStep] = useState(1); // 1: Enter email/phone, 2: Enter OTP and new password
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
 
@@ -14,17 +18,58 @@ const ForgotPasswordPage = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = async (e) => {
+  const handleSendOTP = async (e) => {
     e.preventDefault();
     setMessage('');
     setError('');
 
-    // Placeholder for backend submission
-    // For now, just show a success message
-    if (formData.email || formData.phone) {
-      setMessage('Reset instructions sent successfully!');
-    } else {
-      setError('Please enter either email or phone number.');
+    try {
+      const response = await axios.post('http://localhost:5000/api/forgot-password', {
+        email: formData.email,
+        phone: formData.phone
+      });
+      setMessage('OTP sent successfully to your email and/or phone!');
+      setStep(2);
+    } catch (error) {
+      if (error.response && error.response.data && error.response.data.error) {
+        setError(error.response.data.error);
+      } else {
+        setError('Failed to send OTP. Please try again.');
+      }
+    }
+  };
+
+  const handleResetPassword = async (e) => {
+    e.preventDefault();
+    setMessage('');
+    setError('');
+
+    if (!formData.otp || !formData.newPassword) {
+      setError('Please enter OTP and new password.');
+      return;
+    }
+
+    try {
+      const response = await axios.post('http://localhost:5000/api/reset-password', {
+        email: formData.email,
+        phone: formData.phone,
+        otp: formData.otp,
+        newPassword: formData.newPassword
+      });
+      setMessage('Password reset successful! You can now log in with your new password.');
+      setStep(1);
+      setFormData({
+        email: '',
+        phone: '',
+        otp: '',
+        newPassword: ''
+      });
+    } catch (error) {
+      if (error.response && error.response.data && error.response.data.error) {
+        setError(error.response.data.error);
+      } else {
+        setError('Failed to reset password. Please try again.');
+      }
     }
   };
 
@@ -86,34 +131,139 @@ const ForgotPasswordPage = () => {
           fontFamily: "'Poppins', sans-serif",
           marginBottom: '40px'
         }}>No worries, we'll send you reset instructions.</p>
-        <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '30px' }}>
-          <div>
-            <label style={{
-              display: 'block',
-              color: '#ffffff',
-              fontSize: '1rem',
-              fontWeight: '500',
-              marginBottom: '8px',
-              fontFamily: "'Poppins', sans-serif"
-            }}>Email</label>
-            <div style={{ position: 'relative' }}>
-              <span style={{
-                position: 'absolute',
-                left: '10px',
-                top: '50%',
-                transform: 'translateY(-50%)',
+        {step === 1 ? (
+          <form onSubmit={handleSendOTP} style={{ display: 'flex', flexDirection: 'column', gap: '30px' }}>
+            <div>
+              <label style={{
+                display: 'block',
                 color: '#ffffff',
-                fontSize: '1.2rem'
-              }}>👤</span>
+                fontSize: '1rem',
+                fontWeight: '500',
+                marginBottom: '8px',
+                fontFamily: "'Poppins', sans-serif"
+              }}>Email</label>
+              <div style={{ position: 'relative' }}>
+                <span style={{
+                  position: 'absolute',
+                  left: '10px',
+                  top: '50%',
+                  transform: 'translateY(-50%)',
+                  color: '#ffffff',
+                  fontSize: '1.2rem'
+                }}>👤</span>
+                <input
+                  type="email"
+                  name="email"
+                  placeholder="Enter your email address"
+                  value={formData.email}
+                  onChange={handleChange}
+                  style={{
+                    width: '90%',
+                    padding: '12px 15px 12px 40px',
+                    margin: '0 auto',
+                    display: 'block',
+                    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+                    border: '1px solid rgba(255, 255, 255, 0.2)',
+                    borderRadius: '8px',
+                    color: '#ffffff',
+                    fontSize: '1rem',
+                    outline: 'none',
+                    transition: 'border-color 0.3s, box-shadow 0.3s'
+                  }}
+                  onFocus={(e) => e.target.style.boxShadow = '0 0 10px rgba(229, 9, 20, 0.5)'}
+                  onBlur={(e) => e.target.style.boxShadow = 'none'}
+                />
+              </div>
+            </div>
+            <div>
+              <label style={{
+                display: 'block',
+                color: '#ffffff',
+                fontSize: '1rem',
+                fontWeight: '500',
+                marginBottom: '8px',
+                fontFamily: "'Poppins', sans-serif"
+              }}>Phone Number</label>
+              <div style={{ position: 'relative' }}>
+                <span style={{
+                  position: 'absolute',
+                  left: '10px',
+                  top: '50%',
+                  transform: 'translateY(-50%)',
+                  color: '#ffffff',
+                  fontSize: '1.2rem'
+                }}>📱</span>
+                <input
+                  type="tel"
+                  name="phone"
+                  placeholder="Enter your phone number"
+                  value={formData.phone}
+                  onChange={handleChange}
+                  style={{
+                    width: '90%',
+                    padding: '12px 15px 12px 40px',
+                    margin: '0 auto',
+                    display: 'block',
+                    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+                    border: '1px solid rgba(255, 255, 255, 0.2)',
+                    borderRadius: '8px',
+                    color: '#ffffff',
+                    fontSize: '1rem',
+                    outline: 'none',
+                    transition: 'border-color 0.3s, box-shadow 0.3s'
+                  }}
+                  onFocus={(e) => e.target.style.boxShadow = '0 0 10px rgba(229, 9, 20, 0.5)'}
+                  onBlur={(e) => e.target.style.boxShadow = 'none'}
+                />
+              </div>
+            </div>
+            <button type="submit" style={{
+              width: '100%',
+              padding: '15px',
+              background: 'linear-gradient(90deg, #E50914, #B20710)',
+              border: 'none',
+              borderRadius: '50px',
+              color: '#ffffff',
+              fontSize: '1.1rem',
+              fontWeight: 'bold',
+              fontFamily: "'Poppins', sans-serif",
+              cursor: 'pointer',
+              transition: 'all 0.3s',
+              position: 'relative',
+              overflow: 'hidden'
+            }}
+            onMouseEnter={(e) => {
+              e.target.style.transform = 'scale(1.05)';
+              e.target.style.boxShadow = '0 0 18px rgba(229, 9, 20, 0.4)';
+            }}
+            onMouseLeave={(e) => {
+              e.target.style.transform = 'none';
+              e.target.style.boxShadow = 'none';
+            }}>
+              {getButtonText()}
+            </button>
+          </form>
+        ) : (
+          <form onSubmit={handleResetPassword} style={{ display: 'flex', flexDirection: 'column', gap: '30px' }}>
+            <div>
+              <label style={{
+                display: 'block',
+                color: '#ffffff',
+                fontSize: '1rem',
+                fontWeight: '500',
+                marginBottom: '8px',
+                fontFamily: "'Poppins', sans-serif"
+              }}>OTP</label>
               <input
-                type="email"
-                name="email"
-                placeholder="Enter your email address"
-                value={formData.email}
+                type="text"
+                name="otp"
+                placeholder="Enter OTP"
+                value={formData.otp}
                 onChange={handleChange}
+                required
                 style={{
                   width: '90%',
-                  padding: '12px 15px 12px 40px',
+                  padding: '12px 15px',
                   margin: '0 auto',
                   display: 'block',
                   backgroundColor: 'rgba(0, 0, 0, 0.5)',
@@ -128,34 +278,25 @@ const ForgotPasswordPage = () => {
                 onBlur={(e) => e.target.style.boxShadow = 'none'}
               />
             </div>
-          </div>
-          <div>
-            <label style={{
-              display: 'block',
-              color: '#ffffff',
-              fontSize: '1rem',
-              fontWeight: '500',
-              marginBottom: '8px',
-              fontFamily: "'Poppins', sans-serif"
-            }}>Phone Number</label>
-            <div style={{ position: 'relative' }}>
-              <span style={{
-                position: 'absolute',
-                left: '10px',
-                top: '50%',
-                transform: 'translateY(-50%)',
+            <div>
+              <label style={{
+                display: 'block',
                 color: '#ffffff',
-                fontSize: '1.2rem'
-              }}>📱</span>
+                fontSize: '1rem',
+                fontWeight: '500',
+                marginBottom: '8px',
+                fontFamily: "'Poppins', sans-serif"
+              }}>New Password</label>
               <input
-                type="tel"
-                name="phone"
-                placeholder="Enter your phone number"
-                value={formData.phone}
+                type="password"
+                name="newPassword"
+                placeholder="Enter new password"
+                value={formData.newPassword}
                 onChange={handleChange}
+                required
                 style={{
                   width: '90%',
-                  padding: '12px 15px 12px 40px',
+                  padding: '12px 15px',
                   margin: '0 auto',
                   display: 'block',
                   backgroundColor: 'rgba(0, 0, 0, 0.5)',
@@ -170,33 +311,33 @@ const ForgotPasswordPage = () => {
                 onBlur={(e) => e.target.style.boxShadow = 'none'}
               />
             </div>
-          </div>
-          <button type="submit" style={{
-            width: '100%',
-            padding: '15px',
-            background: 'linear-gradient(90deg, #E50914, #B20710)',
-            border: 'none',
-            borderRadius: '50px',
-            color: '#ffffff',
-            fontSize: '1.1rem',
-            fontWeight: 'bold',
-            fontFamily: "'Poppins', sans-serif",
-            cursor: 'pointer',
-            transition: 'all 0.3s',
-            position: 'relative',
-            overflow: 'hidden'
-          }}
-          onMouseEnter={(e) => {
-            e.target.style.transform = 'scale(1.05)';
-            e.target.style.boxShadow = '0 0 18px rgba(229, 9, 20, 0.4)';
-          }}
-          onMouseLeave={(e) => {
-            e.target.style.transform = 'none';
-            e.target.style.boxShadow = 'none';
-          }}>
-            {getButtonText()}
-          </button>
-        </form>
+            <button type="submit" style={{
+              width: '100%',
+              padding: '15px',
+              background: 'linear-gradient(90deg, #E50914, #B20710)',
+              border: 'none',
+              borderRadius: '50px',
+              color: '#ffffff',
+              fontSize: '1.1rem',
+              fontWeight: 'bold',
+              fontFamily: "'Poppins', sans-serif",
+              cursor: 'pointer',
+              transition: 'all 0.3s',
+              position: 'relative',
+              overflow: 'hidden'
+            }}
+            onMouseEnter={(e) => {
+              e.target.style.transform = 'scale(1.05)';
+              e.target.style.boxShadow = '0 0 18px rgba(229, 9, 20, 0.4)';
+            }}
+            onMouseLeave={(e) => {
+              e.target.style.transform = 'none';
+              e.target.style.boxShadow = 'none';
+            }}>
+              Reset Password
+            </button>
+          </form>
+        )}
         <div style={{
           textAlign: 'center',
           marginTop: '20px',
