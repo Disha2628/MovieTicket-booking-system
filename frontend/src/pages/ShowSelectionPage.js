@@ -69,8 +69,7 @@ const rawData = [
       { time: '10:00 PM', status: 'available' },
     ],
   },
-];
-/* --------------------------------------------------------------- */
+]; 
 
 const ShowSelectionPage = () => {
   const location = useLocation();
@@ -86,9 +85,7 @@ const ShowSelectionPage = () => {
   const [showsData, setShowsData] = useState(rawData);
   const [loading, setLoading] = useState(false);
 
-
-
-  // memoize days so identity doesn't change on every render
+ 
   const days = useMemo(() => {
     return [
       {
