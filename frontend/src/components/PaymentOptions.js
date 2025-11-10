@@ -10,15 +10,16 @@ const PaymentOptions = ({ selectedPaymentMethod, setSelectedPaymentMethod, setSh
         }}
         style={{
           padding: '15px',
-          border: selectedPaymentMethod === 'UPI' ? '2px solid #d4af37' : '1px solid #374151',
-          backgroundColor: selectedPaymentMethod === 'UPI' ? '#fef3c7' : 'transparent',
+          border: 'none',
+          borderLeft: selectedPaymentMethod === 'UPI' ? '4px solid #2563EB' : 'none',
+          backgroundColor: selectedPaymentMethod === 'UPI' ? '#333333' : '#222222',
           cursor: 'pointer',
           textAlign: 'left',
           fontWeight: '600',
           display: 'flex',
           alignItems: 'center',
           gap: '10px',
-          color: selectedPaymentMethod === 'UPI' ? '#92400e' : 'white',
+          color: 'white',
         }}
       >
         <img
@@ -35,12 +36,13 @@ const PaymentOptions = ({ selectedPaymentMethod, setSelectedPaymentMethod, setSh
         }}
         style={{
           padding: '15px',
-          border: selectedPaymentMethod === 'Card' ? '2px solid #d4af37' : '1px solid #374151',
-          backgroundColor: selectedPaymentMethod === 'Card' ? '#fef3c7' : 'transparent',
+          border: 'none',
+          borderLeft: selectedPaymentMethod === 'Card' ? '4px solid #2563EB' : 'none',
+          backgroundColor: selectedPaymentMethod === 'Card' ? '#333333' : '#222222',
           cursor: 'pointer',
           textAlign: 'left',
           fontWeight: '600',
-          color: selectedPaymentMethod === 'Card' ? '#92400e' : 'white',
+          color: 'white',
         }}
       >
         Debit/Credit Card
@@ -52,12 +54,13 @@ const PaymentOptions = ({ selectedPaymentMethod, setSelectedPaymentMethod, setSh
         }}
         style={{
           padding: '15px',
-          border: selectedPaymentMethod === 'Wallet' ? '2px solid #d4af37' : '1px solid #374151',
-          backgroundColor: selectedPaymentMethod === 'Wallet' ? '#fef3c7' : 'transparent',
+          border: 'none',
+          borderLeft: selectedPaymentMethod === 'Wallet' ? '4px solid #2563EB' : 'none',
+          backgroundColor: selectedPaymentMethod === 'Wallet' ? '#333333' : '#222222',
           cursor: 'pointer',
           textAlign: 'left',
           fontWeight: '600',
-          color: selectedPaymentMethod === 'Wallet' ? '#92400e' : 'white',
+          color: 'white',
         }}
       >
         Mobile Wallets
@@ -69,12 +72,13 @@ const PaymentOptions = ({ selectedPaymentMethod, setSelectedPaymentMethod, setSh
         }}
         style={{
           padding: '15px',
-          border: selectedPaymentMethod === 'NetBanking' ? '2px solid #d4af37' : '1px solid #374151',
-          backgroundColor: selectedPaymentMethod === 'NetBanking' ? '#fef3c7' : 'transparent',
+          border: 'none',
+          borderLeft: selectedPaymentMethod === 'NetBanking' ? '4px solid #2563EB' : 'none',
+          backgroundColor: selectedPaymentMethod === 'NetBanking' ? '#333333' : '#222222',
           cursor: 'pointer',
           textAlign: 'left',
           fontWeight: '600',
-          color: selectedPaymentMethod === 'NetBanking' ? '#92400e' : 'white',
+          color: 'white',
         }}
       >
         Net Banking

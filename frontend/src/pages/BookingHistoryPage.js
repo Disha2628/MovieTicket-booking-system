@@ -59,17 +59,17 @@ const BookingHistoryPage = () => {
   };
 
   return (
-    <div style={{ maxWidth: '1200px', margin: '120px auto', padding: '30px', backgroundColor: '#1f2937', borderRadius: '12px', border: '5px solid #ffd700', color: 'white' }}>
-      <h2 style={{ textAlign: 'center', color: '#d4af37', marginBottom: '40px', fontSize: '2rem' }}>Booking History</h2>
+    <div style={{ maxWidth: '1200px', margin: '120px auto', padding: '30px', backgroundColor: '#1A1A1A', borderRadius: '12px', color: 'white' }}>
+      <h2 style={{ textAlign: 'center', color: 'white', marginBottom: '40px', fontSize: '2rem' }}>Booking History</h2>
 
       {loading ? (
         <p style={{ textAlign: 'center', color: '#9ca3af' }}>Loading booking history...</p>
       ) : error ? (
         <p style={{ textAlign: 'center', color: '#ef4444' }}>{error}</p>
       ) : bookings.length > 0 ? (
-        <table style={{ width: '100%', borderCollapse: 'collapse', backgroundColor: '#374151', borderRadius: '8px', overflow: 'hidden' }}>
+        <table style={{ width: '100%', borderCollapse: 'collapse', backgroundColor: '#222222', borderRadius: '8px', overflow: 'hidden' }}>
           <thead>
-            <tr style={{ backgroundColor: '#d4af37', color: '#1f2937' }}>
+            <tr style={{ backgroundColor: '#333333', color: 'white' }}>
               <th style={{ padding: '15px', textAlign: 'left', fontWeight: 'bold' }}>Movie Title</th>
               <th style={{ padding: '15px', textAlign: 'left', fontWeight: 'bold' }}>Theatre Name</th>
               <th style={{ padding: '15px', textAlign: 'left', fontWeight: 'bold' }}>City</th>
@@ -88,7 +88,7 @@ const BookingHistoryPage = () => {
                 day: 'numeric'
               });
               return (
-                <tr key={booking.id} style={{ borderBottom: index !== bookings.length - 1 ? '1px solid #4b5563' : 'none' }}>
+                <tr key={booking.id} style={{ backgroundColor: index % 2 === 0 ? '#222222' : '#2A2A2A', borderBottom: index !== bookings.length - 1 ? '1px solid #4b5563' : 'none' }}>
                   <td style={{ padding: '15px' }}>{booking.movieName}</td>
                   <td style={{ padding: '15px' }}>{booking.theatre}</td>
                   <td style={{ padding: '15px' }}>{booking.city}</td>
@@ -100,11 +100,11 @@ const BookingHistoryPage = () => {
                     <button
                       onClick={() => downloadTicket(booking)}
                       style={{
-                        backgroundColor: '#d4af37',
-                        color: '#1f2937',
+                        backgroundColor: '#2563EB',
+                        color: 'white',
                         border: 'none',
                         padding: '8px 16px',
-                        borderRadius: '4px',
+                        borderRadius: '8px',
                         cursor: 'pointer',
                         fontWeight: 'bold'
                       }}

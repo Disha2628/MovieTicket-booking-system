@@ -86,27 +86,7 @@ const ShowSelectionPage = () => {
   const [showsData, setShowsData] = useState(rawData);
   const [loading, setLoading] = useState(false);
 
-  // inject global styles once (safe - will mount/unmount correctly)
-  useEffect(() => {
-    const styles = `
-      @keyframes glow {
-        from {
-          text-shadow: 0 0 20px rgba(255, 215, 0, 0.8), 0 0 40px rgba(255, 215, 0, 0.5);
-        }
-        to {
-          text-shadow: 0 0 30px rgba(255, 215, 0, 1), 0 0 60px rgba(255, 215, 0, 0.8);
-        }
-      }
-    `;
-    const styleSheet = document.createElement("style");
-    styleSheet.type = "text/css";
-    styleSheet.innerText = styles;
-    document.head.appendChild(styleSheet);
 
-    return () => {
-      document.head.removeChild(styleSheet);
-    };
-  }, []);
 
   // memoize days so identity doesn't change on every render
   const days = useMemo(() => {

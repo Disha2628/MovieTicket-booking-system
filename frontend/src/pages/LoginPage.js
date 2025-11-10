@@ -52,8 +52,7 @@ const LoginPage = () => {
   return (
     <div style={{
       minHeight: '100vh',
-      background: 'radial-gradient(circle at top, #8b0000 0%, #1a0000 80%)',
-      //background: 'linear-gradient(135deg, #140101 0%, #751212 50%, #3d0303 100%)',
+      background: 'linear-gradient(135deg, #080C14 0%, #0D1117 100%)',
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
@@ -73,39 +72,33 @@ const LoginPage = () => {
       }}></div>
       <div style={{
         width: '100%',
-        maxWidth: '520px',
-        minWidth: '320px',
-        backgroundColor: 'rgba(12, 18, 32, 0.9)',
+        maxWidth: '700px',
+        minWidth: '400px',
+        background: 'rgba(255, 255, 255, 0.05)',
+        backdropFilter: 'blur(12px)',
         borderRadius: '24px',
+        border: '1px solid rgba(255, 255, 255, 0.1)',
         padding: '40px 30px',
-        boxShadow: `
-          inset 0 4px 8px rgba(0,0,0,0.3),
-          0 0 20px rgba(255, 215, 0, 0.3),
-          0 0 40px rgba(255, 215, 0, 0.2),
-          0 0 60px rgba(255, 215, 0, 0.1) inset,
-          0 0 80px rgba(255, 215, 0, 0.1) inset
-        `,
+        boxShadow: '0 8px 32px rgba(0, 0, 0, 0.5)',
         position: 'relative',
         zIndex: 1,
         overflow: 'hidden'
       }}>
         <h1 style={{
           textAlign: 'center',
-          color: '#ffd700',
-          fontSize: '2.5rem',
-          fontWeight: 'bold',
-          fontFamily: 'serif',
-          marginBottom: '20px',
-          textShadow: '0 0 15px rgba(255, 215, 0, 0.8), 0 0 30px rgba(255, 215, 0, 0.5)'
-        }}>Welcome To Movie-Matrix</h1>
+          color: '#ffffff',
+          fontSize: '3rem',
+          fontWeight: '700',
+          fontFamily: "'Poppins', sans-serif",
+          marginBottom: '20px'
+        }}>Welcome to Movie-Matrix</h1>
         <h2 style={{
           textAlign: 'center',
-          color: '#ffd700',
-          fontSize: '2rem',
-          fontWeight: 'bold',
-          fontFamily: 'serif',
-          marginBottom: '40px',
-          textShadow: '0 0 10px rgba(255, 215, 0, 0.5)'
+          color: '#bbbbbb',
+          fontSize: '1.5rem',
+          fontWeight: '600',
+          fontFamily: "'Poppins', sans-serif",
+          marginBottom: '40px'
         }}>Login</h2>
         <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '30px' }}>
           <div style={{ position: 'relative', marginBottom: '10px' }}>
@@ -114,7 +107,7 @@ const LoginPage = () => {
               left: '10px',
               top: '50%',
               transform: 'translateY(-50%)',
-              color: '#ffd700',
+              color: '#ffffff',
               fontSize: '1.2rem'
             }}>👤</span>
             <input
@@ -125,22 +118,19 @@ const LoginPage = () => {
               onChange={handleChange}
               required
               style={{
-                width: '85%', // <— visibly reduces width and matches reference
+                width: '90%',
                 padding: '12px 15px 12px 40px',
                 margin: '0 auto',
                 display: 'block',
-                backgroundColor: 'rgba(12, 18, 32, 0.8)',
-                border: 'none',
-                borderBottom: '2px solid #ffd700',
+                backgroundColor: 'rgba(0, 0, 0, 0.5)',
+                border: '1px solid rgba(255, 255, 255, 0.2)',
                 borderRadius: '8px',
                 color: '#ffffff',
                 fontSize: '1rem',
                 outline: 'none',
                 transition: 'border-color 0.3s, box-shadow 0.3s'
               }}
-              
-              
-              onFocus={(e) => e.target.style.boxShadow = '0 0 10px rgba(255, 215, 0, 0.5)'}
+              onFocus={(e) => e.target.style.boxShadow = '0 0 10px rgba(229, 9, 20, 0.5)'}
               onBlur={(e) => e.target.style.boxShadow = 'none'}
             />
           </div>
@@ -150,7 +140,7 @@ const LoginPage = () => {
               left: '10px',
               top: '50%',
               transform: 'translateY(-50%)',
-              color: '#ffd700',
+              color: '#ffffff',
               fontSize: '1.2rem'
             }}>🔒</span>
             <input
@@ -161,47 +151,44 @@ const LoginPage = () => {
               onChange={handleChange}
               required
               style={{
-                width: '85%', // <— visibly reduces width and matches reference
+                width: '90%',
                 padding: '12px 15px 12px 40px',
                 margin: '0 auto',
                 display: 'block',
-                backgroundColor: 'rgba(12, 18, 32, 0.8)',
-                border: 'none',
-                borderBottom: '2px solid #ffd700',
+                backgroundColor: 'rgba(0, 0, 0, 0.5)',
+                border: '1px solid rgba(255, 255, 255, 0.2)',
                 borderRadius: '8px',
                 color: '#ffffff',
                 fontSize: '1rem',
                 outline: 'none',
                 transition: 'border-color 0.3s, box-shadow 0.3s'
               }}
-              
-              
-              onFocus={(e) => e.target.style.boxShadow = '0 0 10px rgba(255, 215, 0, 0.5)'}
+              onFocus={(e) => e.target.style.boxShadow = '0 0 10px rgba(229, 9, 20, 0.5)'}
               onBlur={(e) => e.target.style.boxShadow = 'none'}
             />
           </div>
           <button type="submit" style={{
             width: '100%',
             padding: '15px',
-            backgroundColor: 'transparent',
-            border: '2px solid #ffd700',
+            background: 'linear-gradient(90deg, #E50914, #B20710)',
+            border: 'none',
             borderRadius: '50px',
-            color: '#ffd700',
+            color: '#ffffff',
             fontSize: '1.1rem',
+            fontWeight: 'bold',
+            fontFamily: "'Poppins', sans-serif",
             cursor: 'pointer',
             transition: 'all 0.3s',
             position: 'relative',
             overflow: 'hidden'
           }}
           onMouseEnter={(e) => {
-            e.target.style.boxShadow = '0 0 20px rgba(255, 215, 0, 0.5)';
-            e.target.style.transform = 'translateY(-2px)';
-            e.target.style.backgroundColor = 'rgba(255, 215, 0, 0.1)';
+            e.target.style.transform = 'scale(1.05)';
+            e.target.style.boxShadow = '0 0 18px rgba(229, 9, 20, 0.4)';
           }}
           onMouseLeave={(e) => {
-            e.target.style.boxShadow = 'none';
             e.target.style.transform = 'none';
-            e.target.style.backgroundColor = 'transparent';
+            e.target.style.boxShadow = 'none';
           }}>
             Log In
           </button>
@@ -210,23 +197,29 @@ const LoginPage = () => {
           display: 'flex',
           justifyContent: 'space-between',
           marginTop: '20px',
-          fontSize: '0.9rem'
+          fontSize: '0.85rem',
+          fontFamily: "'Poppins', sans-serif"
         }}>
           <Link to="/forgot-password" style={{
-            color: '#ffd700',
+            color: '#bbbbbb',
             textDecoration: 'none',
-            transition: 'color 0.3s'
+            transition: 'text-decoration 0.3s'
           }}
-           >
+          onMouseEnter={(e) => e.target.style.textDecoration = 'underline'}
+          onMouseLeave={(e) => e.target.style.textDecoration = 'none'}
+          >
             Forgot Password?
           </Link>
-          <span style={{ color: '#ffffff' }}>
+          <span style={{ color: '#bbbbbb' }}>
             New to MovieMatrix?{' '}
             <Link to="/register" style={{
-              color: '#ffd700',
+              color: '#E50914',
               textDecoration: 'none',
-              transition: 'color 0.3s'
-            }}>
+              transition: 'text-decoration 0.3s'
+            }}
+            onMouseEnter={(e) => e.target.style.textDecoration = 'underline'}
+            onMouseLeave={(e) => e.target.style.textDecoration = 'none'}
+            >
               Sign up
             </Link>
           </span>

@@ -8,8 +8,8 @@ const SeatCategory = ({ category, selectedSeats, onSeatClick, dbSeats }) => {
     >
       <div
         style={{
-          fontWeight: '700',
-          color: '#d4af37',
+          fontWeight: '900',
+          color: 'white',
           marginBottom: '15px',
         }}
       >

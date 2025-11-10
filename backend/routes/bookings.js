@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const pool = require('../config/database');
 
-// ✅ Create booking
+// Create booking
 router.post('/', async (req, res) => {
   const connection = await pool.getConnection();
   try {

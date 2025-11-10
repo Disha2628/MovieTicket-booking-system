@@ -1,13 +1,8 @@
 
-import React, { useState, useContext } from 'react';
+import React, { useContext } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { UserContext } from '../contexts/UserContext';
-import PaymentOptions from '../components/PaymentOptions';
-import UPIDetails from '../components/UPIDetails';
-import WalletDetails from '../components/WalletDetails';
-import NetBankingDetails from '../components/NetBankingDetails';
-import CardDetails from '../components/CardDetails';
 import OrderSummary from '../components/OrderSummary';
 
 console.log("Frontend Razorpay Key:", process.env.REACT_APP_RAZORPAY_KEY_ID);
@@ -18,9 +13,6 @@ const PaymentPage = () => {
   const navigate = useNavigate();
   const { user } = useContext(UserContext);
   const { selectedShow, selectedSeatType, selectedSeatCount, movieName, selectedSeats } = location.state || {};
-
-  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState('UPI');
-  const [showUPIDetails, setShowUPIDetails] = useState(true);
 
   // Function to get price based on row
   const getSeatPrice = (seatId) => {
@@ -36,54 +28,7 @@ const PaymentPage = () => {
   const donation = 2.00; // example donation amount
   const orderTotal = (totalCost + parseFloat(convenienceFee) + donation).toFixed(2);
 
-  const [upiSelectedOption, setUpiSelectedOption] = React.useState('');
-  const [cardDetails, setCardDetails] = React.useState({
-    cardNumber: '',
-    nameOnCard: '',
-    expiry: '',
-    cvv: '',
-  });
-
-  const isCardFormValid = () => {
-    const { cardNumber, nameOnCard, expiry, cvv } = cardDetails;
-    return (
-      cardNumber.trim().length === 19 &&
-      nameOnCard.trim().length > 0 &&
-      expiry.trim().length === 5 &&
-      cvv.trim().length === 3
-    );
-  };
-
-  const isUpiOptionSelected = () => {
-    return upiSelectedOption.trim().length > 0;
-  };
-
-  const [walletSelectedOption, setWalletSelectedOption] = React.useState('');
-  const [netBankingSelectedOption, setNetBankingSelectedOption] = React.useState('');
-
-  const canClickPayNow = () => {
-    if (selectedPaymentMethod === 'UPI') {
-      return isUpiOptionSelected();
-    } else if (selectedPaymentMethod === 'Card') {
-      return isCardFormValid();
-    } else if (selectedPaymentMethod === 'Wallet') {
-      return walletSelectedOption.trim().length > 0;
-    } else if (selectedPaymentMethod === 'NetBanking') {
-      return netBankingSelectedOption.trim().length > 0;
-    }
-    // For other payment methods, allow pay now for now
-    return true;
-  };
-
   const handlePayment = async () => {
-    if (!selectedPaymentMethod) {
-      alert('Please select a payment method.');
-      return;
-    }
-    if (!canClickPayNow()) {
-      alert('Please complete the payment details before proceeding.');
-      return;
-    }
     if (!user) {
       alert('Please log in to proceed with payment.');
       return;
@@ -132,7 +77,7 @@ const PaymentPage = () => {
               customerId: user.id,
               showId: selectedShow.show.show_id,
               amount: parseFloat(orderTotal),
-              paymentMethod: selectedPaymentMethod,
+              paymentMethod: 'Razorpay',
               seats: selectedSeats, // Assuming selectedSeats are seat_ids
             });
 
@@ -172,67 +117,15 @@ const PaymentPage = () => {
   return (
     <div
       style={{
-        padding: '30px',
+        padding: '50px',
         color: 'white',
-        maxWidth: '1000px',
-        margin: '40px auto',
+        maxWidth: '600px',
+        margin: '110px auto',
         fontFamily: 'Arial, sans-serif',
-        backgroundColor: '#1f2937',
+        backgroundColor: '#1A1A1A',
         borderRadius: '12px',
-        border: '4px solid #ffd700',
-        display: 'flex',
-        gap: '20px',
       }}
     >
-      {/* Left Panel - Payment Options */}
-      <div
-        style={{
-          flex: 2,
-          backgroundColor: '#111827',
-          borderRadius: '8px',
-          padding: '20px',
-          color: 'white',
-        }}
-      >
-        <h3 style={{ marginBottom: '20px', color: '#d4af37' }}>Payment options</h3>
-        <PaymentOptions
-          selectedPaymentMethod={selectedPaymentMethod}
-          setSelectedPaymentMethod={setSelectedPaymentMethod}
-          setShowUPIDetails={setShowUPIDetails}
-        />
-
-        {/* UPI Details */}
-        {showUPIDetails && selectedPaymentMethod === 'UPI' && (
-          <UPIDetails
-            upiSelectedOption={upiSelectedOption}
-            setUpiSelectedOption={setUpiSelectedOption}
-          />
-        )}
-
-        {/* Mobile Wallet Details */}
-        {selectedPaymentMethod === 'Wallet' && (
-          <WalletDetails
-            walletSelectedOption={walletSelectedOption}
-            setWalletSelectedOption={setWalletSelectedOption}
-          />
-        )}
-        {/* Net Banking Details */}
-        {selectedPaymentMethod === 'NetBanking' && (
-          <NetBankingDetails
-            netBankingSelectedOption={netBankingSelectedOption}
-            setNetBankingSelectedOption={setNetBankingSelectedOption}
-          />
-        )}
-        {/* Debit/Credit Card Details */}
-        {selectedPaymentMethod === 'Card' && (
-          <CardDetails
-            cardDetails={cardDetails}
-            setCardDetails={setCardDetails}
-          />
-        )}
-      </div>
-
-      {/* Right Panel - Order Summary */}
       <OrderSummary
         movieName={movieName}
         selectedShow={selectedShow}
@@ -241,7 +134,7 @@ const PaymentPage = () => {
         donation={donation}
         orderTotal={orderTotal}
         handlePayment={handlePayment}
-        canClickPayNow={canClickPayNow()}
+        canClickPayNow={true}
       />
     </div>
   );

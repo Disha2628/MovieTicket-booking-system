@@ -8,13 +8,11 @@ const Screen = () => {
           margin: '0 auto',
           marginLeft: '300px',
           width: '45%',
-          height: '15px',
-          backgroundColor: '#93c5fd',
-          borderRadius: '12px',
-          boxShadow: '0 0 15px #60a5fa',
+          height: '2px',
+          backgroundColor: 'white',
         }}
       />
-      <div style={{ marginTop: '8px', color: '#aaa', fontWeight: '600' }}>
+      <div style={{ marginTop: '8px', color: '#cccccc', fontWeight: '600' }}>
         All eyes this way please
       </div>
     </div>

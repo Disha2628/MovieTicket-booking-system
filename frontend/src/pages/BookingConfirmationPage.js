@@ -31,34 +31,33 @@ const BookingConfirmationPage = () => {
         padding: '30px',
         color: 'white',
         maxWidth: '800px',
-        margin: '40px auto',
+        margin: '200px auto',
         fontFamily: 'Arial, sans-serif',
-        backgroundColor: '#1f2937',
+        backgroundColor: '#222222',
         borderRadius: '12px',
-        border: '4px solid #ffd700',
       }}
     >
-      <h2 style={{ color: '#d4af37', marginBottom: '20px', textAlign: 'center' }}>
+      <h2 style={{ color: 'white', marginBottom: '20px', textAlign: 'center' }}>
         Booking Confirmation
       </h2>
 
       <div style={{ marginBottom: '20px' }}>
-        <strong>Movie:</strong> {movieName}
+        <strong style={{ color: '#cccccc' }}>Movie:</strong> {movieName}
       </div>
       <div style={{ marginBottom: '20px' }}>
-        <strong>Date:</strong> {selectedShow.show.fullDate?.toLocaleDateString('en-US', { weekday: 'short', day: '2-digit', month: 'short' }) || 'N/A'}
+        <strong style={{ color: '#cccccc' }}>Date:</strong> {selectedShow.show.fullDate?.toLocaleDateString('en-US', { weekday: 'short', day: '2-digit', month: 'short' }) || 'N/A'}
       </div>
       <div style={{ marginBottom: '20px' }}>
-        <strong>Theatre:</strong> {selectedShow.theatre}
+        <strong style={{ color: '#cccccc' }}>Theatre:</strong> {selectedShow.theatre}
       </div>
       <div style={{ marginBottom: '20px' }}>
-        <strong>Show Time:</strong> {selectedShow.show.time}
+        <strong style={{ color: '#cccccc' }}>Show Time:</strong> {selectedShow.show.time}
       </div>
       <div style={{ marginBottom: '20px' }}>
-        <strong>Selected Seats:</strong> {selectedSeats.join(', ')}
+        <strong style={{ color: '#cccccc' }}>Selected Seats:</strong> {selectedSeats.join(', ')}
       </div>
       <div style={{ marginBottom: '30px' }}>
-        <strong>Total Cost:</strong> ₹{totalCost}
+        <strong style={{ color: '#00CC66' }}>Total Cost:</strong> <span style={{ color: '#00CC66' }}>₹{totalCost}</span>
       </div>
 
       <div style={{ textAlign: 'center' }}>
@@ -76,13 +75,14 @@ const BookingConfirmationPage = () => {
           }}
           style={{
             padding: '12px 24px',
-            backgroundColor: '#d4af37',
+            backgroundColor: '#007bff',
             color: 'white',
             border: 'none',
             borderRadius: '8px',
             fontSize: '16px',
             fontWeight: 'bold',
             cursor: 'pointer',
+            boxShadow: '0 4px 8px rgba(0, 123, 255, 0.3)',
           }}
         >
           Proceed to Payment

@@ -163,12 +163,11 @@ const SeatLayoutPage = () => {
         maxWidth: "1000px",
         margin: "40px auto",
         fontFamily: "Arial, sans-serif",
-        backgroundColor: "#1f2937",
+        backgroundColor: "#222222",
         borderRadius: "12px",
-        border: "4px solid #ffd700",
       }}
     >
-      <h2 style={{ color: "#d4af37", marginBottom: "20px" }}>
+      <h2 style={{ color: "white", marginBottom: "20px" }}>
         {movieName} - {selectedShow.theatre} -{" "}
         {selectedShow.show.fullDate?.toLocaleDateString("en-US", {
           weekday: "short",
@@ -232,7 +231,7 @@ const SeatLayoutPage = () => {
           style={{
             padding: "12px 24px",
             backgroundColor:
-              selectedSeats.length === selectedSeatCount ? "#d4af37" : "#555",
+              selectedSeats.length === selectedSeatCount ? "#00CC66" : "#555",
             color: "white",
             border: "none",
             borderRadius: "8px",
@@ -242,6 +241,7 @@ const SeatLayoutPage = () => {
               selectedSeats.length === selectedSeatCount
                 ? "pointer"
                 : "not-allowed",
+            boxShadow: selectedSeats.length === selectedSeatCount ? "0 4px 8px rgba(0, 204, 102, 0.3)" : "none",
           }}
         >
           Confirm Seats

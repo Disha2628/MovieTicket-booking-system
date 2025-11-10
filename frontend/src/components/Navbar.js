@@ -24,21 +24,19 @@ const Navbar = ({ user }) => {
       <div>
         {user ? (
           <>
-            <a href="/profile" style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
+            <a href="/profile" style={{ display: 'flex', alignItems: 'center', gap: '5px', color: '#ffffff' }}>
               <div style={{
                 width: '20px',
                 height: '20px',
                 borderRadius: '50%',
-                backgroundColor: 'rgba(12, 18, 32, 0.8)',
-                border: '1px solid #ffd700',
+                backgroundColor: '#333333',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
                 fontSize: '0.8rem',
                 fontWeight: 'bold',
-                color: '#ffd700',
-                textShadow: '0 0 5px rgba(255, 215, 0, 0.8)',
-                boxShadow: '0 0 10px rgba(255, 215, 0, 0.3)'
+                color: '#ffffff',
+                fontFamily: "'Poppins', sans-serif"
               }}>
                 {user.first_name ? user.first_name.charAt(0).toUpperCase() : 'U'}
               </div>
@@ -47,7 +45,7 @@ const Navbar = ({ user }) => {
             <button onClick={handleLogout} style={{
               backgroundColor: 'transparent',
               border: 'none',
-              color: '#ffd700',
+              color: '#ffffff',
               cursor: 'pointer',
               fontSize: '1rem',
               marginLeft: '10px'

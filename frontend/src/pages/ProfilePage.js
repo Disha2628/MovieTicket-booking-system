@@ -80,7 +80,7 @@ const ProfilePage = () => {
   return (
     <div style={{
       minHeight: '100vh',
-      background: 'radial-gradient(circle at top, #8b0000 0%, #1a0000 80%)',
+      background: 'linear-gradient(135deg, #080C14 0%, #0D1117 100%)',
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
@@ -88,42 +88,27 @@ const ProfilePage = () => {
       position: 'relative',
       overflow: 'hidden'
     }}>
-      {/* Faint outer vignette */}
-      <div style={{
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0,
-        background: 'radial-gradient(circle at center, transparent 50%, rgba(0,0,0,0.3) 100%)',
-        pointerEvents: 'none'
-      }}></div>
       <div style={{
         width: '100%',
         maxWidth: '800px',
         minWidth: '600px',
-        backgroundColor: 'rgba(12, 18, 32, 0.9)',
+        background: 'rgba(255, 255, 255, 0.05)',
+        backdropFilter: 'blur(12px)',
         borderRadius: '24px',
+        border: '1px solid rgba(255, 255, 255, 0.1)',
         padding: '40px 30px',
-        boxShadow: `
-          inset 0 4px 8px rgba(0,0,0,0.3),
-          0 0 20px rgba(255, 215, 0, 0.3),
-          0 0 40px rgba(255, 215, 0, 0.2),
-          0 0 60px rgba(255, 215, 0, 0.1) inset,
-          0 0 80px rgba(255, 215, 0, 0.1) inset
-        `,
+        boxShadow: '0 8px 32px rgba(0, 0, 0, 0.5)',
         position: 'relative',
         zIndex: 1,
         overflow: 'hidden'
       }}>
         <h2 style={{
           textAlign: 'center',
-          color: '#ffd700',
+          color: '#ffffff',
           fontSize: '2.5rem',
-          fontWeight: 'bold',
-          fontFamily: 'serif',
-          marginBottom: '20px',
-          textShadow: '0 0 15px rgba(255, 215, 0, 0.8), 0 0 30px rgba(255, 215, 0, 0.5)'
+          fontWeight: '700',
+          fontFamily: "'Poppins', sans-serif",
+          marginBottom: '20px'
         }}>My Profile</h2>
         <style>
           {`
@@ -142,7 +127,7 @@ const ProfilePage = () => {
         <div className="profile-flex">
           <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '30px' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-              <label style={{ color: '#ffd700', fontWeight: 'bold', fontFamily: 'serif', minWidth: '120px' }}>First Name:</label>
+              <label style={{ color: '#bbbbbb', fontFamily: "'Poppins', sans-serif", minWidth: '120px' }}>First Name:</label>
               {isEditing ? (
                 <input
                   type="text"
@@ -151,16 +136,15 @@ const ProfilePage = () => {
                   style={{
                     flex: 1,
                     padding: '12px 15px',
-                    backgroundColor: 'rgba(12, 18, 32, 0.8)',
-                    border: 'none',
-                    borderBottom: '2px solid #ffd700',
+                    backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                    border: '1px solid rgba(255, 255, 255, 0.2)',
                     borderRadius: '8px',
                     color: '#ffffff',
                     fontSize: '1rem',
                     outline: 'none',
                     transition: 'border-color 0.3s, box-shadow 0.3s'
                   }}
-                  onFocus={(e) => e.target.style.boxShadow = '0 0 10px rgba(255, 215, 0, 0.5)'}
+                  onFocus={(e) => e.target.style.boxShadow = '0 0 10px rgba(229, 9, 20, 0.5)'}
                   onBlur={(e) => e.target.style.boxShadow = 'none'}
                 />
               ) : (
@@ -169,7 +153,7 @@ const ProfilePage = () => {
             </div>
 
             <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-              <label style={{ color: '#ffd700', fontWeight: 'bold', fontFamily: 'serif', minWidth: '120px' }}>Last Name:</label>
+              <label style={{ color: '#bbbbbb', fontFamily: "'Poppins', sans-serif", minWidth: '120px' }}>Last Name:</label>
               {isEditing ? (
                 <input
                   type="text"
@@ -178,16 +162,15 @@ const ProfilePage = () => {
                   style={{
                     flex: 1,
                     padding: '12px 15px',
-                    backgroundColor: 'rgba(12, 18, 32, 0.8)',
-                    border: 'none',
-                    borderBottom: '2px solid #ffd700',
+                    backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                    border: '1px solid rgba(255, 255, 255, 0.2)',
                     borderRadius: '8px',
                     color: '#ffffff',
                     fontSize: '1rem',
                     outline: 'none',
                     transition: 'border-color 0.3s, box-shadow 0.3s'
                   }}
-                  onFocus={(e) => e.target.style.boxShadow = '0 0 10px rgba(255, 215, 0, 0.5)'}
+                  onFocus={(e) => e.target.style.boxShadow = '0 0 10px rgba(229, 9, 20, 0.5)'}
                   onBlur={(e) => e.target.style.boxShadow = 'none'}
                 />
               ) : (
@@ -196,12 +179,12 @@ const ProfilePage = () => {
             </div>
 
             <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-              <label style={{ color: '#ffd700', fontWeight: 'bold', fontFamily: 'serif', minWidth: '120px' }}>Email:</label>
+              <label style={{ color: '#bbbbbb', fontFamily: "'Poppins', sans-serif", minWidth: '120px' }}>Email:</label>
               <p style={{ margin: 0, color: '#ffffff', fontSize: '1rem' }}>{profile.email}</p>
             </div>
 
             <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-              <label style={{ color: '#ffd700', fontWeight: 'bold', fontFamily: 'serif', minWidth: '120px' }}>Phone No.:</label>
+              <label style={{ color: '#bbbbbb', fontFamily: "'Poppins', sans-serif", minWidth: '120px' }}>Phone No.:</label>
               {isEditing ? (
                 <input
                   type="text"
@@ -210,16 +193,15 @@ const ProfilePage = () => {
                   style={{
                     flex: 1,
                     padding: '12px 15px',
-                    backgroundColor: 'rgba(12, 18, 32, 0.8)',
-                    border: 'none',
-                    borderBottom: '2px solid #ffd700',
+                    backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                    border: '1px solid rgba(255, 255, 255, 0.2)',
                     borderRadius: '8px',
                     color: '#ffffff',
                     fontSize: '1rem',
                     outline: 'none',
                     transition: 'border-color 0.3s, box-shadow 0.3s'
                   }}
-                  onFocus={(e) => e.target.style.boxShadow = '0 0 10px rgba(255, 215, 0, 0.5)'}
+                  onFocus={(e) => e.target.style.boxShadow = '0 0 10px rgba(229, 9, 20, 0.5)'}
                   onBlur={(e) => e.target.style.boxShadow = 'none'}
                 />
               ) : (
@@ -232,16 +214,14 @@ const ProfilePage = () => {
               width: '150px',
               height: '150px',
               borderRadius: '50%',
-              backgroundColor: '#8b0000',
-              border: '3px solid black',
+              backgroundColor: '#333333',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
               fontSize: '4rem',
               fontWeight: 'bold',
-              color: '#ffd700',
-              textShadow: '0 0 10px rgba(255, 215, 0, 0.8)',
-              boxShadow: '0 0 20px rgba(255, 215, 0, 0.3)'
+              color: '#ffffff',
+              fontFamily: "'Poppins', sans-serif"
             }}>
               {profile.first_name ? profile.first_name.charAt(0).toUpperCase() : 'U'}
             </div>
@@ -253,51 +233,31 @@ const ProfilePage = () => {
               <button onClick={handleSave} style={{
                 flex: 1,
                 padding: '15px',
-                backgroundColor: 'transparent',
-                border: '2px solid #ffd700',
+                background: 'linear-gradient(90deg,rgb(76, 17, 194),rgb(67, 8, 101))',
                 borderRadius: '50px',
-                color: '#ffd700',
+                color: '#ffffff',
                 fontSize: '1.1rem',
                 cursor: 'pointer',
-                transition: 'all 0.3s',
-                position: 'relative',
-                overflow: 'hidden'
+                border: 'none',
+                transition: 'all 0.3s'
               }}
-              onMouseEnter={(e) => {
-                e.target.style.boxShadow = '0 0 20px rgba(255, 215, 0, 0.5)';
-                e.target.style.transform = 'translateY(-2px)';
-                e.target.style.backgroundColor = 'rgba(255, 215, 0, 0.1)';
-              }}
-              onMouseLeave={(e) => {
-                e.target.style.boxShadow = 'none';
-                e.target.style.transform = 'none';
-                e.target.style.backgroundColor = 'transparent';
-              }}>
+              onMouseEnter={(e) => e.target.style.transform = 'scale(1.05)'}
+              onMouseLeave={(e) => e.target.style.transform = 'none'}>
                 Save
               </button>
               <button onClick={handleCancel} style={{
                 flex: 1,
                 padding: '15px',
-                backgroundColor: 'transparent',
-                border: '2px solid #ffd700',
+                background: '#1a1a1a',
                 borderRadius: '50px',
-                color: '#ffd700',
+                color: '#ffffff',
                 fontSize: '1.1rem',
                 cursor: 'pointer',
-                transition: 'all 0.3s',
-                position: 'relative',
-                overflow: 'hidden'
+                border: 'none',
+                transition: 'all 0.3s'
               }}
-              onMouseEnter={(e) => {
-                e.target.style.boxShadow = '0 0 20px rgba(255, 215, 0, 0.5)';
-                e.target.style.transform = 'translateY(-2px)';
-                e.target.style.backgroundColor = 'rgba(255, 215, 0, 0.1)';
-              }}
-              onMouseLeave={(e) => {
-                e.target.style.boxShadow = 'none';
-                e.target.style.transform = 'none';
-                e.target.style.backgroundColor = 'transparent';
-              }}>
+              onMouseEnter={(e) => e.target.style.transform = 'scale(1.05)'}
+              onMouseLeave={(e) => e.target.style.transform = 'none'}>
                 Cancel
               </button>
             </>
@@ -305,52 +265,32 @@ const ProfilePage = () => {
             <button onClick={handleEdit} style={{
               flex: 1,
               padding: '15px',
-              backgroundColor: 'transparent',
-              border: '2px solid #ffd700',
+              background: 'linear-gradient(90deg,rgb(76, 17, 194),rgb(67, 8, 101))',
               borderRadius: '50px',
-              color: '#ffd700',
+              color: '#ffffff',
               fontSize: '1.1rem',
               cursor: 'pointer',
-              transition: 'all 0.3s',
-              position: 'relative',
-              overflow: 'hidden'
+              border: 'none',
+              transition: 'all 0.3s'
             }}
-            onMouseEnter={(e) => {
-              e.target.style.boxShadow = '0 0 20px rgba(255, 215, 0, 0.5)';
-              e.target.style.transform = 'translateY(-2px)';
-              e.target.style.backgroundColor = 'rgba(255, 215, 0, 0.1)';
-            }}
-            onMouseLeave={(e) => {
-              e.target.style.boxShadow = 'none';
-              e.target.style.transform = 'none';
-              e.target.style.backgroundColor = 'transparent';
-            }}>
+            onMouseEnter={(e) => e.target.style.transform = 'scale(1.05)'}
+            onMouseLeave={(e) => e.target.style.transform = 'none'}>
               Edit Profile
             </button>
           )}
           <button onClick={handleLogout} style={{
             flex: 1,
             padding: '15px',
-            backgroundColor: 'transparent',
-            border: '2px solid #ffd700',
+            background: '#1a1a1a',
             borderRadius: '50px',
-            color: '#ffd700',
+            color: '#ffffff',
             fontSize: '1.1rem',
             cursor: 'pointer',
-            transition: 'all 0.3s',
-            position: 'relative',
-            overflow: 'hidden'
+            border: 'none',
+            transition: 'all 0.3s'
           }}
-          onMouseEnter={(e) => {
-            e.target.style.boxShadow = '0 0 20px rgba(255, 215, 0, 0.5)';
-            e.target.style.transform = 'translateY(-2px)';
-            e.target.style.backgroundColor = 'rgba(255, 215, 0, 0.1)';
-          }}
-          onMouseLeave={(e) => {
-            e.target.style.boxShadow = 'none';
-            e.target.style.transform = 'none';
-            e.target.style.backgroundColor = 'transparent';
-          }}>
+          onMouseEnter={(e) => e.target.style.transform = 'scale(1.05)'}
+          onMouseLeave={(e) => e.target.style.transform = 'none'}>
             Logout
           </button>
         </div>
@@ -358,26 +298,16 @@ const ProfilePage = () => {
           <button onClick={() => navigate('/booking-history')} style={{
             width: '100%',
             padding: '15px',
-            backgroundColor: 'transparent',
-            border: '2px solid #ffd700',
+            background: 'transparent',
+            border: '1px solid #ffffff',
             borderRadius: '50px',
-            color: '#ffd700',
+            color: '#ffffff',
             fontSize: '1.1rem',
             cursor: 'pointer',
-            transition: 'all 0.3s',
-            position: 'relative',
-            overflow: 'hidden'
+            transition: 'all 0.3s'
           }}
-          onMouseEnter={(e) => {
-            e.target.style.boxShadow = '0 0 20px rgba(255, 215, 0, 0.5)';
-            e.target.style.transform = 'translateY(-2px)';
-            e.target.style.backgroundColor = 'rgba(255, 215, 0, 0.1)';
-          }}
-          onMouseLeave={(e) => {
-            e.target.style.boxShadow = 'none';
-            e.target.style.transform = 'none';
-            e.target.style.backgroundColor = 'transparent';
-          }}>
+          onMouseEnter={(e) => e.target.style.backgroundColor = 'rgba(255, 255, 255, 0.15)'}
+          onMouseLeave={(e) => e.target.style.backgroundColor = 'transparent'}>
             Booking History
           </button>
         </div>

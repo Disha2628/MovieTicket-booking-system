@@ -6,8 +6,9 @@ const SelectedSeatsDisplay = ({ selectedSeats }) => {
       style={{
         marginBottom: '25px',
         padding: '10px',
-        backgroundColor: '#374151',
+        backgroundColor: '#333333',
         borderRadius: '8px',
+        color: 'white',
       }}
     >
       <strong>Selected Seats: </strong>
