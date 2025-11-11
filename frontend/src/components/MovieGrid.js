@@ -1,42 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
-const styles = {
-  movieGrid: {
-    display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))',
-    gap: '20px',
-    justifyItems: 'center',
-    width: '98%',
-    boxSizing: 'border-box',
-  },
-  movieCard: {
-    borderRadius: '16px',
-    overflow: 'hidden',
-    transition: 'transform 0.3s ease, box-shadow 0.3s ease',
-    cursor: 'pointer',
-    width: '100%',
-    maxWidth: '300px',
-    marginBottom: '20px',
-    background: 'transparent',
-  },
-  poster: {
-    width: '100%',
-    height: '450px',
-    objectFit: 'cover',
-    display: 'block',
-    transition: 'transform 0.3s ease',
-  },
-  title: {
-    fontSize: '1.5rem',
-    fontWeight: '400',
-    color: 'var(--text-primary)',
-    textAlign: 'center',
-    margin: '10px 0 0 0',
-    padding: '0 5px',
-  },
-};
-
 const MovieGrid = ({ movies: propMovies, comingSoon }) => {
   const [movies, setMovies] = useState([]);
   const [hoveredCard, setHoveredCard] = useState(null);
@@ -56,25 +20,31 @@ const MovieGrid = ({ movies: propMovies, comingSoon }) => {
   }, [propMovies]);
 
   return (
-    <div style={styles.movieGrid}>
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-10 justify-items-center w-full max-w-7xl mx-auto">
       {movies.map(movie => (
         <div
           key={movie.id}
-          style={{
-            ...styles.movieCard,
-            transform: hoveredCard === movie.id ? 'scale(1.05)' : 'none',
-            boxShadow: hoveredCard === movie.id ? '0 8px 20px rgba(255,255,255,.15)' : 'none',
-          }}
+          className={`rounded-2xl overflow-hidden transition-all duration-300 cursor-pointer w-full max-w-sm bg-transparent hover:scale-105 hover:shadow-2xl hover:shadow-purple-500/20 ${
+            hoveredCard === movie.id ? 'shadow-2xl shadow-white/15' : ''
+          }`}
           onMouseEnter={() => setHoveredCard(movie.id)}
           onMouseLeave={() => setHoveredCard(null)}
           onClick={() => window.location.href = `/movie/${movie.id}`}
         >
-          <img
-            src={movie.poster}
-            alt={movie.title}
-            style={styles.poster}
-          />
-          <h3 style={styles.title}>{movie.title}</h3>
+          <div className="relative overflow-hidden rounded-2xl">
+            <img
+              src={movie.poster}
+              alt={movie.title}
+              className="w-full h-[26rem] object-cover transition-transform duration-300 hover:scale-110"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300 flex items-end justify-center pb-4">
+              <div className="text-center">
+                <h3 className="text-white text-lg font-semibold drop-shadow-lg">{movie.title}</h3>
+                <p className="text-gray-300 text-sm">{new Date(movie.release_date).getFullYear()}</p>
+              </div>
+            </div>
+          </div>
+ 
         </div>
       ))}
     </div>

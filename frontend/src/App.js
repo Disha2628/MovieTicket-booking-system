@@ -50,7 +50,9 @@ function AppContent() {
 function App() {
   return (
     <UserProvider>
-      <AppContent />
+      <div className="min-h-screen bg-gray-900 text-white">
+        <AppContent />
+      </div>
     </UserProvider>
   );
 }

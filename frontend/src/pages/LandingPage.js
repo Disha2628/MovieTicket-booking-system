@@ -6,42 +6,6 @@ import Footer from '../components/Footer';
 import About from '../components/About';
 import axios from 'axios';
 import { UserContext } from '../contexts/UserContext';
-import './LandingPage.css';
-import './Homepage.css';
-
-// Trailer Modal Component
-const TrailerModal = ({ isOpen, onClose, trailerUrl }) => {
-  if (!isOpen) return null;
-
-  // Function to convert YouTube URL to embed URL
-  const getEmbedUrl = (url) => {
-    if (!url) return '';
-    const videoIdMatch = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&\n?#]+)/);
-    if (videoIdMatch) {
-      return `https://www.youtube.com/embed/${videoIdMatch[1]}`;
-    }
-    return url; // Return original if not YouTube
-  };
-
-  const embedUrl = getEmbedUrl(trailerUrl);
-
-  return (
-    <div className="trailer-modal-overlay" onClick={onClose}>
-      <div className="trailer-modal-content" onClick={(e) => e.stopPropagation()}>
-        <button className="close-btn" onClick={onClose}>×</button>
-        <iframe
-          width="100%"
-          height="100%"
-          src={embedUrl}
-          title="Movie Trailer"
-          frameBorder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowFullScreen
-        ></iframe>
-      </div>
-    </div>
-  );
-};
 
 const LandingPage = () => {
   const { user } = useContext(UserContext);
@@ -54,7 +18,7 @@ const LandingPage = () => {
   const [dropdownOpen, setDropdownOpen] = useState({ allMovies: false, byCategory: false });
   const [genres, setGenres] = useState([]);
   const [languages, setLanguages] = useState([]);
-  const [heroMovies, setHeroMovies] = useState([]);
+  const [heroMovies, setHeroMovies] = useState([{id: 1, title: 'Interstellar', poster: '/Movies_posters/Interstellar_poster.jpeg', release_date: '2014-11-07', genre: 'Sci-Fi', duration: 169, rating: 8.6, trailer_url: ''}]);
   const heroWrapperRef = useRef(null);
   const [trailerModalOpen, setTrailerModalOpen] = useState(false);
   const [currentTrailerUrl, setCurrentTrailerUrl] = useState('');
@@ -141,94 +105,125 @@ const LandingPage = () => {
   };
 
 
-
   return (
-    <div className="landing-page-container">
-      <div className="hero">
-        <div className="hero-container" ref={heroWrapperRef}>
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-black text-white flex flex-col items-center p-4 relative overflow-hidden">
+      <Navbar />
+      {/* Animated background elements for beauty */}
+      <div className="absolute inset-0 bg-gradient-to-r from-purple-1200/20 to-pink-900/20 animate-pulse"></div>
+      <div className="absolute top-10 left-10 w-32 h-32 bg-purple-500/10 rounded-full blur-xl animate-bounce"></div>
+      <div className="absolute bottom-10 right-10 w-40 h-40 bg-pink-500/10 rounded-full blur-xl animate-bounce delay-1000"></div>
+      {/* Subtle radial glow for depth */}
+      <div className="absolute inset-0 bg-radial-gradient from-transparent via-gray-900/50 to-gray-950/90 pointer-events-none"></div>
+
+     
+        <div className="w-full min-h-[65vh] relative overflow-hidden rounded-3xl shadow-2xl shadow-black/50 mx-auto max-w-7xl my-5 z-10">
+        <div className="flex w-full h-full overflow-x-auto scroll-smooth" ref={heroWrapperRef}>
           {heroMovies.map((movie, index) => (
-            <div key={movie.id} className="hero-slide">
-              <div className="hero-bg">
-                <img src={`/banner${index + 1}.png`} alt="bg" />
-                <div className="hero-overlay"></div>
+            <div key={movie.id} className="relative flex-shrink-0 w-full min-h-[65vh] flex items-center justify-start">
+              <div className="absolute inset-0 -z-20">
+                <img src={`/banner${index + 1}.png`} alt="bg" className="w-full h-full object-cover brightness-80 blur-xs" />
+                <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/70 to-transparent"></div>
               </div>
-              <div className="hero-content">
-                <div className="poster">
-                  <img src={movie.poster} alt={movie.title} />
+              <div className="mt-6 ml-12 flex gap-16 items-center justify-start flex-wrap max-w-5xl">
+                <div className="relative">
+                  <img src={movie.poster} alt={movie.title} className="w-80 h-[28rem] rounded-2xl shadow-2xl shadow-blue-900/50 transition-transform duration-300 hover:scale-105" />
                 </div>
-                <div className="details">
-                  <h1>{movie.title}</h1>
-                  <div className="meta">
+                <div className="max-w-md text-white">
+                  {/* Title with a subtle white/gray gradient */}
+                  <h1 className="text-6xl font-extrabold bg-gradient-to-r from-white to-gray-400 bg-clip-text text-transparent inline-block">{movie.title}</h1>
+                  <div className="flex gap-3 mt-3 mb-6 text-xl text-gray-300">
                     <span>{new Date(movie.release_date).getFullYear()}</span>
                     <span>•</span>
                     <span>{movie.genre}</span>
                   </div>
-                  <p>{movie.duration} min</p>
-                  <p>Languages: English , Hindi , Tamil , Telugu</p>
-                  <p>IMDB: {Math.floor(movie.rating)}/10</p>
-                  <div className="actions">
-                    <button className="outline-btn">Coming Soon...</button>
-                    <button className="primary-btn" onClick={() => openTrailerModal(movie.trailer_url)}>Watch Trailer</button>
+                  <p className="text-lg text-gray-400">{movie.duration} min</p>
+                  <p className="text-lg text-gray-400">Languages: English, Hindi, Tamil, Telugu</p>
+                  <p className="text-lg text-gray-400">IMDB: {Math.floor(movie.rating)}/10</p>
+                  <div className="mt-6 flex gap-4">
+                    <button className="bg-transparent border-2 border-gray-500 py-3 px-6 rounded-full text-gray-300 text-lg cursor-pointer transition-all duration-300 hover:bg-gray-700/50 hover:border-white">Coming Soon...</button>
+                    {/* Primary button using a professional blue gradient */}
+                    <button
+                      className="bg-gradient-to-r from-blue-700 to-indigo-800 py-3 px-6 rounded-full text-white text-lg cursor-pointer border-none transition-all duration-300 hover:scale-105 shadow-lg shadow-blue-700/40"
+                      onClick={() => openTrailerModal(movie.trailer_url)}>
+                        Watch Trailer
+                    </button>
                   </div>
                 </div>
               </div>
             </div>
           ))}
         </div>
-
       </div>
 
-      <div className="filter-bar">
-        <div className="filter" onClick={() => toggleDropdown('allMovies')}>
-          <span className="dropdown-text">{genreFilter || 'Current Movies'}</span>
+      {/* Filter bar with professional dark styling */}
+      <div className="flex justify-center items-center gap-16 mx-auto max-w-6xl my-5 flex-wrap relative z-20 bg-gray-900/80 backdrop-blur-md rounded-full p-3 border border-gray-700 shadow-xl shadow-black/50">
+        <div className="relative cursor-pointer text-gray-300 text-lg flex items-center group" onClick={() => toggleDropdown('allMovies')}>
+          <span className="transition-all duration-300 group-hover:text-blue-400">{genreFilter || 'Current Movies'}</span>
+          <span className="ml-2 text-sm text-gray-500 group-hover:text-blue-400">▼</span>
           {dropdownOpen.allMovies && (
-            <div className="dropdown-options">
-              <div onClick={() => selectOption('allMovies', 'All Movies')}>Current Movies</div>
+            <div className="absolute top-full mt-2 left-0 bg-gray-800 border border-blue-600/50 rounded-lg min-w-48 z-30 flex flex-col overflow-hidden shadow-2xl">
+              <div className="px-4 py-2 text-gray-300 cursor-pointer transition-colors duration-200 hover:bg-blue-600/20 hover:text-white" onClick={() => selectOption('allMovies', 'All Movies')}>Current Movies</div>
               {genres.map(genre => (
-                <div key={genre} onClick={() => selectOption('allMovies', genre)}>{genre}</div>
+                <div key={genre} className="px-4 py-2 text-gray-300 cursor-pointer transition-colors duration-200 hover:bg-blue-600/20 hover:text-white" onClick={() => selectOption('allMovies', genre)}>{genre}</div>
               ))}
             </div>
           )}
         </div>
 
-        <div className="filter" onClick={() => toggleDropdown('byCategory')}>
-          <span className="dropdown-text">{languageFilter || 'by Language'}</span>
+        <div className="relative cursor-pointer text-gray-300 text-lg flex items-center group" onClick={() => toggleDropdown('byCategory')}>
+          <span className="transition-all duration-300 group-hover:text-blue-400">{languageFilter || 'by Language'}</span>
+          <span className="ml-2 text-sm text-gray-500 group-hover:text-blue-400">▼</span>
           {dropdownOpen.byCategory && (
-            <div className="dropdown-options">
-              <div onClick={() => selectOption('byCategory', 'by Language')}>All Languages</div>
+            <div className="absolute top-full mt-2 left-0 bg-gray-800 border border-blue-600/50 rounded-lg min-w-48 z-30 flex flex-col overflow-hidden shadow-2xl">
+              <div className="px-4 py-2 text-gray-300 cursor-pointer transition-colors duration-200 hover:bg-blue-600/20 hover:text-white" onClick={() => selectOption('byCategory', 'by Language')}>All Languages</div>
               {languages.map(language => (
-                <div key={language} onClick={() => selectOption('byCategory', language)}>{language}</div>
+                <div key={language} className="px-4 py-2 text-gray-300 cursor-pointer transition-colors duration-200 hover:bg-blue-600/20 hover:text-white" onClick={() => selectOption('byCategory', language)}>{language}</div>
               ))}
             </div>
           )}
         </div>
-        <div className="filter" onClick={() => setComingSoon(!comingSoon)}>
-          <span className="dropdown-text">{comingSoon ? 'All Movies' : 'Coming Soon'}</span>
+        <div className="cursor-pointer text-gray-300 text-lg flex items-center group" onClick={() => setComingSoon(!comingSoon)}>
+          <span className="transition-all duration-300 group-hover:text-blue-400">{comingSoon ? 'All Movies' : 'Coming Soon'}</span>
         </div>
-        <div className="search-bar">
+        <div className="relative flex items-center">
           <input
             type="text"
             placeholder="Search movies..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
+            className="px-4 py-2 border border-gray-700 rounded-full bg-gray-800 text-white outline-none w-48 text-lg focus:border-blue-500 transition-colors duration-300 placeholder-gray-500"
           />
-          <span className="search-icon">🔍</span>
+          <span className="absolute right-4 text-gray-500 text-lg">🔍</span>
         </div>
       </div>
-      <h2 style={{
-        textAlign: 'center',
-        color: 'var(--text-primary)',
-        fontSize: '2rem',
-        margin: '20px 0',
-        textShadow: '0 0 15px rgba(38, 12, 103, 0.8), 0 0 30px rgba(153, 38, 182, 0.5)',
-        fontWeight: 'bold'
-      }}>{comingSoon ? 'Coming Soon...' : 'Recommended Movies...'}</h2>
-      <main className="main-content" style={{ width: '100%', padding: '20px' }}>
-  <MovieGrid movies={movies} comingSoon={comingSoon} />
-</main>
-      <About />
-      <Footer />
-      <TrailerModal isOpen={trailerModalOpen} onClose={closeTrailerModal} trailerUrl={currentTrailerUrl} />
+
+      {/* Updated heading color to a deep blue for professionalism */}
+      <h2 className="text-center text-white-400 text-4xl my-8 font-extrabold tracking-wide drop-shadow-lg">{comingSoon ? 'Coming Soon...' : 'Recommended Movies...'}</h2>
+
+        <main className="w-full p-5">
+          <MovieGrid movies={movies} comingSoon={comingSoon} />
+        </main>
+
+        <About />
+        <Footer />
+      
+      {/* Trailer Modal */}
+      {trailerModalOpen && (
+        <div className="fixed inset-0 bg-black/90 flex justify-center items-center z-50 backdrop-blur-md" onClick={closeTrailerModal}>
+          <div className="relative w-11/12 max-w-4xl h-3/4 max-h-[500px] bg-gray-900 rounded-2xl overflow-hidden shadow-2xl border-2 border-blue-700/50" onClick={(e) => e.stopPropagation()}>
+            <button className="absolute top-4 right-4 bg-gray-800/70 text-white border-none rounded-full w-10 h-10 cursor-pointer text-xl z-10 transition-all duration-300 hover:bg-blue-600" onClick={closeTrailerModal}>×</button>
+            <iframe
+              width="100%"
+              height="100%"
+              src={currentTrailerUrl ? `https://www.youtube.com/embed/${currentTrailerUrl.split('v=')[1]}` : ''}
+              title="Movie Trailer"
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            ></iframe>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

@@ -66,248 +66,119 @@ const ProfilePage = () => {
     setIsEditing(false);
   };
 
-
-
   const handleLogout = () => {
     setUser(null);
     navigate('/');
   };
 
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error}</div>;
-  if (!profile) return <div>No profile data</div>;
+  if (loading) return <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-gray-900 to-black text-white">Loading...</div>;
+  if (error) return <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-gray-900 to-black text-white">Error: {error}</div>;
+  if (!profile) return <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-gray-900 to-black text-white">No profile data</div>;
 
   return (
-    <div style={{
-      minHeight: '100vh',
-      background: 'linear-gradient(135deg, #080C14 0%, #0D1117 100%)',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      padding: '20px',
-      position: 'relative',
-      overflow: 'hidden'
-    }}>
-      <div style={{
-        width: '100%',
-        maxWidth: '800px',
-        minWidth: '600px',
-        background: 'rgba(255, 255, 255, 0.05)',
-        backdropFilter: 'blur(12px)',
-        borderRadius: '24px',
-        border: '1px solid rgba(255, 255, 255, 0.1)',
-        padding: '40px 30px',
-        boxShadow: '0 8px 32px rgba(0, 0, 0, 0.5)',
-        position: 'relative',
-        zIndex: 1,
-        overflow: 'hidden'
-      }}>
-        <h2 style={{
-          textAlign: 'center',
-          color: '#ffffff',
-          fontSize: '2.5rem',
-          fontWeight: '700',
-          fontFamily: "'Poppins', sans-serif",
-          marginBottom: '20px'
-        }}>My Profile</h2>
-        <style>
-          {`
-            .profile-flex {
-              display: flex;
-              gap: 30px;
-              align-items: flex-start;
-            }
-            @media (max-width: 768px) {
-              .profile-flex {
-                flex-direction: column;
-              }
-            }
-          `}
-        </style>
-        <div className="profile-flex">
-          <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '30px' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-              <label style={{ color: '#bbbbbb', fontFamily: "'Poppins', sans-serif", minWidth: '120px' }}>First Name:</label>
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-black flex items-center justify-center p-4 relative overflow-hidden">
+      {/* Animated background elements for beauty */}
+      <div className="absolute inset-0 bg-gradient-to-r from-purple-900/20 to-pink-900/20 animate-pulse"></div>
+      <div className="absolute top-10 left-10 w-32 h-32 bg-purple-500/10 rounded-full blur-xl animate-bounce"></div>
+      <div className="absolute bottom-10 right-10 w-40 h-40 bg-pink-500/10 rounded-full blur-xl animate-bounce delay-1000"></div>
+
+      <div className="w-full max-w-4xl min-w-[600px] bg-white/5 backdrop-blur-lg rounded-3xl border border-white/10 p-8 shadow-2xl relative z-10 overflow-hidden">
+        <h2 className="text-center text-white text-4xl font-bold font-poppins mb-6">My Profile</h2>
+
+        <div className="flex gap-8 items-start md:flex-row flex-col">
+          <div className="flex-1 flex flex-col gap-8">
+            <div className="flex items-center gap-3">
+              <label className="text-gray-400 font-poppins min-w-[120px] text-lg">First Name:</label>
               {isEditing ? (
                 <input
                   type="text"
                   value={editForm.first_name}
                   onChange={(e) => setEditForm({ ...editForm, first_name: e.target.value })}
-                  style={{
-                    flex: 1,
-                    padding: '12px 15px',
-                    backgroundColor: 'rgba(255, 255, 255, 0.1)',
-                    border: '1px solid rgba(255, 255, 255, 0.2)',
-                    borderRadius: '8px',
-                    color: '#ffffff',
-                    fontSize: '1rem',
-                    outline: 'none',
-                    transition: 'border-color 0.3s, box-shadow 0.3s'
-                  }}
-                  onFocus={(e) => e.target.style.boxShadow = '0 0 10px rgba(229, 9, 20, 0.5)'}
-                  onBlur={(e) => e.target.style.boxShadow = 'none'}
+                  className="flex-1 px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white text-lg outline-none focus:border-red-500 focus:ring-2 focus:ring-red-500/50 transition-all duration-300"
                 />
               ) : (
-                <p style={{ margin: 0, color: '#ffffff', fontSize: '1rem' }}>{profile.first_name}</p>
+                <p className="m-0 text-white text-lg">{profile.first_name}</p>
               )}
             </div>
 
-            <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-              <label style={{ color: '#bbbbbb', fontFamily: "'Poppins', sans-serif", minWidth: '120px' }}>Last Name:</label>
+            <div className="flex items-center gap-3">
+              <label className="text-gray-400 font-poppins min-w-[120px] text-lg">Last Name:</label>
               {isEditing ? (
                 <input
                   type="text"
                   value={editForm.last_name}
                   onChange={(e) => setEditForm({ ...editForm, last_name: e.target.value })}
-                  style={{
-                    flex: 1,
-                    padding: '12px 15px',
-                    backgroundColor: 'rgba(255, 255, 255, 0.1)',
-                    border: '1px solid rgba(255, 255, 255, 0.2)',
-                    borderRadius: '8px',
-                    color: '#ffffff',
-                    fontSize: '1rem',
-                    outline: 'none',
-                    transition: 'border-color 0.3s, box-shadow 0.3s'
-                  }}
-                  onFocus={(e) => e.target.style.boxShadow = '0 0 10px rgba(229, 9, 20, 0.5)'}
-                  onBlur={(e) => e.target.style.boxShadow = 'none'}
+                  className="flex-1 px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white text-lg outline-none focus:border-red-500 focus:ring-2 focus:ring-red-500/50 transition-all duration-300"
                 />
               ) : (
-                <p style={{ margin: 0, color: '#ffffff', fontSize: '1rem' }}>{profile.last_name}</p>
+                <p className="m-0 text-white text-lg">{profile.last_name}</p>
               )}
             </div>
 
-            <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-              <label style={{ color: '#bbbbbb', fontFamily: "'Poppins', sans-serif", minWidth: '120px' }}>Email:</label>
-              <p style={{ margin: 0, color: '#ffffff', fontSize: '1rem' }}>{profile.email}</p>
+            <div className="flex items-center gap-3">
+              <label className="text-gray-400 font-poppins min-w-[120px] text-lg">Email:</label>
+              <p className="m-0 text-white text-lg">{profile.email}</p>
             </div>
 
-            <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-              <label style={{ color: '#bbbbbb', fontFamily: "'Poppins', sans-serif", minWidth: '120px' }}>Phone No.:</label>
+            <div className="flex items-center gap-3">
+              <label className="text-gray-400 font-poppins min-w-[120px] text-lg">Phone No.:</label>
               {isEditing ? (
                 <input
                   type="text"
                   value={editForm.phn_no}
                   onChange={(e) => setEditForm({ ...editForm, phn_no: e.target.value })}
-                  style={{
-                    flex: 1,
-                    padding: '12px 15px',
-                    backgroundColor: 'rgba(255, 255, 255, 0.1)',
-                    border: '1px solid rgba(255, 255, 255, 0.2)',
-                    borderRadius: '8px',
-                    color: '#ffffff',
-                    fontSize: '1rem',
-                    outline: 'none',
-                    transition: 'border-color 0.3s, box-shadow 0.3s'
-                  }}
-                  onFocus={(e) => e.target.style.boxShadow = '0 0 10px rgba(229, 9, 20, 0.5)'}
-                  onBlur={(e) => e.target.style.boxShadow = 'none'}
+                  className="flex-1 px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white text-lg outline-none focus:border-red-500 focus:ring-2 focus:ring-red-500/50 transition-all duration-300"
                 />
               ) : (
-                <p style={{ margin: 0, color: '#ffffff', fontSize: '1rem' }}>{profile.phn_no}</p>
+                <p className="m-0 text-white text-lg">{profile.phn_no}</p>
               )}
             </div>
           </div>
-          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '20px', flex: '0 0 180px', marginLeft: '-20px' }}>
-            <div style={{
-              width: '150px',
-              height: '150px',
-              borderRadius: '50%',
-              backgroundColor: '#333333',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              fontSize: '4rem',
-              fontWeight: 'bold',
-              color: '#ffffff',
-              fontFamily: "'Poppins', sans-serif"
-            }}>
+
+          <div className="flex flex-col items-center gap-5 w-44 -ml-5">
+            <div className="w-36 h-36 rounded-full bg-gray-700 flex items-center justify-center text-6xl font-bold text-white font-poppins shadow-lg hover:shadow-xl transition-shadow duration-300">
               {profile.first_name ? profile.first_name.charAt(0).toUpperCase() : 'U'}
             </div>
           </div>
         </div>
-        <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap', justifyContent: 'center', marginTop: '30px' }}>
+
+        <div className="flex gap-3 flex-wrap justify-center mt-8">
           {isEditing ? (
             <>
-              <button onClick={handleSave} style={{
-                flex: 1,
-                padding: '15px',
-                background: 'linear-gradient(90deg,rgb(76, 17, 194),rgb(67, 8, 101))',
-                borderRadius: '50px',
-                color: '#ffffff',
-                fontSize: '1.1rem',
-                cursor: 'pointer',
-                border: 'none',
-                transition: 'all 0.3s'
-              }}
-              onMouseEnter={(e) => e.target.style.transform = 'scale(1.05)'}
-              onMouseLeave={(e) => e.target.style.transform = 'none'}>
+              <button
+                onClick={handleSave}
+                className="flex-1 py-4 bg-gradient-to-r from-purple-600 to-purple-800 rounded-full text-white text-xl cursor-pointer border-none hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-purple-500/50"
+              >
                 Save
               </button>
-              <button onClick={handleCancel} style={{
-                flex: 1,
-                padding: '15px',
-                background: '#1a1a1a',
-                borderRadius: '50px',
-                color: '#ffffff',
-                fontSize: '1.1rem',
-                cursor: 'pointer',
-                border: 'none',
-                transition: 'all 0.3s'
-              }}
-              onMouseEnter={(e) => e.target.style.transform = 'scale(1.05)'}
-              onMouseLeave={(e) => e.target.style.transform = 'none'}>
+              <button
+                onClick={handleCancel}
+                className="flex-1 py-4 bg-gray-800 rounded-full text-white text-xl cursor-pointer border-none hover:scale-105 transition-all duration-300 shadow-lg"
+              >
                 Cancel
               </button>
             </>
           ) : (
-            <button onClick={handleEdit} style={{
-              flex: 1,
-              padding: '15px',
-              background: 'linear-gradient(90deg,rgb(76, 17, 194),rgb(67, 8, 101))',
-              borderRadius: '50px',
-              color: '#ffffff',
-              fontSize: '1.1rem',
-              cursor: 'pointer',
-              border: 'none',
-              transition: 'all 0.3s'
-            }}
-            onMouseEnter={(e) => e.target.style.transform = 'scale(1.05)'}
-            onMouseLeave={(e) => e.target.style.transform = 'none'}>
+            <button
+              onClick={handleEdit}
+              className="flex-1 py-4 bg-gradient-to-r from-purple-600 to-purple-800 rounded-full text-white text-xl cursor-pointer border-none hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-purple-500/50"
+            >
               Edit Profile
             </button>
           )}
-          <button onClick={handleLogout} style={{
-            flex: 1,
-            padding: '15px',
-            background: '#1a1a1a',
-            borderRadius: '50px',
-            color: '#ffffff',
-            fontSize: '1.1rem',
-            cursor: 'pointer',
-            border: 'none',
-            transition: 'all 0.3s'
-          }}
-          onMouseEnter={(e) => e.target.style.transform = 'scale(1.05)'}
-          onMouseLeave={(e) => e.target.style.transform = 'none'}>
+          <button
+            onClick={handleLogout}
+            className="flex-1 py-4 bg-gray-800 rounded-full text-white text-xl cursor-pointer border-none hover:scale-105 transition-all duration-300 shadow-lg"
+          >
             Logout
           </button>
         </div>
-        <div style={{ marginTop: '20px' }}>
-          <button onClick={() => navigate('/booking-history')} style={{
-            width: '100%',
-            padding: '15px',
-            background: 'transparent',
-            border: '1px solid #ffffff',
-            borderRadius: '50px',
-            color: '#ffffff',
-            fontSize: '1.1rem',
-            cursor: 'pointer',
-            transition: 'all 0.3s'
-          }}
-          onMouseEnter={(e) => e.target.style.backgroundColor = 'rgba(255, 255, 255, 0.15)'}
-          onMouseLeave={(e) => e.target.style.backgroundColor = 'transparent'}>
+
+        <div className="mt-5">
+          <button
+            onClick={() => navigate('/booking-history')}
+            className="w-full py-4 bg-transparent border border-white rounded-full text-white text-xl cursor-pointer hover:bg-white/15 transition-all duration-300"
+          >
             Booking History
           </button>
         </div>
