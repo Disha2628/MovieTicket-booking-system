@@ -6,9 +6,68 @@ const { generateToken } = require("../config/jwt");
 const nodemailer = require("nodemailer");
 const crypto = require("crypto");
 const twilio = require("twilio");
+const passport = require("passport");
+const GoogleStrategy = require("passport-google-oauth20").Strategy;
 
 // Temporary OTP storage (in production, use Redis or DB)
 const otpStore = new Map();
+
+// Google OAuth Configuration
+passport.use(new GoogleStrategy({
+  clientID: process.env.GOOGLE_CLIENT_ID,
+  clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+  callbackURL: "http://localhost:5000/auth/google/callback"
+},
+async (accessToken, refreshToken, profile, done) => {
+  try {
+    const email = profile.emails[0].value.toLowerCase();
+    const firstName = profile.name.givenName;
+    const lastName = profile.name.familyName;
+
+    // Check if user exists
+    const [existing] = await pool.execute(
+      "SELECT * FROM customer WHERE Email = ?",
+      [email]
+    );
+
+    let user;
+    if (existing.length > 0) {
+      user = existing[0];
+    } else {
+      // Create new user
+      const [result] = await pool.execute(
+        `INSERT INTO customer (F_Name, L_Name, Email, Phone_No, Password, Created_at)
+         VALUES (?, ?, ?, '', NULL, NOW())`,
+        [firstName, lastName, email]
+      );
+      const [newUser] = await pool.execute(
+        "SELECT * FROM customer WHERE customer_Id = ?",
+        [result.insertId]
+      );
+      user = newUser[0];
+    }
+
+    return done(null, user);
+  } catch (error) {
+    return done(error, null);
+  }
+}));
+
+passport.serializeUser((user, done) => {
+  done(null, user.customer_Id);
+});
+
+passport.deserializeUser(async (id, done) => {
+  try {
+    const [rows] = await pool.execute(
+      "SELECT * FROM customer WHERE customer_Id = ?",
+      [id]
+    );
+    done(null, rows[0]);
+  } catch (error) {
+    done(error, null);
+  }
+});
 
 // ✅ REGISTER
 router.post("/register", async (req, res) => {
@@ -22,7 +81,7 @@ router.post("/register", async (req, res) => {
     const normalizedEmail = email.toLowerCase();
 
     const [existing] = await pool.execute(
-      "SELECT * FROM customer WHERE email = ?",
+      "SELECT * FROM customer WHERE Email = ?",
       [normalizedEmail]
     );
 
@@ -35,7 +94,7 @@ router.post("/register", async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, 10);
 
     await pool.execute(
-      `INSERT INTO customer (F_Name, L_Name, email, Phone_No, Password, created_at)
+      `INSERT INTO customer (F_Name, L_Name, Email, Phone_No, Password, Created_at)
        VALUES (?, ?, ?, ?, ?, NOW())`,
       [first_name, last_name, normalizedEmail, phn_no, hashedPassword]
     );
@@ -60,7 +119,7 @@ router.post("/login", async (req, res) => {
     const normalizedEmail = Email.toLowerCase();
 
     const [rows] = await pool.execute(
-      "SELECT * FROM customer WHERE email = ?",
+      "SELECT * FROM customer WHERE Email = ?",
       [normalizedEmail]
     );
 
@@ -110,10 +169,10 @@ router.post("/forgot-password", async (req, res) => {
     let params = [];
 
     if (email && phone) {
-      query = "SELECT * FROM customer WHERE email = ? AND Phone_No = ?";
+      query = "SELECT * FROM customer WHERE Email = ? AND Phone_No = ?";
       params = [email.toLowerCase(), phone];
     } else if (email) {
-      query = "SELECT * FROM customer WHERE email = ?";
+      query = "SELECT * FROM customer WHERE Email = ?";
       params = [email.toLowerCase()];
     } else if (phone) {
       query = "SELECT * FROM customer WHERE Phone_No = ?";
@@ -238,10 +297,10 @@ router.post("/reset-password", async (req, res) => {
     let params = [];
 
     if (email && phone) {
-      query = "UPDATE customer SET Password = ? WHERE email = ? AND Phone_No = ?";
+      query = "UPDATE customer SET Password = ? WHERE Email = ? AND Phone_No = ?";
       params = [await bcrypt.hash(newPassword, 10), email.toLowerCase(), phone];
     } else if (email) {
-      query = "UPDATE customer SET Password = ? WHERE email = ?";
+      query = "UPDATE customer SET Password = ? WHERE Email = ?";
       params = [await bcrypt.hash(newPassword, 10), email.toLowerCase()];
     } else if (phone) {
       query = "UPDATE customer SET Password = ? WHERE Phone_No = ?";
@@ -263,5 +322,39 @@ router.post("/reset-password", async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 });
+
+// Google OAuth Routes
+router.get("/google",
+  passport.authenticate("google", { scope: ["profile", "email"] })
+);
+
+router.get("/google/callback",
+  passport.authenticate("google", { failureRedirect: "http://localhost:3000/login" }),
+  async (req, res) => {
+    try {
+      console.log("Google OAuth callback - req.user:", req.user);
+      if (!req.user) {
+        console.error("No user found in req.user");
+        return res.redirect("http://localhost:3000/login?error=no_user");
+      }
+
+      const token = generateToken({ id: req.user.customer_Id, email: req.user.Email });
+      console.log("Generated token for user:", req.user.Email);
+
+      // Redirect to frontend with token
+      const redirectUrl = `http://localhost:3000/login?token=${token}&user=${encodeURIComponent(JSON.stringify({
+        id: req.user.customer_Id,
+        first_name: req.user.F_Name,
+        last_name: req.user.L_Name,
+        email: req.user.Email,
+      }))}`;
+      console.log("Redirecting to:", redirectUrl);
+      res.redirect(redirectUrl);
+    } catch (error) {
+      console.error("Error during Google OAuth callback:", error);
+      res.redirect("http://localhost:3000/login?error=google_auth_failed");
+    }
+  }
+);
 
 module.exports = router;

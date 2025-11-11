@@ -1,4 +1,4 @@
-import React, { createContext, useState, useEffect } from 'react';
+import React, { createContext, useState, useEffect, useCallback } from 'react';
 
 export const UserContext = createContext(null);
 
@@ -32,10 +32,10 @@ export const UserProvider = ({ children }) => {
     }
   }, [token]);
 
-  const login = (userData, authToken) => {
+  const login = useCallback((userData, authToken) => {
     setUser(userData);
     setToken(authToken);
-  };
+  }, []);
 
   const logout = () => {
     setUser(null);

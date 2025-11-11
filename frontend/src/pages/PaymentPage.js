@@ -4,10 +4,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { UserContext } from '../contexts/UserContext';
 import OrderSummary from '../components/OrderSummary';
-
-console.log("Frontend Razorpay Key:", process.env.REACT_APP_RAZORPAY_KEY_ID);
-
-
+  
 const PaymentPage = () => {
   const location = useLocation();
   const navigate = useNavigate();

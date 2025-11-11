@@ -1,12 +1,13 @@
 
-import React, { useState, useContext } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import React, { useState, useContext, useEffect, useRef } from 'react';
+import { useNavigate, Link, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import { UserContext } from '../contexts/UserContext';
 
 const LoginPage = () => {
   const { login } = useContext(UserContext);
   const navigate = useNavigate();
+  const location = useLocation();
 
   const [formData, setFormData] = useState({
     email: '',
@@ -15,6 +16,31 @@ const LoginPage = () => {
 
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
+  const hasProcessed = useRef(false);
+
+  useEffect(() => {
+    if (hasProcessed.current) return;
+    const urlParams = new URLSearchParams(location.search);
+    const token = urlParams.get('token');
+    const user = urlParams.get('user');
+    const errorParam = urlParams.get('error');
+
+    if (token && user) {
+      hasProcessed.current = true;
+      try {
+        const userData = JSON.parse(decodeURIComponent(user));
+        login(userData, token);
+        // Clear the URL parameters after successful login
+        navigate('/', { replace: true });
+      } catch (err) {
+        console.error('Error parsing user data:', err);
+        setError('Google login failed. Please try again.');
+      }
+    } else if (errorParam) {
+      hasProcessed.current = true;
+      setError('Google login failed. Please try again.');
+    }
+  }, [location.search, login, navigate]); // login is now stable due to useCallback
 
   const handleChange = (e) => {
     setFormData({...formData, [e.target.name]: e.target.value});
@@ -100,6 +126,8 @@ const LoginPage = () => {
           fontFamily: "'Poppins', sans-serif",
           marginBottom: '40px'
         }}>Login</h2>
+        
+
         <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '30px' }}>
           <div style={{ position: 'relative', marginBottom: '10px' }}>
             <span style={{
@@ -117,6 +145,7 @@ const LoginPage = () => {
               value={formData.email}
               onChange={handleChange}
               required
+              autoComplete="email"
               style={{
                 width: '90%',
                 padding: '12px 15px 12px 40px',
@@ -150,6 +179,7 @@ const LoginPage = () => {
               value={formData.password}
               onChange={handleChange}
               required
+              autoComplete="current-password"
               style={{
                 width: '90%',
                 padding: '12px 15px 12px 40px',
@@ -192,6 +222,37 @@ const LoginPage = () => {
           }}>
             Log In
           </button>
+          {/* Google Login Button */}
+        <button
+          type="button"
+          onClick={() => window.location.href = 'http://localhost:5000/auth/google'}
+          style={{
+            width: '100%',
+            padding: '15px',
+            background: '#4285F4',
+            border: 'none',
+            borderRadius: '50px',
+            color: '#ffffff',
+            fontSize: '1.1rem',
+            fontWeight: 'bold',
+            fontFamily: "'Poppins', sans-serif",
+            cursor: 'pointer',
+            transition: 'all 0.3s',
+            position: 'relative',
+            overflow: 'hidden',
+            marginBottom: '20px'
+          }}
+          onMouseEnter={(e) => {
+            e.target.style.transform = 'scale(1.05)';
+            e.target.style.boxShadow = '0 0 18px rgba(66, 133, 244, 0.4)';
+          }}
+          onMouseLeave={(e) => {
+            e.target.style.transform = 'none';
+            e.target.style.boxShadow = 'none';
+          }}
+        >
+          Login with Google
+        </button>
         </form>
         <div style={{
           display: 'flex',

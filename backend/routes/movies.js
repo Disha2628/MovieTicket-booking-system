@@ -106,4 +106,45 @@ router.get('/by-title/:title', async (req, res) => {
   }
 });
 
+// Route to get cast for a movie by ID
+router.get('/:id/cast', async (req, res) => {
+  try {
+    const [rows] = await pool.execute(`
+      SELECT
+        a.Name AS name,
+        ma.Role_Name AS role,
+        a.actor_pic AS img
+      FROM movie_actors ma
+      JOIN actors a ON ma.Actor_Id = a.Actor_Id
+      WHERE ma.movie_Id = ?
+    `, [req.params.id]);
+
+    res.json(rows);
+  } catch (error) {
+    console.error('Error fetching cast:', error);
+    res.status(500).json({ error: 'Failed to fetch cast' });
+  }
+});
+
+// Route to get reviews for a movie by ID
+router.get('/:id/reviews', async (req, res) => {
+  try {
+    const [rows] = await pool.execute(`
+      SELECT
+        Review_Id AS id,
+        Rating AS rating,
+        Comment AS review,
+        Reviewed_At AS reviewedAt
+      FROM reviews
+      WHERE movie_Id = ?
+      ORDER BY Reviewed_At DESC
+    `, [req.params.id]);
+
+    res.json(rows);
+  } catch (error) {
+    console.error('Error fetching reviews:', error);
+    res.status(500).json({ error: 'Failed to fetch reviews' });
+  }
+});
+
 module.exports = router;

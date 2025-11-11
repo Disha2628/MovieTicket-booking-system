@@ -12,8 +12,7 @@ const Navbar = ({ user }) => {
     navigate('/');
   };
 
-  console.log("NAVBAR USER =", user);
-  console.log("USER ID =", user?.id);
+
   return (
     <nav className="navbar">
       <div>

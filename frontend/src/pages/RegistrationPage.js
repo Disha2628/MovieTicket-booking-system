@@ -1,5 +1,5 @@
- import React, { useState, useContext } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import React, { useState, useContext, useEffect } from 'react';
+import { useNavigate, Link, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import { UserContext } from '../contexts/UserContext';
 
@@ -100,7 +100,6 @@ const RegistrationPage = () => {
           fontFamily: "'Poppins', sans-serif",
           marginBottom: '40px'
         }}>Register</h2>
-        
         <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '30px' }}>
           <div style={{ position: 'relative' }}>
             <span style={{
@@ -118,6 +117,7 @@ const RegistrationPage = () => {
               value={formData.first_name}
               onChange={handleChange}
               required
+              autoComplete="given-name"
               style={{
                 width: '90%',
                 padding: '12px 15px 12px 40px',
@@ -158,6 +158,7 @@ const RegistrationPage = () => {
               value={formData.last_name}
               onChange={handleChange}
               required
+              autoComplete="family-name"
               style={{
                 width: '90%',
                 padding: '12px 15px 12px 40px',
@@ -191,6 +192,7 @@ const RegistrationPage = () => {
               value={formData.email}
               onChange={handleChange}
               required
+              autoComplete="email"
               style={{
                 width: '90%',
                 padding: '12px 15px 12px 40px',
@@ -224,6 +226,7 @@ const RegistrationPage = () => {
               value={formData.phn_no}
               onChange={handleChange}
               required
+              autoComplete="tel"
               style={{
                 width: '90%',
                 padding: '12px 15px 12px 40px',
@@ -257,6 +260,7 @@ const RegistrationPage = () => {
               value={formData.password}
               onChange={handleChange}
               required
+              autoComplete="new-password"
               style={{
                 width: '90%',
                 padding: '12px 15px 12px 40px',

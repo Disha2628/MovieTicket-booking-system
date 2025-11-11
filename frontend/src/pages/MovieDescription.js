@@ -13,20 +13,7 @@ const castData = [
   { name: "Faisal Malik", role: "Yadav", img: "/actor_pics/actor5.jpeg" }
 ];
 
-const reviews = [
-  {
-    user: "Mahima",
-    rating: 10,
-    review: "The visuals and emotions blend perfectly.",
-    daysAgo: 13
-  },
-  {
-    user: "User",
-    rating: 10,
-    review: "Amazing story and superb direction. Loved it!",
-    daysAgo: 13
-  }
-];
+
 
 // Trailer Modal Component
 const TrailerModal = ({ isOpen, onClose, trailerUrl }) => {
@@ -110,11 +97,11 @@ const MovieHeroSection = ({ movie, isComingSoon, openTrailerModal, navigate, use
 );
 
 // CastSection Component
-const CastSection = () => (
+const CastSection = ({ cast }) => (
   <div className="cast-section">
     <h2 className="section-title">Cast</h2>
     <div className="cast-grid">
-      {castData.map((actor, index) => (
+      {cast.map((actor, index) => (
         <div key={index} className="cast-card">
           <img src={actor.img} alt={actor.name} className="cast-image" />
           <h3 className="cast-name">{actor.name}</h3>
@@ -126,25 +113,31 @@ const CastSection = () => (
 );
 
 // ReviewsSection Component
-const ReviewsSection = () => (
+const ReviewsSection = ({ reviews }) => (
   <div className="reviews-section">
     <h2 className="section-title">Top Reviews</h2>
     <div className="reviews-list">
-      {reviews.map((review, index) => (
-        <div key={index} className="review-card">
-          <div className="review-header">
-            <img src={`https://via.placeholder.com/40`} alt={review.user} className="review-avatar" />
-            <div className="review-user-info">
-              <h3 className="review-user">{review.user}</h3>
-              <div className="review-rating">
-                <span className="rating-stars">⭐ {review.rating}/10</span>
-                <span className="review-date">{review.daysAgo} days ago</span>
+      {reviews.length > 0 ? reviews.map((review, index) => {
+        const reviewedDate = new Date(review.reviewedAt);
+        const now = new Date();
+        const diffTime = Math.abs(now - reviewedDate);
+        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+        return (
+          <div key={review.id} className="review-card">
+            <div className="review-header">
+              <div className="review-user-info">
+                <div className="review-rating">
+                  <span className="rating-stars">⭐ {review.rating}/5</span>
+                  <span className="review-date">{diffDays} days ago</span>
+                </div>
               </div>
             </div>
+            <p className="review-text">{review.review}</p>
           </div>
-          <p className="review-text">{review.review}</p>
-        </div>
-      ))}
+        );
+      }) : (
+        <p>No reviews available.</p>
+      )}
     </div>
   </div>
 );
@@ -154,6 +147,8 @@ const MovieDescription = ({ movieId }) => {
   const { user } = useContext(UserContext);
   const navigate = useNavigate();
   const [movie, setMovie] = useState(null);
+  const [cast, setCast] = useState(castData);
+  const [reviews, setReviews] = useState([]);
   const [error, setError] = useState('');
   const [trailerModalOpen, setTrailerModalOpen] = useState(false);
   const [currentTrailerUrl, setCurrentTrailerUrl] = useState('');
@@ -177,8 +172,32 @@ const MovieDescription = ({ movieId }) => {
         console.error(err);
       }
     };
+
+    const fetchCast = async () => {
+      try {
+        const castResponse = await axios.get(`/api/movies/${movieId || id}/cast`);
+        setCast(castResponse.data);
+      } catch (err) {
+        console.error('Failed to fetch cast, using fallback:', err);
+        // Fallback to hard-coded castData
+        setCast(castData);
+      }
+    };
+
+    const fetchReviews = async () => {
+      try {
+        const reviewsResponse = await axios.get(`/api/movies/${movieId || id}/reviews`);
+        setReviews(reviewsResponse.data);
+      } catch (err) {
+        console.error('Failed to fetch reviews:', err);
+        setReviews([]);
+      }
+    };
+
     if (movieId || id) {
       fetchMovie();
+      fetchCast();
+      fetchReviews();
     }
   }, [movieId, id]);
 
@@ -216,8 +235,8 @@ const MovieDescription = ({ movieId }) => {
       <div className="movie-description-page">
         <div className="movie-description-container">
           <MovieHeroSection movie={movie} isComingSoon={isComingSoon} openTrailerModal={openTrailerModal} navigate={navigate} user={user} />
-          <CastSection />
-          <ReviewsSection />
+          <CastSection cast={cast} />
+          <ReviewsSection reviews={reviews} />
         </div>
         <TrailerModal isOpen={trailerModalOpen} onClose={closeTrailerModal} trailerUrl={currentTrailerUrl} />
       </div>
