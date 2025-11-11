@@ -7,69 +7,7 @@ import SeatSelection from '../components/SeatSelection';
 import axios from 'axios';
 import './ShowSelectionPage.css';
 
-/* ---------- fallback sample data ---------- */
-const rawData = [
-  {
-    theatre: 'INOX: C-21 Mall',
-    shows: [
-      { time: '08:15 AM', status: 'available' },
-      { time: '10:15 AM', status: 'available' },
-      { time: '11:15 AM', status: 'available' },
-      { time: '01:15 PM', status: 'available' },
-      { time: '02:15 PM', status: 'available' },
-      { time: '02:55 PM', status: 'available' },
-      { time: '04:15 PM', status: 'available' },
-      { time: '05:15 PM', status: 'available' },
-      { time: '07:15 PM', status: 'available' },
-      { time: '08:15 PM', status: 'available' },
-      { time: '10:15 PM', status: 'available' },
-      { time: '11:15 PM', status: 'available' },
-    ],
-  },
-  {
-    theatre: 'PVR: Treasure Island Mall, Indore',
-    shows: [
-      { time: '09:20 AM', status: 'available' },
-      { time: '10:15 AM', status: 'available' },
-      { time: '11:15 AM', status: 'available' },
-      { time: '12:20 PM', status: 'fast_filling' },
-      { time: '01:15 PM', status: 'available' },
-      { time: '02:15 PM', status: 'available' },
-      { time: '04:15 PM', status: 'available' },
-      { time: '05:15 PM', status: 'available' },
-      { time: '07:15 PM', status: 'available' },
-      { time: '08:15 PM', status: 'available' },
-      { time: '10:15 PM', status: 'available' },
-      { time: '11:15 PM', status: 'available' },
-    ],
-  },
-  {
-    theatre: 'Velocity III: Miraj Cinemas, Indore',
-    shows: [
-      { time: '09:00 AM', status: 'available' },
-      { time: '11:45 AM', status: 'available' },
-      { time: '02:30 PM', status: 'available' },
-      { time: '05:15 PM', status: 'available' },
-      { time: '08:00 PM', status: 'available' },
-      { time: '10:45 PM', status: 'available' },
-    ],
-  },
-  {
-    theatre: 'INOX: Phoenix Citadel Mall, Indore',
-    shows: [
-      { time: '09:00 AM', status: 'available' },
-      { time: '10:00 AM', status: 'available' },
-      { time: '12:00 PM', status: 'available' },
-      { time: '01:00 PM', status: 'available' },
-      { time: '03:00 PM', status: 'available' },
-      { time: '04:00 PM', status: 'available' },
-      { time: '06:00 PM', status: 'available' },
-      { time: '07:00 PM', status: 'available' },
-      { time: '09:00 PM', status: 'available' },
-      { time: '10:00 PM', status: 'available' },
-    ],
-  },
-]; 
+
 
 const ShowSelectionPage = () => {
   const location = useLocation();
@@ -82,7 +20,7 @@ const ShowSelectionPage = () => {
   const [selectedSeatType, setSelectedSeatType] = useState(null);
   const [selectedSeatCount, setSelectedSeatCount] = useState(1);
   const [movieId, setMovieId] = useState(null);
-  const [showsData, setShowsData] = useState(rawData);
+  const [showsData, setShowsData] = useState([]);
   const [loading, setLoading] = useState(false);
 
  
@@ -169,7 +107,7 @@ const ShowSelectionPage = () => {
         if (!mounted) return;
 
         const grouped = groupShowsByTheatre(res.data);
-        setShowsData(grouped.length > 0 ? grouped : rawData);
+        setShowsData(grouped);
       } catch (err) {
         if (axios.isCancel && axios.isCancel(err)) {
           // cancelled — ignore
@@ -177,7 +115,7 @@ const ShowSelectionPage = () => {
           // fetch aborted — ignore
         } else {
           console.error('Error fetching shows:', err);
-          setShowsData(rawData);
+          setShowsData([]);
         }
       } finally {
         if (mounted) setLoading(false);
@@ -285,6 +223,8 @@ const ShowSelectionPage = () => {
 
         {loading ? (
           <div className="loading-text">Loading shows...</div>
+        ) : showsData.length === 0 ? (
+          <div className="no-shows-text">No shows available for this date</div>
         ) : (
           <TheatreShows rawData={showsData} onSelectShow={handleSelectShow} />
         )}
