@@ -10,44 +10,12 @@ const SeatLayoutPage = () => {
   const { selectedShow, selectedSeatType, selectedSeatCount, movieName } =
     location.state || {};
 
-  // Fallback data
-  const fallbackSeatCategories = [
-    {
-      name: "Platinum",
-      price: 280,
-      rows: [
-        { row: "A", seats: Array.from({ length: 18 }, (_, i) => (i + 1).toString().padStart(2, "0")) },
-        { row: "B", seats: Array.from({ length: 18 }, (_, i) => (i + 1).toString().padStart(2, "0")) },
-      ],
-    },
-    {
-      name: "Gold",
-      price: 220,
-      rows: [
-        { row: "C", seats: Array.from({ length: 18 }, (_, i) => (i + 1).toString().padStart(2, "0")) },
-        { row: "D", seats: Array.from({ length: 18 }, (_, i) => (i + 1).toString().padStart(2, "0")) },
-        { row: "E", seats: Array.from({ length: 18 }, (_, i) => (i + 1).toString().padStart(2, "0")) },
-        { row: "F", seats: Array.from({ length: 18 }, (_, i) => (i + 1).toString().padStart(2, "0")) },
-      ],
-    },
-    {
-      name: "Silver",
-      price: 180,
-      rows: [
-        { row: "G", seats: Array.from({ length: 18 }, (_, i) => (i + 1).toString().padStart(2, "0")) },
-        { row: "H", seats: Array.from({ length: 18 }, (_, i) => (i + 1).toString().padStart(2, "0")) },
-        { row: "I", seats: Array.from({ length: 18 }, (_, i) => (i + 1).toString().padStart(2, "0")) },
-        { row: "J", seats: Array.from({ length: 18 }, (_, i) => (i + 1).toString().padStart(2, "0")) },
-      ],
-    },
-  ];
-  const fallbackRowAlphabets = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"];
-
-  const [seatCategories, setSeatCategories] = useState(fallbackSeatCategories);
-  const [rowAlphabets, setRowAlphabets] = useState(fallbackRowAlphabets);
+  const [seatCategories, setSeatCategories] = useState([]);
+  const [rowAlphabets, setRowAlphabets] = useState([]);
 
   const [selectedSeats, setSelectedSeats] = useState([]);
   const [dbSeats, setDbSeats] = useState([]); // ✅ DB seats stored here
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     // Parse layout_structure and set dynamic layout
@@ -57,7 +25,6 @@ const SeatLayoutPage = () => {
         const layout = typeof layoutStructure === 'string' ? JSON.parse(layoutStructure) : layoutStructure;
         const rows = layout.rows;
         const cols = layout.columns;
-        console.log(rows , " " , cols);
         if (rows >= 5 && cols > 0) {
           // Generate row alphabets
           const alphabets = [];
@@ -85,25 +52,26 @@ const SeatLayoutPage = () => {
           ];
           setSeatCategories(dynamicCategories);
         } else {
-          // Invalid layout, use fallback
-          setSeatCategories(fallbackSeatCategories);
-          setRowAlphabets(fallbackRowAlphabets);
+          // Invalid layout, no seats
+          setSeatCategories([]);
+          setRowAlphabets([]);
         }
       } catch (error) {
         console.error("Error parsing layout_structure:", error);
-        // Use fallback
-        setSeatCategories(fallbackSeatCategories);
-        setRowAlphabets(fallbackRowAlphabets);
+        // No seats
+        setSeatCategories([]);
+        setRowAlphabets([]);
       }
     } else {
-      // No layout_structure, use fallback
-      setSeatCategories(fallbackSeatCategories);
-      setRowAlphabets(fallbackRowAlphabets);
+      // No layout_structure, no seats
+      setSeatCategories([]);
+      setRowAlphabets([]);
     }
   }, [selectedShow]);
 
   useEffect(() => {
     const fetchSeats = async () => {
+      setLoading(true);
       try {
         const showId = selectedShow?.show?.show_id;
         const response = await fetch(
@@ -112,6 +80,12 @@ const SeatLayoutPage = () => {
 
         if (response.ok) {
           const seats = await response.json();
+
+          if (seats.length === 0) {
+            setDbSeats({});
+            setLoading(false);
+            return;
+          }
 
           // ✅ converting DB objects to:  { "A05": "unavailable" }
           const mappedSeats = {};
@@ -122,9 +96,13 @@ const SeatLayoutPage = () => {
           setDbSeats(mappedSeats);
         } else {
           console.error("Failed to fetch seats from DB");
+          setDbSeats({});
         }
       } catch (error) {
         console.error("Error fetching seats:", error);
+        setDbSeats({});
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -151,6 +129,22 @@ const SeatLayoutPage = () => {
     return (
       <div style={{ padding: "20px", color: "white" }}>
         Missing booking details. Please select show and seats first.
+      </div>
+    );
+  }
+
+  if (loading) {
+    return (
+      <div style={{ padding: "20px", color: "white" }}>
+        Loading seats...
+      </div>
+    );
+  }
+
+  if (seatCategories.length === 0 || Object.keys(dbSeats).length === 0) {
+    return (
+      <div style={{ padding: "20px", color: "white" }}>
+        No seats available for this show
       </div>
     );
   }

@@ -99,7 +99,6 @@ const ShowSelectionPage = () => {
       try {
         const fullDate = days[selectedDateIndex].fullDate;
         const selectedDate = `${fullDate.getFullYear()}-${String(fullDate.getMonth() + 1).padStart(2, '0')}-${String(fullDate.getDate()).padStart(2, '0')}`;
-        console.log(selectedDate);
         const res = await axios.get(`/api/shows/movie/${movieId}/date/${selectedDate}`, {
           signal: controller.signal
         });
