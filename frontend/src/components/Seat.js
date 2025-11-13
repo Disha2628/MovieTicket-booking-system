@@ -2,25 +2,18 @@ import React from 'react';
 
 const Seat = ({ seatId, seatNum, isBooked, isSelected, onClick }) => {
   const seatColor = isBooked
-    ? '#750000'
+    ? 'bg-red-900'
     : isSelected
-    ? '#00CC66'
-    : '#333333';
+    ? 'bg-green-500'
+    : 'bg-gray-700';
 
   return (
     <button
       disabled={isBooked}
       onClick={onClick}
-      style={{
-        width: '28px',
-        height: '25px',
-        backgroundColor: seatColor,
-        border: 'none',
-        borderRadius: '6px',
-        color: 'white',
-        cursor: isBooked ? 'not-allowed' : 'pointer',
-        fontWeight: '600',
-      }}
+      className={`w-7 h-6 ${seatColor} border-none rounded-md text-white cursor-pointer font-semibold hover:scale-110 transition-transform duration-200 ${
+        isBooked ? 'cursor-not-allowed' : ''
+      }`}
       title={seatId}
     >
       {seatNum}

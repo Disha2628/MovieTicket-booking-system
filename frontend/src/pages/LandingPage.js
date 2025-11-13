@@ -1,6 +1,5 @@
 import React, { useEffect, useState, useContext, useRef } from 'react';
-import Navbar from '../components/Navbar';
-import Sidebar from '../components/Sidebar';
+import Navbar from '../components/Navbar'; 
 import MovieGrid from '../components/MovieGrid';
 import Footer from '../components/Footer';
 import About from '../components/About';
@@ -109,7 +108,7 @@ const LandingPage = () => {
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-black text-white flex flex-col items-center p-4 relative overflow-hidden">
       <Navbar />
       {/* Animated background elements for beauty */}
-      <div className="absolute inset-0 bg-gradient-to-r from-purple-1200/20 to-pink-900/20 animate-pulse"></div>
+      <div className="absolute inset-0 bg-gradient-to-r from-purple-1000/20 to-pink-900/20 animate-pulse"></div>
       <div className="absolute top-10 left-10 w-32 h-32 bg-purple-500/10 rounded-full blur-xl animate-bounce"></div>
       <div className="absolute bottom-10 right-10 w-40 h-40 bg-pink-500/10 rounded-full blur-xl animate-bounce delay-1000"></div>
       {/* Subtle radial glow for depth */}

@@ -21,7 +21,7 @@ function AppContent() {
 
   return (
     <BrowserRouter>
-    <Navbar user={user} />
+    <Navbar />
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/movies" element={<LandingPage />} />

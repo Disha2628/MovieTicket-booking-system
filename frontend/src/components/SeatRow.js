@@ -3,19 +3,12 @@ import Seat from './Seat';
 
 const SeatRow = ({ row, groups, seats, selectedSeats, onSeatClick, dbSeats }) => {
   return (
-    <div
-      style={{
-        display: 'flex',
-        justifyContent: 'center',
-        gap: '40px',
-        marginBottom: '10px',
-      }}
-    >
+    <div className="flex justify-center gap-10 mb-2">
       {/* If groups exist (Gold/Silver), use them. Otherwise render seats directly (Platinum). */}
       {(groups || [seats]).map((group, gIndex) => (
         <div
           key={gIndex}
-          style={{ display: 'flex', gap: '8px' }}
+          className="flex gap-2"
         >
           {group.map((seatNum) => {
             const seatId = `${row}${seatNum}`;

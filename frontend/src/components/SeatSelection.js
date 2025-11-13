@@ -2,28 +2,32 @@ import React from 'react';
 
 const SeatSelection = ({ seatTypes, selectedSeatType, setSelectedSeatType, selectedSeatCount, setSelectedSeatCount, selectedShow, onNext }) => {
   return (
-    <div className="seat-selection">
-      <h2 className="seat-selection-title">Select Seats for {selectedShow.show.time} {selectedShow.show.label ? `(${selectedShow.show.label})` : ''}</h2>
-      <div className="seat-types">
+    <div className="bg-white/5 backdrop-blur-lg rounded-3xl border border-white/10 shadow-2xl p-8">
+      <h2 className="text-2xl font-bold text-white mb-6">Select Seats for {selectedShow.show.time} {selectedShow.show.label ? `(${selectedShow.show.label})` : ''}</h2>
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
         {seatTypes.map((seat) => (
           <div
             key={seat.type}
             onClick={() => setSelectedSeatType(seat)}
-            className={`seat-type-card ${selectedSeatType?.type === seat.type ? 'selected' : ''}`}
+            className={`bg-gray-800 border rounded-xl p-4 text-center cursor-pointer transition-all duration-300 hover:scale-105 ${
+              selectedSeatType?.type === seat.type
+                ? 'border-blue-500 bg-gray-700'
+                : 'border-gray-600 hover:border-blue-500'
+            }`}
           >
-            <div className="seat-type-name">{seat.type}</div>
-            <div className="seat-price">₹{seat.price}</div>
-            <div className="seat-availability">AVAILABLE</div>
+            <div className="font-semibold text-white mb-2">{seat.type}</div>
+            <div className="text-lg font-bold text-white mb-1">₹{seat.price}</div>
+            <div className="text-sm text-green-400 font-semibold">AVAILABLE</div>
           </div>
         ))}
       </div>
-      <div className="seat-count-selector">
-        <label htmlFor="seatCount" className="seat-count-label">How many seats?</label>
+      <div className="mb-6">
+        <label htmlFor="seatCount" className="block text-white font-semibold mb-2">How many seats?</label>
         <select
           id="seatCount"
           value={selectedSeatCount}
           onChange={(e) => setSelectedSeatCount(Number(e.target.value))}
-          className="seat-count-select"
+          className="px-4 py-2 border border-gray-600 rounded-lg bg-gray-800 text-white outline-none focus:border-blue-500 transition-colors duration-300"
         >
           {[...Array(10).keys()].map((num) => (
             <option key={num + 1} value={num + 1}>{num + 1}</option>
@@ -33,7 +37,11 @@ const SeatSelection = ({ seatTypes, selectedSeatType, setSelectedSeatType, selec
       <button
         onClick={onNext}
         disabled={!selectedSeatType}
-        className={`next-button ${!selectedSeatType ? 'disabled' : ''}`}
+        className={`w-full py-4 rounded-full text-white text-xl font-bold font-poppins border-none transition-all duration-300 ${
+          selectedSeatType
+            ? 'bg-gradient-to-r from-blue-600 to-purple-600 cursor-pointer hover:scale-105 shadow-lg hover:shadow-blue-500/50'
+            : 'bg-gray-600 cursor-not-allowed'
+        }`}
       >
         Next
       </button>

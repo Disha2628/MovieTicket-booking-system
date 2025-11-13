@@ -1,10 +1,9 @@
-
 import React, { useContext } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { UserContext } from '../contexts/UserContext';
 import OrderSummary from '../components/OrderSummary';
-  
+
 const PaymentPage = () => {
   const location = useLocation();
   const navigate = useNavigate();
@@ -105,34 +104,34 @@ const PaymentPage = () => {
 
   if (!selectedShow || !selectedSeats) {
     return (
-      <div style={{ padding: '20px', color: 'white' }}>
+      <div className="p-5 text-white">
         Missing booking info.
       </div>
     );
   }
 
   return (
-    <div
-      style={{
-        padding: '50px',
-        color: 'white',
-        maxWidth: '600px',
-        margin: '110px auto',
-        fontFamily: 'Arial, sans-serif',
-        backgroundColor: '#1A1A1A',
-        borderRadius: '12px',
-      }}
-    >
-      <OrderSummary
-        movieName={movieName}
-        selectedShow={selectedShow}
-        totalCost={totalCost}
-        convenienceFee={convenienceFee}
-        donation={donation}
-        orderTotal={orderTotal}
-        handlePayment={handlePayment}
-        canClickPayNow={true}
-      />
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-black relative overflow-hidden">
+      {/* Enhanced background effects */}
+      <div className="absolute inset-0 bg-gradient-to-r from-purple-500/10 via-transparent to-pink-500/10 animate-pulse"></div>
+      <div className="absolute top-20 left-20 w-64 h-64 bg-purple-500/10 rounded-full blur-3xl animate-bounce"></div>
+      <div className="absolute bottom-20 right-20 w-80 h-80 bg-pink-500/10 rounded-full blur-3xl animate-bounce delay-1000"></div>
+      <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-cyan-500/5 rounded-full blur-3xl animate-pulse delay-500"></div>
+
+      <div className="relative z-10 max-w-4xl mx-auto px-4 py-8">
+        <div className="bg-white/5 backdrop-blur-lg rounded-3xl border border-white/10 shadow-2xl p-8">
+          <OrderSummary
+            movieName={movieName}
+            selectedShow={selectedShow}
+            totalCost={totalCost}
+            convenienceFee={convenienceFee}
+            donation={donation}
+            orderTotal={orderTotal}
+            handlePayment={handlePayment}
+            canClickPayNow={true}
+          />
+        </div>
+      </div>
     </div>
   );
 };

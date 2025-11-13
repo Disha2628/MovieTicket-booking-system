@@ -3,16 +3,8 @@ import SeatRow from './SeatRow';
 
 const SeatCategory = ({ category, selectedSeats, onSeatClick, dbSeats }) => {
   return (
-    <div
-      style={{ marginBottom: '40px', textAlign: 'center' }}
-    >
-      <div
-        style={{
-          fontWeight: '900',
-          color: 'white',
-          marginBottom: '15px',
-        }}
-      >
+    <div className="mb-10 text-center">
+      <div className="font-black text-white mb-4">
         ₹{category.price} {category.name}
       </div>
 

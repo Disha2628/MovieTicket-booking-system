@@ -5,9 +5,6 @@ import TheatreShows from '../components/TheatreShows';
 import MovieDescription from './MovieDescription';
 import SeatSelection from '../components/SeatSelection';
 import axios from 'axios';
-import './ShowSelectionPage.css';
-
-
 
 const ShowSelectionPage = () => {
   const location = useLocation();
@@ -23,7 +20,7 @@ const ShowSelectionPage = () => {
   const [showsData, setShowsData] = useState([]);
   const [loading, setLoading] = useState(false);
 
- 
+
   const days = useMemo(() => {
     return [
       {
@@ -208,28 +205,34 @@ const ShowSelectionPage = () => {
   };
 
   return (
-    <div className="show-selection-page">
-      <div className="show-selection-container">
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-black relative overflow-hidden">
+      {/* Enhanced background effects */}
+      <div className="absolute inset-0 bg-gradient-to-r from-purple-500/10 via-transparent to-pink-500/10 animate-pulse"></div>
+      <div className="absolute top-20 left-20 w-64 h-64 bg-purple-500/10 rounded-full blur-3xl animate-bounce"></div>
+      <div className="absolute bottom-20 right-20 w-80 h-80 bg-pink-500/10 rounded-full blur-3xl animate-bounce delay-1000"></div>
+      <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-cyan-500/5 rounded-full blur-3xl animate-pulse delay-500"></div>
+
+      <div className="relative z-10 max-w-7xl mx-auto px-4 py-8">
         {finalMovieName && (
-          <h1 className="page-title">
+          <h1 className="text-6xl font-bold bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent font-poppins text-center mb-8">
             {finalMovieName}
           </h1>
         )}
 
-        <h2 className="page-subtitle">Select Date and Show</h2>
+        <h2 className="text-3xl font-bold text-white font-poppins text-center mb-6">Select Date and Show</h2>
 
         <DateSelector days={days} selectedDateIndex={selectedDateIndex} onDateSelect={setSelectedDateIndex} />
 
         {loading ? (
-          <div className="loading-text">Loading shows...</div>
+          <div className="text-center text-white text-xl mt-8">Loading shows...</div>
         ) : showsData.length === 0 ? (
-          <div className="no-shows-text">No shows available for this date</div>
+          <div className="text-center text-white text-xl mt-8">No shows available for this date</div>
         ) : (
           <TheatreShows rawData={showsData} onSelectShow={handleSelectShow} />
         )}
 
         {selectedShow && (
-          <div id="seat-selection">
+          <div id="seat-selection" className="mt-12">
             <SeatSelection
               seatTypes={seatTypes}
               selectedSeatType={selectedSeatType}

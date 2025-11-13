@@ -3,12 +3,14 @@ import { useNavigate } from 'react-router-dom';
 import { UserContext } from '../contexts/UserContext';
 import './Navbar.css'
 
-const Navbar = ({ user }) => {
-  const { setUser } = React.useContext(UserContext);
+const Navbar = () => {
+  const { user, setUser } = React.useContext(UserContext);
   const navigate = useNavigate();
 
   const handleLogout = () => {
     setUser(null);
+    localStorage.removeItem('user');
+    localStorage.removeItem('token');
     navigate('/');
   };
 

@@ -36,7 +36,7 @@ router.put('/:id', async (req, res) => {
 const authenticateToken = require('../middleware/auth');
 
 // Get customer booking history
-router.get('/:id/bookings', authenticateToken, async (req, res) => {
+router.get('/:id/bookings',async (req, res) => {
   try {
     const [rows] = await pool.execute(`
       SELECT
@@ -58,7 +58,7 @@ router.get('/:id/bookings', authenticateToken, async (req, res) => {
     JOIN seats seat ON bs.seat_id = seat.seat_id
     WHERE b.Customer_Id = ?
     GROUP BY b.Booking_Id, m.Title, t.Name, t.Address_City, sc.screen_name, s.Show_Date, s.Start_Time, b.Amount
-    ORDER BY s.Show_Date DESC, s.Start_Time DESC;
+    ORDER BY b.Booking_Id DESC;
     `, [req.params.id]);
 
     res.json(rows);

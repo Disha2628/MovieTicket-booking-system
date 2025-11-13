@@ -81,179 +81,54 @@ const ForgotPasswordPage = () => {
   };
 
   return (
-    <div style={{
-      minHeight: '100vh',
-      background: 'linear-gradient(135deg, #080C14 0%, #0D1117 100%)',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      padding: '20px',
-      position: 'relative',
-      overflow: 'hidden'
-    }}>
-      {/* Faint outer vignette */}
-      <div style={{
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0,
-        background: 'radial-gradient(circle at center, transparent 50%, rgba(0,0,0,0.3) 100%)',
-        pointerEvents: 'none'
-      }}></div>
-      <div style={{
-        width: '100%',
-        maxWidth: '700px',
-        minWidth: '400px',
-        background: 'rgba(255, 255, 255, 0.05)',
-        backdropFilter: 'blur(12px)',
-        borderRadius: '24px',
-        border: '1px solid rgba(255, 255, 255, 0.1)',
-        padding: '40px 30px',
-        boxShadow: '0 8px 32px rgba(0, 0, 0, 0.5)',
-        position: 'relative',
-        zIndex: 1,
-        overflow: 'hidden'
-      }}>
-        <h1 style={{
-          textAlign: 'center',
-          color: '#ffffff',
-          fontSize: '3rem',
-          fontWeight: '700',
-          fontFamily: "'Poppins', sans-serif",
-          marginBottom: '20px'
-        }}>Forgot password?</h1>
-        <p style={{
-          textAlign: 'center',
-          color: '#bbbbbb',
-          fontSize: '1.2rem',
-          fontWeight: '400',
-          fontFamily: "'Poppins', sans-serif",
-          marginBottom: '40px'
-        }}>No worries, we'll send you reset instructions.</p>
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-black flex items-center justify-center p-4 relative overflow-hidden">
+      {/* Animated background elements for beauty */}
+      <div className="absolute inset-0 bg-gradient-to-r from-purple-1000/20 to-pink-900/20 animate-pulse"></div>
+      <div className="absolute top-10 left-10 w-32 h-32 bg-purple-500/10 rounded-full blur-xl animate-bounce"></div>
+      <div className="absolute bottom-10 right-10 w-40 h-40 bg-pink-500/10 rounded-full blur-xl animate-bounce delay-1000"></div>
+
+      <div className="w-full max-w-xl min-w-[400px] bg-white/5 backdrop-blur-lg rounded-3xl border border-white/10 p-8 shadow-2xl relative z-10 overflow-hidden">
+        <h1 className="text-center text-white text-4xl font-bold font-poppins mb-6">Forgot password?</h1>
+        <p className="text-center text-gray-400 text-xl font-medium font-poppins mb-8">No worries, we'll send you reset instructions.</p>
+
         {step === 1 ? (
-          <form onSubmit={handleSendOTP} style={{ display: 'flex', flexDirection: 'column', gap: '30px' }}>
+          <form onSubmit={handleSendOTP} className="flex flex-col gap-6">
             <div>
-              <label style={{
-                display: 'block',
-                color: '#ffffff',
-                fontSize: '1rem',
-                fontWeight: '500',
-                marginBottom: '8px',
-                fontFamily: "'Poppins', sans-serif"
-              }}>Email</label>
-              <div style={{ position: 'relative' }}>
-                <span style={{
-                  position: 'absolute',
-                  left: '10px',
-                  top: '50%',
-                  transform: 'translateY(-50%)',
-                  color: '#ffffff',
-                  fontSize: '1.2rem'
-                }}>👤</span>
+              <label className="block text-white text-lg font-medium mb-2 font-poppins">Email</label>
+              <div className="relative">
+                <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-white text-xl">👤</span>
                 <input
                   type="email"
                   name="email"
                   placeholder="Enter your email address"
                   value={formData.email}
                   onChange={handleChange}
-                  style={{
-                    width: '90%',
-                    padding: '12px 15px 12px 40px',
-                    margin: '0 auto',
-                    display: 'block',
-                    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-                    border: '1px solid rgba(255, 255, 255, 0.2)',
-                    borderRadius: '8px',
-                    color: '#ffffff',
-                    fontSize: '1rem',
-                    outline: 'none',
-                    transition: 'border-color 0.3s, box-shadow 0.3s'
-                  }}
-                  onFocus={(e) => e.target.style.boxShadow = '0 0 10px rgba(229, 9, 20, 0.5)'}
-                  onBlur={(e) => e.target.style.boxShadow = 'none'}
+                  className="w-full pl-12 pr-4 py-4 bg-white/10 border border-white/20 rounded-lg text-white text-lg outline-none focus:border-red-500 focus:ring-2 focus:ring-red-500/50 transition-all duration-300"
                 />
               </div>
             </div>
             <div>
-              <label style={{
-                display: 'block',
-                color: '#ffffff',
-                fontSize: '1rem',
-                fontWeight: '500',
-                marginBottom: '8px',
-                fontFamily: "'Poppins', sans-serif"
-              }}>Phone Number</label>
-              <div style={{ position: 'relative' }}>
-                <span style={{
-                  position: 'absolute',
-                  left: '10px',
-                  top: '50%',
-                  transform: 'translateY(-50%)',
-                  color: '#ffffff',
-                  fontSize: '1.2rem'
-                }}>📱</span>
+              <label className="block text-white text-lg font-medium mb-2 font-poppins">Phone Number</label>
+              <div className="relative">
+                <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-white text-xl">📱</span>
                 <input
                   type="tel"
                   name="phone"
                   placeholder="Enter your phone number"
                   value={formData.phone}
                   onChange={handleChange}
-                  style={{
-                    width: '90%',
-                    padding: '12px 15px 12px 40px',
-                    margin: '0 auto',
-                    display: 'block',
-                    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-                    border: '1px solid rgba(255, 255, 255, 0.2)',
-                    borderRadius: '8px',
-                    color: '#ffffff',
-                    fontSize: '1rem',
-                    outline: 'none',
-                    transition: 'border-color 0.3s, box-shadow 0.3s'
-                  }}
-                  onFocus={(e) => e.target.style.boxShadow = '0 0 10px rgba(229, 9, 20, 0.5)'}
-                  onBlur={(e) => e.target.style.boxShadow = 'none'}
+                  className="w-full pl-12 pr-4 py-4 bg-white/10 border border-white/20 rounded-lg text-white text-lg outline-none focus:border-red-500 focus:ring-2 focus:ring-red-500/50 transition-all duration-300"
                 />
               </div>
             </div>
-            <button type="submit" style={{
-              width: '100%',
-              padding: '15px',
-              background: 'linear-gradient(90deg, #E50914, #B20710)',
-              border: 'none',
-              borderRadius: '50px',
-              color: '#ffffff',
-              fontSize: '1.1rem',
-              fontWeight: 'bold',
-              fontFamily: "'Poppins', sans-serif",
-              cursor: 'pointer',
-              transition: 'all 0.3s',
-              position: 'relative',
-              overflow: 'hidden'
-            }}
-            onMouseEnter={(e) => {
-              e.target.style.transform = 'scale(1.05)';
-              e.target.style.boxShadow = '0 0 18px rgba(229, 9, 20, 0.4)';
-            }}
-            onMouseLeave={(e) => {
-              e.target.style.transform = 'none';
-              e.target.style.boxShadow = 'none';
-            }}>
+            <button type="submit" className="w-full py-4 bg-gradient-to-r from-red-600 to-red-800 rounded-full text-white text-xl font-bold font-poppins cursor-pointer border-none hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-red-500/50">
               {getButtonText()}
             </button>
           </form>
         ) : (
-          <form onSubmit={handleResetPassword} style={{ display: 'flex', flexDirection: 'column', gap: '30px' }}>
+          <form onSubmit={handleResetPassword} className="flex flex-col gap-6">
             <div>
-              <label style={{
-                display: 'block',
-                color: '#ffffff',
-                fontSize: '1rem',
-                fontWeight: '500',
-                marginBottom: '8px',
-                fontFamily: "'Poppins', sans-serif"
-              }}>OTP</label>
+              <label className="block text-white text-lg font-medium mb-2 font-poppins">OTP</label>
               <input
                 type="text"
                 name="otp"
@@ -261,32 +136,11 @@ const ForgotPasswordPage = () => {
                 value={formData.otp}
                 onChange={handleChange}
                 required
-                style={{
-                  width: '90%',
-                  padding: '12px 15px',
-                  margin: '0 auto',
-                  display: 'block',
-                  backgroundColor: 'rgba(0, 0, 0, 0.5)',
-                  border: '1px solid rgba(255, 255, 255, 0.2)',
-                  borderRadius: '8px',
-                  color: '#ffffff',
-                  fontSize: '1rem',
-                  outline: 'none',
-                  transition: 'border-color 0.3s, box-shadow 0.3s'
-                }}
-                onFocus={(e) => e.target.style.boxShadow = '0 0 10px rgba(229, 9, 20, 0.5)'}
-                onBlur={(e) => e.target.style.boxShadow = 'none'}
+                className="w-full px-4 py-4 bg-white/10 border border-white/20 rounded-lg text-white text-lg outline-none focus:border-red-500 focus:ring-2 focus:ring-red-500/50 transition-all duration-300"
               />
             </div>
             <div>
-              <label style={{
-                display: 'block',
-                color: '#ffffff',
-                fontSize: '1rem',
-                fontWeight: '500',
-                marginBottom: '8px',
-                fontFamily: "'Poppins', sans-serif"
-              }}>New Password</label>
+              <label className="block text-white text-lg font-medium mb-2 font-poppins">New Password</label>
               <input
                 type="password"
                 name="newPassword"
@@ -294,81 +148,23 @@ const ForgotPasswordPage = () => {
                 value={formData.newPassword}
                 onChange={handleChange}
                 required
-                style={{
-                  width: '90%',
-                  padding: '12px 15px',
-                  margin: '0 auto',
-                  display: 'block',
-                  backgroundColor: 'rgba(0, 0, 0, 0.5)',
-                  border: '1px solid rgba(255, 255, 255, 0.2)',
-                  borderRadius: '8px',
-                  color: '#ffffff',
-                  fontSize: '1rem',
-                  outline: 'none',
-                  transition: 'border-color 0.3s, box-shadow 0.3s'
-                }}
-                onFocus={(e) => e.target.style.boxShadow = '0 0 10px rgba(229, 9, 20, 0.5)'}
-                onBlur={(e) => e.target.style.boxShadow = 'none'}
+                className="w-full px-4 py-4 bg-white/10 border border-white/20 rounded-lg text-white text-lg outline-none focus:border-red-500 focus:ring-2 focus:ring-red-500/50 transition-all duration-300"
               />
             </div>
-            <button type="submit" style={{
-              width: '100%',
-              padding: '15px',
-              background: 'linear-gradient(90deg, #E50914, #B20710)',
-              border: 'none',
-              borderRadius: '50px',
-              color: '#ffffff',
-              fontSize: '1.1rem',
-              fontWeight: 'bold',
-              fontFamily: "'Poppins', sans-serif",
-              cursor: 'pointer',
-              transition: 'all 0.3s',
-              position: 'relative',
-              overflow: 'hidden'
-            }}
-            onMouseEnter={(e) => {
-              e.target.style.transform = 'scale(1.05)';
-              e.target.style.boxShadow = '0 0 18px rgba(229, 9, 20, 0.4)';
-            }}
-            onMouseLeave={(e) => {
-              e.target.style.transform = 'none';
-              e.target.style.boxShadow = 'none';
-            }}>
+            <button type="submit" className="w-full py-4 bg-gradient-to-r from-red-600 to-red-800 rounded-full text-white text-xl font-bold font-poppins cursor-pointer border-none hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-red-500/50">
               Reset Password
             </button>
           </form>
         )}
-        <div style={{
-          textAlign: 'center',
-          marginTop: '20px',
-          fontSize: '0.85rem',
-          fontFamily: "'Poppins', sans-serif"
-        }}>
-          <Link to="/login" style={{
-            color: '#bbbbbb',
-            textDecoration: 'none',
-            transition: 'text-decoration 0.3s'
-          }}
-          onMouseEnter={(e) => e.target.style.textDecoration = 'underline'}
-          onMouseLeave={(e) => e.target.style.textDecoration = 'none'}
-          >
+
+        <div className="text-center mt-6">
+          <Link to="/login" className="text-gray-400 hover:text-white transition-colors duration-300 underline text-lg font-poppins">
             Back to login
           </Link>
         </div>
-        {message && <p style={{
-          marginTop: '15px',
-          textAlign: 'center',
-          color: 'lightgreen',
-          fontSize: '1.1rem',
-          textShadow: '0 0 5px lightgreen'
-        }}>{message}</p>}
-        {error && <p style={{
-          marginTop: '15px',
-          textAlign: 'center',
-          color: 'red',
-          fontSize: '1.1rem',
-          textShadow: '0 0 5px red'
-        }}>{error}</p>}
+
+        {message && <p className="mt-4 text-center text-green-400 text-lg font-semibold">{message}</p>}
+        {error && <p className="mt-4 text-center text-red-400 text-lg font-semibold">{error}</p>}
       </div>
     </div>
   );
