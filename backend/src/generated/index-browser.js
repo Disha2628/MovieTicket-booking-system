@@ -162,7 +162,8 @@ exports.Prisma.ShowScalarFieldEnum = {
   Screen_no: 'Screen_no',
   Show_date: 'Show_date',
   Start_time: 'Start_time',
-  Show_dimension: 'Show_dimension'
+  Show_dimension: 'Show_dimension',
+  available_seats: 'available_seats'
 };
 
 exports.Prisma.SeatScalarFieldEnum = {

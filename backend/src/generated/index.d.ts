@@ -6045,6 +6045,7 @@ export namespace Prisma {
     Movie_Id: number | null
     Theatre_Id: number | null
     Screen_no: number | null
+    available_seats: number | null
   }
 
   export type ShowSumAggregateOutputType = {
@@ -6052,6 +6053,7 @@ export namespace Prisma {
     Movie_Id: number | null
     Theatre_Id: number | null
     Screen_no: number | null
+    available_seats: number | null
   }
 
   export type ShowMinAggregateOutputType = {
@@ -6062,6 +6064,7 @@ export namespace Prisma {
     Show_date: Date | null
     Start_time: Date | null
     Show_dimension: $Enums.shows_Show_dimension | null
+    available_seats: number | null
   }
 
   export type ShowMaxAggregateOutputType = {
@@ -6072,6 +6075,7 @@ export namespace Prisma {
     Show_date: Date | null
     Start_time: Date | null
     Show_dimension: $Enums.shows_Show_dimension | null
+    available_seats: number | null
   }
 
   export type ShowCountAggregateOutputType = {
@@ -6082,6 +6086,7 @@ export namespace Prisma {
     Show_date: number
     Start_time: number
     Show_dimension: number
+    available_seats: number
     _all: number
   }
 
@@ -6091,6 +6096,7 @@ export namespace Prisma {
     Movie_Id?: true
     Theatre_Id?: true
     Screen_no?: true
+    available_seats?: true
   }
 
   export type ShowSumAggregateInputType = {
@@ -6098,6 +6104,7 @@ export namespace Prisma {
     Movie_Id?: true
     Theatre_Id?: true
     Screen_no?: true
+    available_seats?: true
   }
 
   export type ShowMinAggregateInputType = {
@@ -6108,6 +6115,7 @@ export namespace Prisma {
     Show_date?: true
     Start_time?: true
     Show_dimension?: true
+    available_seats?: true
   }
 
   export type ShowMaxAggregateInputType = {
@@ -6118,6 +6126,7 @@ export namespace Prisma {
     Show_date?: true
     Start_time?: true
     Show_dimension?: true
+    available_seats?: true
   }
 
   export type ShowCountAggregateInputType = {
@@ -6128,6 +6137,7 @@ export namespace Prisma {
     Show_date?: true
     Start_time?: true
     Show_dimension?: true
+    available_seats?: true
     _all?: true
   }
 
@@ -6225,6 +6235,7 @@ export namespace Prisma {
     Show_date: Date
     Start_time: Date
     Show_dimension: $Enums.shows_Show_dimension
+    available_seats: number | null
     _count: ShowCountAggregateOutputType | null
     _avg: ShowAvgAggregateOutputType | null
     _sum: ShowSumAggregateOutputType | null
@@ -6254,6 +6265,7 @@ export namespace Prisma {
     Show_date?: boolean
     Start_time?: boolean
     Show_dimension?: boolean
+    available_seats?: boolean
     booking?: boolean | Show$bookingArgs<ExtArgs>
     seats?: boolean | Show$seatsArgs<ExtArgs>
     movie?: boolean | MovieDefaultArgs<ExtArgs>
@@ -6272,9 +6284,10 @@ export namespace Prisma {
     Show_date?: boolean
     Start_time?: boolean
     Show_dimension?: boolean
+    available_seats?: boolean
   }
 
-  export type ShowOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"Show_Id" | "Movie_Id" | "Theatre_Id" | "Screen_no" | "Show_date" | "Start_time" | "Show_dimension", ExtArgs["result"]["show"]>
+  export type ShowOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"Show_Id" | "Movie_Id" | "Theatre_Id" | "Screen_no" | "Show_date" | "Start_time" | "Show_dimension" | "available_seats", ExtArgs["result"]["show"]>
   export type ShowInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     booking?: boolean | Show$bookingArgs<ExtArgs>
     seats?: boolean | Show$seatsArgs<ExtArgs>
@@ -6301,6 +6314,7 @@ export namespace Prisma {
       Show_date: Date
       Start_time: Date
       Show_dimension: $Enums.shows_Show_dimension
+      available_seats: number | null
     }, ExtArgs["result"]["show"]>
     composites: {}
   }
@@ -6682,6 +6696,7 @@ export namespace Prisma {
     readonly Show_date: FieldRef<"Show", 'DateTime'>
     readonly Start_time: FieldRef<"Show", 'DateTime'>
     readonly Show_dimension: FieldRef<"Show", 'shows_Show_dimension'>
+    readonly available_seats: FieldRef<"Show", 'Int'>
   }
     
 
@@ -13274,7 +13289,8 @@ export namespace Prisma {
     Screen_no: 'Screen_no',
     Show_date: 'Show_date',
     Start_time: 'Start_time',
-    Show_dimension: 'Show_dimension'
+    Show_dimension: 'Show_dimension',
+    available_seats: 'available_seats'
   };
 
   export type ShowScalarFieldEnum = (typeof ShowScalarFieldEnum)[keyof typeof ShowScalarFieldEnum]
@@ -13816,6 +13832,7 @@ export namespace Prisma {
     Show_date?: DateTimeFilter<"Show"> | Date | string
     Start_time?: DateTimeFilter<"Show"> | Date | string
     Show_dimension?: Enumshows_Show_dimensionFilter<"Show"> | $Enums.shows_Show_dimension
+    available_seats?: IntNullableFilter<"Show"> | number | null
     booking?: BookingListRelationFilter
     seats?: SeatListRelationFilter
     movie?: XOR<MovieScalarRelationFilter, MovieWhereInput>
@@ -13831,6 +13848,7 @@ export namespace Prisma {
     Show_date?: SortOrder
     Start_time?: SortOrder
     Show_dimension?: SortOrder
+    available_seats?: SortOrderInput | SortOrder
     booking?: bookingOrderByRelationAggregateInput
     seats?: SeatOrderByRelationAggregateInput
     movie?: MovieOrderByWithRelationInput
@@ -13849,6 +13867,7 @@ export namespace Prisma {
     Show_date?: DateTimeFilter<"Show"> | Date | string
     Start_time?: DateTimeFilter<"Show"> | Date | string
     Show_dimension?: Enumshows_Show_dimensionFilter<"Show"> | $Enums.shows_Show_dimension
+    available_seats?: IntNullableFilter<"Show"> | number | null
     booking?: BookingListRelationFilter
     seats?: SeatListRelationFilter
     movie?: XOR<MovieScalarRelationFilter, MovieWhereInput>
@@ -13864,6 +13883,7 @@ export namespace Prisma {
     Show_date?: SortOrder
     Start_time?: SortOrder
     Show_dimension?: SortOrder
+    available_seats?: SortOrderInput | SortOrder
     _count?: ShowCountOrderByAggregateInput
     _avg?: ShowAvgOrderByAggregateInput
     _max?: ShowMaxOrderByAggregateInput
@@ -13882,6 +13902,7 @@ export namespace Prisma {
     Show_date?: DateTimeWithAggregatesFilter<"Show"> | Date | string
     Start_time?: DateTimeWithAggregatesFilter<"Show"> | Date | string
     Show_dimension?: Enumshows_Show_dimensionWithAggregatesFilter<"Show"> | $Enums.shows_Show_dimension
+    available_seats?: IntNullableWithAggregatesFilter<"Show"> | number | null
   }
 
   export type SeatWhereInput = {
@@ -14525,6 +14546,7 @@ export namespace Prisma {
     Show_date: Date | string
     Start_time: Date | string
     Show_dimension: $Enums.shows_Show_dimension
+    available_seats?: number | null
     booking?: bookingCreateNestedManyWithoutShowsInput
     seats?: SeatCreateNestedManyWithoutShowsInput
     movie: MovieCreateNestedOneWithoutShowsInput
@@ -14540,6 +14562,7 @@ export namespace Prisma {
     Show_date: Date | string
     Start_time: Date | string
     Show_dimension: $Enums.shows_Show_dimension
+    available_seats?: number | null
     booking?: bookingUncheckedCreateNestedManyWithoutShowsInput
     seats?: SeatUncheckedCreateNestedManyWithoutShowsInput
   }
@@ -14548,6 +14571,7 @@ export namespace Prisma {
     Show_date?: DateTimeFieldUpdateOperationsInput | Date | string
     Start_time?: DateTimeFieldUpdateOperationsInput | Date | string
     Show_dimension?: Enumshows_Show_dimensionFieldUpdateOperationsInput | $Enums.shows_Show_dimension
+    available_seats?: NullableIntFieldUpdateOperationsInput | number | null
     booking?: bookingUpdateManyWithoutShowsNestedInput
     seats?: SeatUpdateManyWithoutShowsNestedInput
     movie?: MovieUpdateOneRequiredWithoutShowsNestedInput
@@ -14563,6 +14587,7 @@ export namespace Prisma {
     Show_date?: DateTimeFieldUpdateOperationsInput | Date | string
     Start_time?: DateTimeFieldUpdateOperationsInput | Date | string
     Show_dimension?: Enumshows_Show_dimensionFieldUpdateOperationsInput | $Enums.shows_Show_dimension
+    available_seats?: NullableIntFieldUpdateOperationsInput | number | null
     booking?: bookingUncheckedUpdateManyWithoutShowsNestedInput
     seats?: SeatUncheckedUpdateManyWithoutShowsNestedInput
   }
@@ -14575,12 +14600,14 @@ export namespace Prisma {
     Show_date: Date | string
     Start_time: Date | string
     Show_dimension: $Enums.shows_Show_dimension
+    available_seats?: number | null
   }
 
   export type ShowUpdateManyMutationInput = {
     Show_date?: DateTimeFieldUpdateOperationsInput | Date | string
     Start_time?: DateTimeFieldUpdateOperationsInput | Date | string
     Show_dimension?: Enumshows_Show_dimensionFieldUpdateOperationsInput | $Enums.shows_Show_dimension
+    available_seats?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type ShowUncheckedUpdateManyInput = {
@@ -14591,6 +14618,7 @@ export namespace Prisma {
     Show_date?: DateTimeFieldUpdateOperationsInput | Date | string
     Start_time?: DateTimeFieldUpdateOperationsInput | Date | string
     Show_dimension?: Enumshows_Show_dimensionFieldUpdateOperationsInput | $Enums.shows_Show_dimension
+    available_seats?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type SeatCreateInput = {
@@ -15459,6 +15487,7 @@ export namespace Prisma {
     Show_date?: SortOrder
     Start_time?: SortOrder
     Show_dimension?: SortOrder
+    available_seats?: SortOrder
   }
 
   export type ShowAvgOrderByAggregateInput = {
@@ -15466,6 +15495,7 @@ export namespace Prisma {
     Movie_Id?: SortOrder
     Theatre_Id?: SortOrder
     Screen_no?: SortOrder
+    available_seats?: SortOrder
   }
 
   export type ShowMaxOrderByAggregateInput = {
@@ -15476,6 +15506,7 @@ export namespace Prisma {
     Show_date?: SortOrder
     Start_time?: SortOrder
     Show_dimension?: SortOrder
+    available_seats?: SortOrder
   }
 
   export type ShowMinOrderByAggregateInput = {
@@ -15486,6 +15517,7 @@ export namespace Prisma {
     Show_date?: SortOrder
     Start_time?: SortOrder
     Show_dimension?: SortOrder
+    available_seats?: SortOrder
   }
 
   export type ShowSumOrderByAggregateInput = {
@@ -15493,6 +15525,7 @@ export namespace Prisma {
     Movie_Id?: SortOrder
     Theatre_Id?: SortOrder
     Screen_no?: SortOrder
+    available_seats?: SortOrder
   }
 
   export type DateTimeWithAggregatesFilter<$PrismaModel = never> = {
@@ -17014,6 +17047,7 @@ export namespace Prisma {
     Show_date: Date | string
     Start_time: Date | string
     Show_dimension: $Enums.shows_Show_dimension
+    available_seats?: number | null
     booking?: bookingCreateNestedManyWithoutShowsInput
     seats?: SeatCreateNestedManyWithoutShowsInput
     theatre: theatreCreateNestedOneWithoutShowsInput
@@ -17027,6 +17061,7 @@ export namespace Prisma {
     Show_date: Date | string
     Start_time: Date | string
     Show_dimension: $Enums.shows_Show_dimension
+    available_seats?: number | null
     booking?: bookingUncheckedCreateNestedManyWithoutShowsInput
     seats?: SeatUncheckedCreateNestedManyWithoutShowsInput
   }
@@ -17120,6 +17155,7 @@ export namespace Prisma {
     Show_date?: DateTimeFilter<"Show"> | Date | string
     Start_time?: DateTimeFilter<"Show"> | Date | string
     Show_dimension?: Enumshows_Show_dimensionFilter<"Show"> | $Enums.shows_Show_dimension
+    available_seats?: IntNullableFilter<"Show"> | number | null
   }
 
   export type Movie_ActorCreateWithoutActorInput = {
@@ -17306,6 +17342,7 @@ export namespace Prisma {
     Show_date: Date | string
     Start_time: Date | string
     Show_dimension: $Enums.shows_Show_dimension
+    available_seats?: number | null
     booking?: bookingCreateNestedManyWithoutShowsInput
     seats?: SeatCreateNestedManyWithoutShowsInput
     movie: MovieCreateNestedOneWithoutShowsInput
@@ -17318,6 +17355,7 @@ export namespace Prisma {
     Show_date: Date | string
     Start_time: Date | string
     Show_dimension: $Enums.shows_Show_dimension
+    available_seats?: number | null
     booking?: bookingUncheckedCreateNestedManyWithoutShowsInput
     seats?: SeatUncheckedCreateNestedManyWithoutShowsInput
   }
@@ -17699,6 +17737,7 @@ export namespace Prisma {
     Show_date: Date | string
     Start_time: Date | string
     Show_dimension: $Enums.shows_Show_dimension
+    available_seats?: number | null
     booking?: bookingCreateNestedManyWithoutShowsInput
     movie: MovieCreateNestedOneWithoutShowsInput
     theatre: theatreCreateNestedOneWithoutShowsInput
@@ -17713,6 +17752,7 @@ export namespace Prisma {
     Show_date: Date | string
     Start_time: Date | string
     Show_dimension: $Enums.shows_Show_dimension
+    available_seats?: number | null
     booking?: bookingUncheckedCreateNestedManyWithoutShowsInput
   }
 
@@ -17761,6 +17801,7 @@ export namespace Prisma {
     Show_date?: DateTimeFieldUpdateOperationsInput | Date | string
     Start_time?: DateTimeFieldUpdateOperationsInput | Date | string
     Show_dimension?: Enumshows_Show_dimensionFieldUpdateOperationsInput | $Enums.shows_Show_dimension
+    available_seats?: NullableIntFieldUpdateOperationsInput | number | null
     booking?: bookingUpdateManyWithoutShowsNestedInput
     movie?: MovieUpdateOneRequiredWithoutShowsNestedInput
     theatre?: theatreUpdateOneRequiredWithoutShowsNestedInput
@@ -17775,6 +17816,7 @@ export namespace Prisma {
     Show_date?: DateTimeFieldUpdateOperationsInput | Date | string
     Start_time?: DateTimeFieldUpdateOperationsInput | Date | string
     Show_dimension?: Enumshows_Show_dimensionFieldUpdateOperationsInput | $Enums.shows_Show_dimension
+    available_seats?: NullableIntFieldUpdateOperationsInput | number | null
     booking?: bookingUncheckedUpdateManyWithoutShowsNestedInput
   }
 
@@ -17880,6 +17922,7 @@ export namespace Prisma {
     Show_date: Date | string
     Start_time: Date | string
     Show_dimension: $Enums.shows_Show_dimension
+    available_seats?: number | null
     seats?: SeatCreateNestedManyWithoutShowsInput
     movie: MovieCreateNestedOneWithoutShowsInput
     theatre: theatreCreateNestedOneWithoutShowsInput
@@ -17894,6 +17937,7 @@ export namespace Prisma {
     Show_date: Date | string
     Start_time: Date | string
     Show_dimension: $Enums.shows_Show_dimension
+    available_seats?: number | null
     seats?: SeatUncheckedCreateNestedManyWithoutShowsInput
   }
 
@@ -17966,6 +18010,7 @@ export namespace Prisma {
     Show_date?: DateTimeFieldUpdateOperationsInput | Date | string
     Start_time?: DateTimeFieldUpdateOperationsInput | Date | string
     Show_dimension?: Enumshows_Show_dimensionFieldUpdateOperationsInput | $Enums.shows_Show_dimension
+    available_seats?: NullableIntFieldUpdateOperationsInput | number | null
     seats?: SeatUpdateManyWithoutShowsNestedInput
     movie?: MovieUpdateOneRequiredWithoutShowsNestedInput
     theatre?: theatreUpdateOneRequiredWithoutShowsNestedInput
@@ -17980,6 +18025,7 @@ export namespace Prisma {
     Show_date?: DateTimeFieldUpdateOperationsInput | Date | string
     Start_time?: DateTimeFieldUpdateOperationsInput | Date | string
     Show_dimension?: Enumshows_Show_dimensionFieldUpdateOperationsInput | $Enums.shows_Show_dimension
+    available_seats?: NullableIntFieldUpdateOperationsInput | number | null
     seats?: SeatUncheckedUpdateManyWithoutShowsNestedInput
   }
 
@@ -18174,6 +18220,7 @@ export namespace Prisma {
     Show_date: Date | string
     Start_time: Date | string
     Show_dimension: $Enums.shows_Show_dimension
+    available_seats?: number | null
     booking?: bookingCreateNestedManyWithoutShowsInput
     seats?: SeatCreateNestedManyWithoutShowsInput
     movie: MovieCreateNestedOneWithoutShowsInput
@@ -18187,6 +18234,7 @@ export namespace Prisma {
     Show_date: Date | string
     Start_time: Date | string
     Show_dimension: $Enums.shows_Show_dimension
+    available_seats?: number | null
     booking?: bookingUncheckedCreateNestedManyWithoutShowsInput
     seats?: SeatUncheckedCreateNestedManyWithoutShowsInput
   }
@@ -18263,6 +18311,7 @@ export namespace Prisma {
     Show_date: Date | string
     Start_time: Date | string
     Show_dimension: $Enums.shows_Show_dimension
+    available_seats?: number | null
   }
 
   export type Movie_ActorUpdateWithoutMoviesInput = {
@@ -18304,6 +18353,7 @@ export namespace Prisma {
     Show_date?: DateTimeFieldUpdateOperationsInput | Date | string
     Start_time?: DateTimeFieldUpdateOperationsInput | Date | string
     Show_dimension?: Enumshows_Show_dimensionFieldUpdateOperationsInput | $Enums.shows_Show_dimension
+    available_seats?: NullableIntFieldUpdateOperationsInput | number | null
     booking?: bookingUpdateManyWithoutShowsNestedInput
     seats?: SeatUpdateManyWithoutShowsNestedInput
     theatre?: theatreUpdateOneRequiredWithoutShowsNestedInput
@@ -18317,6 +18367,7 @@ export namespace Prisma {
     Show_date?: DateTimeFieldUpdateOperationsInput | Date | string
     Start_time?: DateTimeFieldUpdateOperationsInput | Date | string
     Show_dimension?: Enumshows_Show_dimensionFieldUpdateOperationsInput | $Enums.shows_Show_dimension
+    available_seats?: NullableIntFieldUpdateOperationsInput | number | null
     booking?: bookingUncheckedUpdateManyWithoutShowsNestedInput
     seats?: SeatUncheckedUpdateManyWithoutShowsNestedInput
   }
@@ -18328,6 +18379,7 @@ export namespace Prisma {
     Show_date?: DateTimeFieldUpdateOperationsInput | Date | string
     Start_time?: DateTimeFieldUpdateOperationsInput | Date | string
     Show_dimension?: Enumshows_Show_dimensionFieldUpdateOperationsInput | $Enums.shows_Show_dimension
+    available_seats?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type Movie_ActorCreateManyActorInput = {
@@ -18356,12 +18408,14 @@ export namespace Prisma {
     Show_date: Date | string
     Start_time: Date | string
     Show_dimension: $Enums.shows_Show_dimension
+    available_seats?: number | null
   }
 
   export type ShowUpdateWithoutScreensInput = {
     Show_date?: DateTimeFieldUpdateOperationsInput | Date | string
     Start_time?: DateTimeFieldUpdateOperationsInput | Date | string
     Show_dimension?: Enumshows_Show_dimensionFieldUpdateOperationsInput | $Enums.shows_Show_dimension
+    available_seats?: NullableIntFieldUpdateOperationsInput | number | null
     booking?: bookingUpdateManyWithoutShowsNestedInput
     seats?: SeatUpdateManyWithoutShowsNestedInput
     movie?: MovieUpdateOneRequiredWithoutShowsNestedInput
@@ -18374,6 +18428,7 @@ export namespace Prisma {
     Show_date?: DateTimeFieldUpdateOperationsInput | Date | string
     Start_time?: DateTimeFieldUpdateOperationsInput | Date | string
     Show_dimension?: Enumshows_Show_dimensionFieldUpdateOperationsInput | $Enums.shows_Show_dimension
+    available_seats?: NullableIntFieldUpdateOperationsInput | number | null
     booking?: bookingUncheckedUpdateManyWithoutShowsNestedInput
     seats?: SeatUncheckedUpdateManyWithoutShowsNestedInput
   }
@@ -18384,6 +18439,7 @@ export namespace Prisma {
     Show_date?: DateTimeFieldUpdateOperationsInput | Date | string
     Start_time?: DateTimeFieldUpdateOperationsInput | Date | string
     Show_dimension?: Enumshows_Show_dimensionFieldUpdateOperationsInput | $Enums.shows_Show_dimension
+    available_seats?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type bookingCreateManyShowsInput = {
@@ -18541,6 +18597,7 @@ export namespace Prisma {
     Show_date: Date | string
     Start_time: Date | string
     Show_dimension: $Enums.shows_Show_dimension
+    available_seats?: number | null
   }
 
   export type ScreenUpdateWithoutTheatreInput = {
@@ -18570,6 +18627,7 @@ export namespace Prisma {
     Show_date?: DateTimeFieldUpdateOperationsInput | Date | string
     Start_time?: DateTimeFieldUpdateOperationsInput | Date | string
     Show_dimension?: Enumshows_Show_dimensionFieldUpdateOperationsInput | $Enums.shows_Show_dimension
+    available_seats?: NullableIntFieldUpdateOperationsInput | number | null
     booking?: bookingUpdateManyWithoutShowsNestedInput
     seats?: SeatUpdateManyWithoutShowsNestedInput
     movie?: MovieUpdateOneRequiredWithoutShowsNestedInput
@@ -18583,6 +18641,7 @@ export namespace Prisma {
     Show_date?: DateTimeFieldUpdateOperationsInput | Date | string
     Start_time?: DateTimeFieldUpdateOperationsInput | Date | string
     Show_dimension?: Enumshows_Show_dimensionFieldUpdateOperationsInput | $Enums.shows_Show_dimension
+    available_seats?: NullableIntFieldUpdateOperationsInput | number | null
     booking?: bookingUncheckedUpdateManyWithoutShowsNestedInput
     seats?: SeatUncheckedUpdateManyWithoutShowsNestedInput
   }
@@ -18594,6 +18653,7 @@ export namespace Prisma {
     Show_date?: DateTimeFieldUpdateOperationsInput | Date | string
     Start_time?: DateTimeFieldUpdateOperationsInput | Date | string
     Show_dimension?: Enumshows_Show_dimensionFieldUpdateOperationsInput | $Enums.shows_Show_dimension
+    available_seats?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
 

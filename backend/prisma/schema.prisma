@@ -70,6 +70,7 @@ model Show {
   Show_date      DateTime             @db.Date
   Start_time     DateTime             @db.Time(0)
   Show_dimension shows_Show_dimension
+  available_seats Int?                @default(0)
   booking        booking[]
   seats          Seat[]
   movie          Movie                @relation(fields: [Movie_Id], references: [Movie_Id], onDelete: NoAction, onUpdate: NoAction, map: "shows_ibfk_1")

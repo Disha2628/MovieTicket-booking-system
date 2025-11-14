@@ -63,18 +63,19 @@ model Screen {
 }
 
 model Show {
-  Show_Id        Int                  @id @default(autoincrement())
-  Movie_Id       Int
-  Theatre_Id     Int
-  Screen_no      Int
-  Show_date      DateTime             @db.Date
-  Start_time     DateTime             @db.Time(0)
-  Show_dimension shows_Show_dimension
-  booking        booking[]
-  seats          Seat[]
-  movie          Movie                @relation(fields: [Movie_Id], references: [Movie_Id], onDelete: NoAction, onUpdate: NoAction, map: "shows_ibfk_1")
-  theatre        theatre              @relation(fields: [Theatre_Id], references: [theatre_Id], onDelete: NoAction, onUpdate: NoAction, map: "shows_ibfk_2")
-  screens        Screen               @relation(fields: [Screen_no, Theatre_Id], references: [screen_no, theatre_Id], onDelete: NoAction, onUpdate: NoAction, map: "shows_ibfk_3")
+  Show_Id         Int                  @id @default(autoincrement())
+  Movie_Id        Int
+  Theatre_Id      Int
+  Screen_no       Int
+  Show_date       DateTime             @db.Date
+  Start_time      DateTime             @db.Time(0)
+  Show_dimension  shows_Show_dimension
+  available_seats Int?                 @default(0)
+  booking         booking[]
+  seats           Seat[]
+  movie           Movie                @relation(fields: [Movie_Id], references: [Movie_Id], onDelete: NoAction, onUpdate: NoAction, map: "shows_ibfk_1")
+  theatre         theatre              @relation(fields: [Theatre_Id], references: [theatre_Id], onDelete: NoAction, onUpdate: NoAction, map: "shows_ibfk_2")
+  screens         Screen               @relation(fields: [Screen_no, Theatre_Id], references: [screen_no, theatre_Id], onDelete: NoAction, onUpdate: NoAction, map: "shows_ibfk_3")
 
   @@index([Movie_Id], map: "Movie_Id")
   @@index([Screen_no], map: "Screen_no")
