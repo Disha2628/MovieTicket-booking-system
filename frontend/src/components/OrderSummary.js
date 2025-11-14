@@ -7,9 +7,7 @@ const OrderSummary = ({ movieName, selectedShow, totalCost, convenienceFee, dona
       <div className="text-sm text-gray-400 mb-2">
         {selectedShow.theatre} | {selectedShow.show.fullDate?.toLocaleDateString('en-US', { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' })} | {selectedShow.show.time}
       </div>
-      <div className="text-sm text-gray-400 mb-4">
-        Screen 3 (example)
-      </div>
+      
       <hr className="border-gray-600 mb-4" />
       <div className="space-y-2 mb-4">
         <div className="flex justify-between">

@@ -109,18 +109,18 @@ const LandingPage = () => {
       <Navbar />
       {/* Animated background elements for beauty */}
       <div className="absolute inset-0 bg-gradient-to-r from-purple-1000/20 to-pink-900/20 animate-pulse"></div>
-      <div className="absolute top-10 left-10 w-32 h-32 bg-purple-500/10 rounded-full blur-xl animate-bounce"></div>
-      <div className="absolute bottom-10 right-10 w-40 h-40 bg-pink-500/10 rounded-full blur-xl animate-bounce delay-1000"></div>
+      <div className="absolute top-10 left-10 w-35 h-32 bg-purple-500/10 rounded-full blur-xl animate-bounce"></div>
+      <div className="absolute bottom-10 right-10 w-45 h-40 bg-pink-500/10 rounded-full blur-xl animate-bounce delay-1000"></div>
       {/* Subtle radial glow for depth */}
       <div className="absolute inset-0 bg-radial-gradient from-transparent via-gray-900/50 to-gray-950/90 pointer-events-none"></div>
 
      
-        <div className="w-full min-h-[65vh] relative overflow-hidden rounded-3xl shadow-2xl shadow-black/50 mx-auto max-w-7xl my-5 z-10">
+        <div className="w-full min-h-[70vh] relative overflow-hidden rounded-3xl shadow-2xl shadow-black/50 mx-auto max-w-7xl my-5 z-10">
         <div className="flex w-full h-full overflow-x-auto scroll-smooth" ref={heroWrapperRef}>
           {heroMovies.map((movie, index) => (
-            <div key={movie.id} className="relative flex-shrink-0 w-full min-h-[65vh] flex items-center justify-start">
+            <div key={movie.id} className="relative flex-shrink-0 w-full min-h-[70vh] flex items-center justify-start">
               <div className="absolute inset-0 -z-20">
-                <img src={`/banner${index + 1}.png`} alt="bg" className="w-full h-full object-cover brightness-80 blur-xs" />
+                <img src={`/banner${index + 1}.png`} alt="bg" className="w-full h-full object-cover brightness-80 blur-2xs" />
                 <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/70 to-transparent"></div>
               </div>
               <div className="mt-6 ml-12 flex gap-16 items-center justify-start flex-wrap max-w-5xl">
