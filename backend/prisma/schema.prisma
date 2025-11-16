@@ -117,6 +117,7 @@ model booking {
   Payment_method String?         @db.VarChar(50)
   Status         String          @default("pending") @db.VarChar(20)
   payment_time   DateTime?       @default(now()) @db.Timestamp(0)
+  booking_qr     String?         @db.Text
   customer       customer?       @relation(fields: [customer_Id], references: [customer_Id], onDelete: NoAction, onUpdate: NoAction, map: "booking_ibfk_1")
   shows          Show?           @relation(fields: [show_id], references: [Show_Id], onDelete: NoAction, onUpdate: NoAction, map: "booking_ibfk_2")
   booking_seats  booking_seats[]

@@ -9142,6 +9142,7 @@ export namespace Prisma {
     Payment_method: string | null
     Status: string | null
     payment_time: Date | null
+    booking_qr: string | null
   }
 
   export type BookingMaxAggregateOutputType = {
@@ -9152,6 +9153,7 @@ export namespace Prisma {
     Payment_method: string | null
     Status: string | null
     payment_time: Date | null
+    booking_qr: string | null
   }
 
   export type BookingCountAggregateOutputType = {
@@ -9162,6 +9164,7 @@ export namespace Prisma {
     Payment_method: number
     Status: number
     payment_time: number
+    booking_qr: number
     _all: number
   }
 
@@ -9188,6 +9191,7 @@ export namespace Prisma {
     Payment_method?: true
     Status?: true
     payment_time?: true
+    booking_qr?: true
   }
 
   export type BookingMaxAggregateInputType = {
@@ -9198,6 +9202,7 @@ export namespace Prisma {
     Payment_method?: true
     Status?: true
     payment_time?: true
+    booking_qr?: true
   }
 
   export type BookingCountAggregateInputType = {
@@ -9208,6 +9213,7 @@ export namespace Prisma {
     Payment_method?: true
     Status?: true
     payment_time?: true
+    booking_qr?: true
     _all?: true
   }
 
@@ -9305,6 +9311,7 @@ export namespace Prisma {
     Payment_method: string | null
     Status: string
     payment_time: Date | null
+    booking_qr: string | null
     _count: BookingCountAggregateOutputType | null
     _avg: BookingAvgAggregateOutputType | null
     _sum: BookingSumAggregateOutputType | null
@@ -9334,6 +9341,7 @@ export namespace Prisma {
     Payment_method?: boolean
     Status?: boolean
     payment_time?: boolean
+    booking_qr?: boolean
     customer?: boolean | booking$customerArgs<ExtArgs>
     shows?: boolean | booking$showsArgs<ExtArgs>
     booking_seats?: boolean | booking$booking_seatsArgs<ExtArgs>
@@ -9350,9 +9358,10 @@ export namespace Prisma {
     Payment_method?: boolean
     Status?: boolean
     payment_time?: boolean
+    booking_qr?: boolean
   }
 
-  export type bookingOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"booking_Id" | "customer_Id" | "show_id" | "Amount" | "Payment_method" | "Status" | "payment_time", ExtArgs["result"]["booking"]>
+  export type bookingOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"booking_Id" | "customer_Id" | "show_id" | "Amount" | "Payment_method" | "Status" | "payment_time" | "booking_qr", ExtArgs["result"]["booking"]>
   export type bookingInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     customer?: boolean | booking$customerArgs<ExtArgs>
     shows?: boolean | booking$showsArgs<ExtArgs>
@@ -9375,6 +9384,7 @@ export namespace Prisma {
       Payment_method: string | null
       Status: string
       payment_time: Date | null
+      booking_qr: string | null
     }, ExtArgs["result"]["booking"]>
     composites: {}
   }
@@ -9754,6 +9764,7 @@ export namespace Prisma {
     readonly Payment_method: FieldRef<"booking", 'String'>
     readonly Status: FieldRef<"booking", 'String'>
     readonly payment_time: FieldRef<"booking", 'DateTime'>
+    readonly booking_qr: FieldRef<"booking", 'String'>
   }
     
 
@@ -13341,7 +13352,8 @@ export namespace Prisma {
     Amount: 'Amount',
     Payment_method: 'Payment_method',
     Status: 'Status',
-    payment_time: 'payment_time'
+    payment_time: 'payment_time',
+    booking_qr: 'booking_qr'
   };
 
   export type BookingScalarFieldEnum = (typeof BookingScalarFieldEnum)[keyof typeof BookingScalarFieldEnum]
@@ -13475,7 +13487,8 @@ export namespace Prisma {
 
   export const bookingOrderByRelevanceFieldEnum: {
     Payment_method: 'Payment_method',
-    Status: 'Status'
+    Status: 'Status',
+    booking_qr: 'booking_qr'
   };
 
   export type bookingOrderByRelevanceFieldEnum = (typeof bookingOrderByRelevanceFieldEnum)[keyof typeof bookingOrderByRelevanceFieldEnum]
@@ -14056,6 +14069,7 @@ export namespace Prisma {
     Payment_method?: StringNullableFilter<"booking"> | string | null
     Status?: StringFilter<"booking"> | string
     payment_time?: DateTimeNullableFilter<"booking"> | Date | string | null
+    booking_qr?: StringNullableFilter<"booking"> | string | null
     customer?: XOR<CustomerNullableScalarRelationFilter, customerWhereInput> | null
     shows?: XOR<ShowNullableScalarRelationFilter, ShowWhereInput> | null
     booking_seats?: Booking_seatsListRelationFilter
@@ -14069,6 +14083,7 @@ export namespace Prisma {
     Payment_method?: SortOrderInput | SortOrder
     Status?: SortOrder
     payment_time?: SortOrderInput | SortOrder
+    booking_qr?: SortOrderInput | SortOrder
     customer?: customerOrderByWithRelationInput
     shows?: ShowOrderByWithRelationInput
     booking_seats?: booking_seatsOrderByRelationAggregateInput
@@ -14086,6 +14101,7 @@ export namespace Prisma {
     Payment_method?: StringNullableFilter<"booking"> | string | null
     Status?: StringFilter<"booking"> | string
     payment_time?: DateTimeNullableFilter<"booking"> | Date | string | null
+    booking_qr?: StringNullableFilter<"booking"> | string | null
     customer?: XOR<CustomerNullableScalarRelationFilter, customerWhereInput> | null
     shows?: XOR<ShowNullableScalarRelationFilter, ShowWhereInput> | null
     booking_seats?: Booking_seatsListRelationFilter
@@ -14099,6 +14115,7 @@ export namespace Prisma {
     Payment_method?: SortOrderInput | SortOrder
     Status?: SortOrder
     payment_time?: SortOrderInput | SortOrder
+    booking_qr?: SortOrderInput | SortOrder
     _count?: bookingCountOrderByAggregateInput
     _avg?: bookingAvgOrderByAggregateInput
     _max?: bookingMaxOrderByAggregateInput
@@ -14117,6 +14134,7 @@ export namespace Prisma {
     Payment_method?: StringNullableWithAggregatesFilter<"booking"> | string | null
     Status?: StringWithAggregatesFilter<"booking"> | string
     payment_time?: DateTimeNullableWithAggregatesFilter<"booking"> | Date | string | null
+    booking_qr?: StringNullableWithAggregatesFilter<"booking"> | string | null
   }
 
   export type booking_seatsWhereInput = {
@@ -14762,6 +14780,7 @@ export namespace Prisma {
     Payment_method?: string | null
     Status?: string
     payment_time?: Date | string | null
+    booking_qr?: string | null
     customer?: customerCreateNestedOneWithoutBookingInput
     shows?: ShowCreateNestedOneWithoutBookingInput
     booking_seats?: booking_seatsCreateNestedManyWithoutBookingInput
@@ -14775,6 +14794,7 @@ export namespace Prisma {
     Payment_method?: string | null
     Status?: string
     payment_time?: Date | string | null
+    booking_qr?: string | null
     booking_seats?: booking_seatsUncheckedCreateNestedManyWithoutBookingInput
   }
 
@@ -14783,6 +14803,7 @@ export namespace Prisma {
     Payment_method?: NullableStringFieldUpdateOperationsInput | string | null
     Status?: StringFieldUpdateOperationsInput | string
     payment_time?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    booking_qr?: NullableStringFieldUpdateOperationsInput | string | null
     customer?: customerUpdateOneWithoutBookingNestedInput
     shows?: ShowUpdateOneWithoutBookingNestedInput
     booking_seats?: booking_seatsUpdateManyWithoutBookingNestedInput
@@ -14796,6 +14817,7 @@ export namespace Prisma {
     Payment_method?: NullableStringFieldUpdateOperationsInput | string | null
     Status?: StringFieldUpdateOperationsInput | string
     payment_time?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    booking_qr?: NullableStringFieldUpdateOperationsInput | string | null
     booking_seats?: booking_seatsUncheckedUpdateManyWithoutBookingNestedInput
   }
 
@@ -14807,6 +14829,7 @@ export namespace Prisma {
     Payment_method?: string | null
     Status?: string
     payment_time?: Date | string | null
+    booking_qr?: string | null
   }
 
   export type bookingUpdateManyMutationInput = {
@@ -14814,6 +14837,7 @@ export namespace Prisma {
     Payment_method?: NullableStringFieldUpdateOperationsInput | string | null
     Status?: StringFieldUpdateOperationsInput | string
     payment_time?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    booking_qr?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type bookingUncheckedUpdateManyInput = {
@@ -14824,6 +14848,7 @@ export namespace Prisma {
     Payment_method?: NullableStringFieldUpdateOperationsInput | string | null
     Status?: StringFieldUpdateOperationsInput | string
     payment_time?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    booking_qr?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type booking_seatsCreateInput = {
@@ -15766,6 +15791,7 @@ export namespace Prisma {
     Payment_method?: SortOrder
     Status?: SortOrder
     payment_time?: SortOrder
+    booking_qr?: SortOrder
   }
 
   export type bookingAvgOrderByAggregateInput = {
@@ -15783,6 +15809,7 @@ export namespace Prisma {
     Payment_method?: SortOrder
     Status?: SortOrder
     payment_time?: SortOrder
+    booking_qr?: SortOrder
   }
 
   export type bookingMinOrderByAggregateInput = {
@@ -15793,6 +15820,7 @@ export namespace Prisma {
     Payment_method?: SortOrder
     Status?: SortOrder
     payment_time?: SortOrder
+    booking_qr?: SortOrder
   }
 
   export type bookingSumOrderByAggregateInput = {
@@ -17520,6 +17548,7 @@ export namespace Prisma {
     Payment_method?: string | null
     Status?: string
     payment_time?: Date | string | null
+    booking_qr?: string | null
     customer?: customerCreateNestedOneWithoutBookingInput
     booking_seats?: booking_seatsCreateNestedManyWithoutBookingInput
   }
@@ -17531,6 +17560,7 @@ export namespace Prisma {
     Payment_method?: string | null
     Status?: string
     payment_time?: Date | string | null
+    booking_qr?: string | null
     booking_seats?: booking_seatsUncheckedCreateNestedManyWithoutBookingInput
   }
 
@@ -17681,6 +17711,7 @@ export namespace Prisma {
     Payment_method?: StringNullableFilter<"booking"> | string | null
     Status?: StringFilter<"booking"> | string
     payment_time?: DateTimeNullableFilter<"booking"> | Date | string | null
+    booking_qr?: StringNullableFilter<"booking"> | string | null
   }
 
   export type SeatUpsertWithWhereUniqueWithoutShowsInput = {
@@ -18148,6 +18179,7 @@ export namespace Prisma {
     Payment_method?: string | null
     Status?: string
     payment_time?: Date | string | null
+    booking_qr?: string | null
     customer?: customerCreateNestedOneWithoutBookingInput
     shows?: ShowCreateNestedOneWithoutBookingInput
   }
@@ -18160,6 +18192,7 @@ export namespace Prisma {
     Payment_method?: string | null
     Status?: string
     payment_time?: Date | string | null
+    booking_qr?: string | null
   }
 
   export type bookingCreateOrConnectWithoutBooking_seatsInput = {
@@ -18205,6 +18238,7 @@ export namespace Prisma {
     Payment_method?: NullableStringFieldUpdateOperationsInput | string | null
     Status?: StringFieldUpdateOperationsInput | string
     payment_time?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    booking_qr?: NullableStringFieldUpdateOperationsInput | string | null
     customer?: customerUpdateOneWithoutBookingNestedInput
     shows?: ShowUpdateOneWithoutBookingNestedInput
   }
@@ -18217,6 +18251,7 @@ export namespace Prisma {
     Payment_method?: NullableStringFieldUpdateOperationsInput | string | null
     Status?: StringFieldUpdateOperationsInput | string
     payment_time?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    booking_qr?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type SeatUpsertWithoutBooking_seatsInput = {
@@ -18252,6 +18287,7 @@ export namespace Prisma {
     Payment_method?: string | null
     Status?: string
     payment_time?: Date | string | null
+    booking_qr?: string | null
     shows?: ShowCreateNestedOneWithoutBookingInput
     booking_seats?: booking_seatsCreateNestedManyWithoutBookingInput
   }
@@ -18263,6 +18299,7 @@ export namespace Prisma {
     Payment_method?: string | null
     Status?: string
     payment_time?: Date | string | null
+    booking_qr?: string | null
     booking_seats?: booking_seatsUncheckedCreateNestedManyWithoutBookingInput
   }
 
@@ -18551,6 +18588,7 @@ export namespace Prisma {
     Payment_method?: string | null
     Status?: string
     payment_time?: Date | string | null
+    booking_qr?: string | null
   }
 
   export type SeatCreateManyShowsInput = {
@@ -18566,6 +18604,7 @@ export namespace Prisma {
     Payment_method?: NullableStringFieldUpdateOperationsInput | string | null
     Status?: StringFieldUpdateOperationsInput | string
     payment_time?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    booking_qr?: NullableStringFieldUpdateOperationsInput | string | null
     customer?: customerUpdateOneWithoutBookingNestedInput
     booking_seats?: booking_seatsUpdateManyWithoutBookingNestedInput
   }
@@ -18577,6 +18616,7 @@ export namespace Prisma {
     Payment_method?: NullableStringFieldUpdateOperationsInput | string | null
     Status?: StringFieldUpdateOperationsInput | string
     payment_time?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    booking_qr?: NullableStringFieldUpdateOperationsInput | string | null
     booking_seats?: booking_seatsUncheckedUpdateManyWithoutBookingNestedInput
   }
 
@@ -18587,6 +18627,7 @@ export namespace Prisma {
     Payment_method?: NullableStringFieldUpdateOperationsInput | string | null
     Status?: StringFieldUpdateOperationsInput | string
     payment_time?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    booking_qr?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type SeatUpdateWithoutShowsInput = {
@@ -18659,6 +18700,7 @@ export namespace Prisma {
     Payment_method?: string | null
     Status?: string
     payment_time?: Date | string | null
+    booking_qr?: string | null
   }
 
   export type bookingUpdateWithoutCustomerInput = {
@@ -18666,6 +18708,7 @@ export namespace Prisma {
     Payment_method?: NullableStringFieldUpdateOperationsInput | string | null
     Status?: StringFieldUpdateOperationsInput | string
     payment_time?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    booking_qr?: NullableStringFieldUpdateOperationsInput | string | null
     shows?: ShowUpdateOneWithoutBookingNestedInput
     booking_seats?: booking_seatsUpdateManyWithoutBookingNestedInput
   }
@@ -18677,6 +18720,7 @@ export namespace Prisma {
     Payment_method?: NullableStringFieldUpdateOperationsInput | string | null
     Status?: StringFieldUpdateOperationsInput | string
     payment_time?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    booking_qr?: NullableStringFieldUpdateOperationsInput | string | null
     booking_seats?: booking_seatsUncheckedUpdateManyWithoutBookingNestedInput
   }
 
@@ -18687,6 +18731,7 @@ export namespace Prisma {
     Payment_method?: NullableStringFieldUpdateOperationsInput | string | null
     Status?: StringFieldUpdateOperationsInput | string
     payment_time?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    booking_qr?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type ScreenCreateManyTheatreInput = {

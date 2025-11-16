@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { UserContext } from '../contexts/UserContext';
 import jsPDF from 'jspdf';
+import QRCode from 'qrcode';
 
 const API_BASE_URL = 'http://localhost:5000/api';
 
@@ -43,19 +44,91 @@ const BookingHistoryPage = () => {
 
   const downloadTicket = (booking) => {
     const doc = new jsPDF();
-    doc.setFontSize(20);
-    doc.text('Movie Ticket', 105, 20, null, null, 'center');
+
+    // Set background color
+    doc.setFillColor(240, 240, 240);
+    doc.rect(0, 0, 210, 297, 'F');
+
+    // Add border
+    doc.setDrawColor(0, 0, 0);
+    doc.setLineWidth(2);
+    doc.rect(10, 10, 190, 277);
+
+    // Title
+    doc.setFontSize(24);
+    doc.setFont('helvetica', 'bold');
+    doc.setTextColor(0, 0, 0);
+    doc.text('MOVIE TICKET', 105, 30, null, null, 'center');
+
+    // Decorative line
+    doc.setLineWidth(1);
+    doc.line(20, 35, 190, 35);
+
+    // Booking details (left side)
+    doc.setFontSize(14);
+    doc.setFont('helvetica', 'bold');
+    doc.text('Booking Details', 20, 50);
+
+    doc.setFontSize(11);
+    doc.setFont('helvetica', 'normal'); 
+    doc.text(`Movie: ${booking.movieName}`, 20, 72);
+    doc.text(`Theatre: ${booking.theatre}`, 20, 82);
+    doc.text(`City: ${booking.city}`, 20, 92);
+    doc.text(`Screen: ${booking.screenName}`, 20, 102);
+    doc.text(`Date: ${new Date(booking.date).toLocaleDateString('en-IN')}`, 20, 112);
+    doc.text(`Time: ${booking.time}`, 20, 122);
+    doc.text(`Seats: ${booking.seats}`, 20, 132);
+
+    // Amount section
+    doc.setFontSize(14);
+    doc.setFont('helvetica', 'bold');
+    doc.text('Payment Details', 20, 150);
+    doc.setFontSize(11);
+    doc.setFont('helvetica', 'normal');
+    doc.text(`Total Amount: ₹${booking.totalAmount}`, 20, 162);
+
+    // Terms
+    doc.setFontSize(9);
+    doc.setFont('helvetica', 'italic');
+    doc.text('Terms & Conditions:', 20, 180);
+    doc.text('1. Please arrive 15 minutes before show time.', 20, 188);
+    doc.text('2. Tickets are non-refundable and non-transferable.', 20, 196);
+    doc.text('3. Keep this ticket safe for entry.', 20, 204);
+
+    // Footer
     doc.setFontSize(12);
-    doc.text(`Booking ID: ${booking.id}`, 20, 40);
-    doc.text(`Movie: ${booking.movieName}`, 20, 50);
-    doc.text(`Theatre: ${booking.theatre}`, 20, 60);
-    doc.text(`City: ${booking.city}`, 20, 70);
-    doc.text(`Screen: ${booking.screenName}`, 20, 80);
-    doc.text(`Date: ${new Date(booking.date).toLocaleDateString('en-IN')}`, 20, 90);
-    doc.text(`Time: ${booking.time}`, 20, 100);
-    doc.text(`Seats: ${booking.seats}`, 20, 110);
-    doc.text(`Total Amount: ₹${booking.totalAmount}`, 20, 120);
+    doc.setFont('helvetica', 'bold');
+    doc.text('Enjoy your movie!', 105, 280, null, null, 'center');
+
+    // QR Code (right side)
+    const qrSize = 40;
+    const qrX = 140;
+    const qrY = 50;
+
+    if (booking.booking_qr) {
+      // Use stored QR code from database
+      doc.addImage(booking.booking_qr, 'PNG', qrX, qrY, qrSize, qrSize);
+    } else {
+      // Fallback: generate QR code if not stored
+      const qrData = `Booking ID: ${booking.id}\nMovie: ${booking.movieName}\nDate: ${new Date(booking.date).toLocaleDateString('en-IN')}\nTime: ${booking.time}\nSeats: ${booking.seats}`;
+
+      QRCode.toDataURL(qrData, { width: 200, margin: 1 }, (err, url) => {
+        if (err) {
+          console.error('Error generating QR code:', err);
+          return;
+        }
+        doc.addImage(url, 'PNG', qrX, qrY, qrSize, qrSize);
+      });
+    }
+
+    // QR Code label
+    doc.setFontSize(10);
+    doc.setFont('helvetica', 'normal');
+    doc.text('Scan to confirm booking', qrX + qrSize/2, qrY + qrSize + 10, null, null, 'center');
+
+    // Save the PDF
     doc.save(`ticket_${booking.id}.pdf`);
+
   };
 
   return (

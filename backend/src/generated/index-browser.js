@@ -190,7 +190,8 @@ exports.Prisma.BookingScalarFieldEnum = {
   Amount: 'Amount',
   Payment_method: 'Payment_method',
   Status: 'Status',
-  payment_time: 'payment_time'
+  payment_time: 'payment_time',
+  booking_qr: 'booking_qr'
 };
 
 exports.Prisma.Booking_seatsScalarFieldEnum = {
@@ -279,7 +280,8 @@ exports.Prisma.ReviewOrderByRelevanceFieldEnum = {
 
 exports.Prisma.bookingOrderByRelevanceFieldEnum = {
   Payment_method: 'Payment_method',
-  Status: 'Status'
+  Status: 'Status',
+  booking_qr: 'booking_qr'
 };
 
 exports.Prisma.customerOrderByRelevanceFieldEnum = {

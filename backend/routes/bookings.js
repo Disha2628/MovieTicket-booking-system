@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const pool = require('../config/database');
+const QRCode = require('qrcode');
 
 // Create booking
 router.post('/', async (req, res) => {
@@ -25,7 +26,7 @@ router.post('/', async (req, res) => {
 
     await connection.beginTransaction();
 
-    // Insert into booking table
+    // Insert into booking table first to get bookingId
     const [bookingResult] = await connection.execute(
       `INSERT INTO booking (Customer_Id, show_id, Amount, Payment_method, Status)
        VALUES (?, ?, ?, ?, ?)`,
@@ -33,6 +34,18 @@ router.post('/', async (req, res) => {
     );
 
     const bookingId = bookingResult.insertId;
+
+    // Generate QR code data
+    const qrData = `Booking ID: ${bookingId}\nCustomer ID: ${customerId}\nShow ID: ${showId}\nAmount: ₹${amount}\nSeats: ${seats.join(', ')}`;
+
+    // Generate QR code as base64 data URL
+    const qrCodeDataURL = await QRCode.toDataURL(qrData, { width: 200, margin: 1 });
+
+    // Update booking with QR code
+    await connection.execute(
+      `UPDATE booking SET booking_qr = ? WHERE booking_Id = ?`,
+      [qrCodeDataURL, bookingId]
+    );
 
     // Fetch seat_ids from seat_name
     const seatIds = [];

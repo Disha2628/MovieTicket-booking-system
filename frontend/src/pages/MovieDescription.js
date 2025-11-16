@@ -129,7 +129,7 @@ const CastSection = ({ cast }) => (
           <img
             src={actor.img}
             alt={actor.name}
-            className="w-40 h-36 rounded-full object-cover mx-auto mb-4 border-2 border-white/20"
+            className="w-40 h-40 object-cover mx-auto mb-4 border-2 border-white/20"
           />
           <h3 className="text-lg font-semibold text-white mb-1">{actor.name}</h3>
           <p className="text-sm text-gray-400">as {actor.role}</p>
