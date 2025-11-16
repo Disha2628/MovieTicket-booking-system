@@ -171,6 +171,7 @@ exports.Prisma.SeatScalarFieldEnum = {
   show_id: 'show_id',
   seat_name: 'seat_name',
   seat_type: 'seat_type',
+  seat_price: 'seat_price',
   status: 'status'
 };
 

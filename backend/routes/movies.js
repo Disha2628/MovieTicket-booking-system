@@ -113,7 +113,7 @@ router.get('/:id/cast', async (req, res) => {
       SELECT
         a.Name AS name,
         ma.Role_Name AS role,
-        a.actor_pic AS img
+        CONCAT('/', a.actor_pic) AS img
       FROM movie_actors ma
       JOIN actors a ON ma.Actor_Id = a.Actor_Id
       WHERE ma.movie_Id = ?

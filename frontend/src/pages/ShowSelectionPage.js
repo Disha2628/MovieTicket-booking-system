@@ -163,10 +163,9 @@ const ShowSelectionPage = () => {
   };
 
   const seatTypes = [
-    { type: 'Royale Recliners', price: 420 },
-    { type: 'Royal', price: 200 },
-    { type: 'Club', price: 190 },
-    { type: 'Executive', price: 180 },
+    { type: 'Platinum', price: 280 },
+    { type: 'Gold', price: 220 },
+    { type: 'Silver', price: 180 }, 
   ];
 
   const handleSelectShow = (theatre, show) => {
@@ -182,8 +181,8 @@ const ShowSelectionPage = () => {
   const navigate = useNavigate();
 
   const handleNext = () => {
-    if (!selectedShow || !selectedSeatType || !selectedSeatCount) {
-      alert('Please select show, seat type, and number of seats before proceeding.');
+    if (!selectedShow || !selectedSeatCount) {
+      alert('Please select show and number of seats before proceeding.');
       return;
     }
     const selectedDate = days[selectedDateIndex]?.fullDate || null;

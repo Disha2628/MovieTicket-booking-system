@@ -3,14 +3,7 @@ import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
 import { UserContext } from '../contexts/UserContext';
 
-// Dummy data
-const castData = [
-  { name: "Ayushmann Khurrana", role: "Alok", img: "/actor_pics/actor1.webp" },
-  { name: "Rashmika Mandanna", role: "Tadaka", img: "/actor_pics/actor2.jpeg" },
-  { name: "Paresh Rawal", role: "Ram Bajaj Goyal", img: "/actor_pics/actor3.jpeg" },
-  { name: "Nawazuddin Siddiqui", role: "Yakshasan", img: "/actor_pics/actor4.jpeg" },
-  { name: "Faisal Malik", role: "Yadav", img: "/actor_pics/actor5.jpeg" }
-];
+
 
 // Trailer Modal Component
 const TrailerModal = ({ isOpen, onClose, trailerUrl }) => {
@@ -182,7 +175,7 @@ const MovieDescription = ({ movieId }) => {
   const { user } = useContext(UserContext);
   const navigate = useNavigate();
   const [movie, setMovie] = useState(null);
-  const [cast, setCast] = useState(castData);
+  const [cast, setCast] = useState([]);
   const [reviews, setReviews] = useState([]);
   const [error, setError] = useState('');
   const [trailerModalOpen, setTrailerModalOpen] = useState(false);
@@ -204,8 +197,8 @@ const MovieDescription = ({ movieId }) => {
         const castResponse = await axios.get(`/api/movies/${movieId || id}/cast`);
         setCast(castResponse.data);
       } catch (err) {
-        console.error('Failed to fetch cast, using fallback:', err);
-        setCast(castData);
+        console.error('Failed to fetch cast:', err);
+        setCast([]);
       }
     };
 

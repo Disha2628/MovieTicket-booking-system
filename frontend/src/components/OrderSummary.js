@@ -1,6 +1,6 @@
 import React from 'react';
 
-const OrderSummary = ({ movieName, selectedShow, totalCost, convenienceFee, donation, orderTotal, handlePayment, canClickPayNow }) => {
+const OrderSummary = ({ movieName, selectedShow, totalCost, convenienceFee, donationAmount, donationChecked, setDonationChecked, orderTotal, handlePayment, canClickPayNow, user }) => {
   return (
     <div className="bg-gray-800 rounded-xl p-6 text-white">
       <h3 className="mb-4 text-xl font-bold text-white">{movieName}</h3>
@@ -18,9 +18,18 @@ const OrderSummary = ({ movieName, selectedShow, totalCost, convenienceFee, dona
           <span className="text-gray-400">Convenience fees</span>
           <span className="text-white">₹{convenienceFee}</span>
         </div>
-        <div className="flex justify-between text-blue-400">
-          <span>Give to Underprivileged Musicians</span>
-          <span>₹{donation.toFixed(2)}</span>
+        <div className="flex justify-between items-center">
+          <label htmlFor="donation-checkbox" className="flex items-center cursor-pointer">
+            <input
+              id="donation-checkbox"
+              type="checkbox"
+              checked={donationChecked}
+              onChange={(e) => setDonationChecked(e.target.checked)}
+              className="mr-2 w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-2"
+            />
+            <span className="text-gray-400">Donate to Underprivileged Musicians</span>
+          </label>
+          <span className="text-blue-400">₹{donationAmount.toFixed(2)}</span>
         </div>
         <hr className="border-gray-600" />
         <div className="flex justify-between font-bold text-lg">
@@ -31,13 +40,10 @@ const OrderSummary = ({ movieName, selectedShow, totalCost, convenienceFee, dona
       <hr className="border-gray-600 mb-4" />
       <div className="mb-4 text-sm text-gray-400">
         <strong className="text-white">Your details</strong>
-        <div>disha2603@gmail.com</div>
-        <div>9607172625 | Madhya Pradesh</div>
-      </div>
-      <hr className="border-gray-600 mb-4" />
-      <div className="mb-4 cursor-pointer text-gray-400 font-bold">
-        Apply Offers
-      </div>
+        <div>{user?.first_name} {user?.last_name}</div>
+        <div>Email - {user?.email }</div>
+        <div>Phone - {user?.phn_no }</div>
+      </div> 
       <hr className="border-gray-600 mb-4" />
       <div className="mb-4 text-xs text-gray-400">
         By proceeding, I express my consent to complete this transaction.

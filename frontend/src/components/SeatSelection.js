@@ -8,12 +8,7 @@ const SeatSelection = ({ seatTypes, selectedSeatType, setSelectedSeatType, selec
         {seatTypes.map((seat) => (
           <div
             key={seat.type}
-            onClick={() => setSelectedSeatType(seat)}
-            className={`bg-gray-800 border rounded-xl p-4 text-center cursor-pointer transition-all duration-300 hover:scale-105 ${
-              selectedSeatType?.type === seat.type
-                ? 'border-blue-500 bg-gray-700'
-                : 'border-gray-600 hover:border-blue-500'
-            }`}
+            className="bg-gray-800 border border-gray-600 rounded-xl p-4 text-center"
           >
             <div className="font-semibold text-white mb-2">{seat.type}</div>
             <div className="text-lg font-bold text-white mb-1">₹{seat.price}</div>
@@ -36,12 +31,7 @@ const SeatSelection = ({ seatTypes, selectedSeatType, setSelectedSeatType, selec
       </div>
       <button
         onClick={onNext}
-        disabled={!selectedSeatType}
-        className={`w-full py-4 rounded-full text-white text-xl font-bold font-poppins border-none transition-all duration-300 ${
-          selectedSeatType
-            ? 'bg-gradient-to-r from-blue-600 to-purple-600 cursor-pointer hover:scale-105 shadow-lg hover:shadow-blue-500/50'
-            : 'bg-gray-600 cursor-not-allowed'
-        }`}
+        className="w-full py-4 rounded-full text-white text-xl font-bold font-poppins border-none transition-all duration-300 bg-gradient-to-r from-blue-600 to-purple-600 cursor-pointer hover:scale-105 shadow-lg hover:shadow-blue-500/50"
       >
         Next
       </button>

@@ -7121,11 +7121,13 @@ export namespace Prisma {
   export type SeatAvgAggregateOutputType = {
     seat_id: number | null
     show_id: number | null
+    seat_price: Decimal | null
   }
 
   export type SeatSumAggregateOutputType = {
     seat_id: number | null
     show_id: number | null
+    seat_price: Decimal | null
   }
 
   export type SeatMinAggregateOutputType = {
@@ -7133,6 +7135,7 @@ export namespace Prisma {
     show_id: number | null
     seat_name: string | null
     seat_type: string | null
+    seat_price: Decimal | null
     status: $Enums.seats_status | null
   }
 
@@ -7141,6 +7144,7 @@ export namespace Prisma {
     show_id: number | null
     seat_name: string | null
     seat_type: string | null
+    seat_price: Decimal | null
     status: $Enums.seats_status | null
   }
 
@@ -7149,6 +7153,7 @@ export namespace Prisma {
     show_id: number
     seat_name: number
     seat_type: number
+    seat_price: number
     status: number
     _all: number
   }
@@ -7157,11 +7162,13 @@ export namespace Prisma {
   export type SeatAvgAggregateInputType = {
     seat_id?: true
     show_id?: true
+    seat_price?: true
   }
 
   export type SeatSumAggregateInputType = {
     seat_id?: true
     show_id?: true
+    seat_price?: true
   }
 
   export type SeatMinAggregateInputType = {
@@ -7169,6 +7176,7 @@ export namespace Prisma {
     show_id?: true
     seat_name?: true
     seat_type?: true
+    seat_price?: true
     status?: true
   }
 
@@ -7177,6 +7185,7 @@ export namespace Prisma {
     show_id?: true
     seat_name?: true
     seat_type?: true
+    seat_price?: true
     status?: true
   }
 
@@ -7185,6 +7194,7 @@ export namespace Prisma {
     show_id?: true
     seat_name?: true
     seat_type?: true
+    seat_price?: true
     status?: true
     _all?: true
   }
@@ -7280,6 +7290,7 @@ export namespace Prisma {
     show_id: number
     seat_name: string
     seat_type: string | null
+    seat_price: Decimal | null
     status: $Enums.seats_status | null
     _count: SeatCountAggregateOutputType | null
     _avg: SeatAvgAggregateOutputType | null
@@ -7307,6 +7318,7 @@ export namespace Prisma {
     show_id?: boolean
     seat_name?: boolean
     seat_type?: boolean
+    seat_price?: boolean
     status?: boolean
     booking_seats?: boolean | Seat$booking_seatsArgs<ExtArgs>
     shows?: boolean | ShowDefaultArgs<ExtArgs>
@@ -7320,10 +7332,11 @@ export namespace Prisma {
     show_id?: boolean
     seat_name?: boolean
     seat_type?: boolean
+    seat_price?: boolean
     status?: boolean
   }
 
-  export type SeatOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"seat_id" | "show_id" | "seat_name" | "seat_type" | "status", ExtArgs["result"]["seat"]>
+  export type SeatOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"seat_id" | "show_id" | "seat_name" | "seat_type" | "seat_price" | "status", ExtArgs["result"]["seat"]>
   export type SeatInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     booking_seats?: boolean | Seat$booking_seatsArgs<ExtArgs>
     shows?: boolean | ShowDefaultArgs<ExtArgs>
@@ -7341,6 +7354,7 @@ export namespace Prisma {
       show_id: number
       seat_name: string
       seat_type: string | null
+      seat_price: Prisma.Decimal | null
       status: $Enums.seats_status | null
     }, ExtArgs["result"]["seat"]>
     composites: {}
@@ -7717,6 +7731,7 @@ export namespace Prisma {
     readonly show_id: FieldRef<"Seat", 'Int'>
     readonly seat_name: FieldRef<"Seat", 'String'>
     readonly seat_type: FieldRef<"Seat", 'String'>
+    readonly seat_price: FieldRef<"Seat", 'Decimal'>
     readonly status: FieldRef<"Seat", 'seats_status'>
   }
     
@@ -13301,6 +13316,7 @@ export namespace Prisma {
     show_id: 'show_id',
     seat_name: 'seat_name',
     seat_type: 'seat_type',
+    seat_price: 'seat_price',
     status: 'status'
   };
 
@@ -13542,16 +13558,16 @@ export namespace Prisma {
 
 
   /**
-   * Reference to a field of type 'seats_status'
+   * Reference to a field of type 'Decimal'
    */
-  export type Enumseats_statusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'seats_status'>
+  export type DecimalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Decimal'>
     
 
 
   /**
-   * Reference to a field of type 'Decimal'
+   * Reference to a field of type 'seats_status'
    */
-  export type DecimalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Decimal'>
+  export type Enumseats_statusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'seats_status'>
     
 
 
@@ -13913,6 +13929,7 @@ export namespace Prisma {
     show_id?: IntFilter<"Seat"> | number
     seat_name?: StringFilter<"Seat"> | string
     seat_type?: StringNullableFilter<"Seat"> | string | null
+    seat_price?: DecimalNullableFilter<"Seat"> | Decimal | DecimalJsLike | number | string | null
     status?: Enumseats_statusNullableFilter<"Seat"> | $Enums.seats_status | null
     booking_seats?: Booking_seatsListRelationFilter
     shows?: XOR<ShowScalarRelationFilter, ShowWhereInput>
@@ -13923,6 +13940,7 @@ export namespace Prisma {
     show_id?: SortOrder
     seat_name?: SortOrder
     seat_type?: SortOrderInput | SortOrder
+    seat_price?: SortOrderInput | SortOrder
     status?: SortOrderInput | SortOrder
     booking_seats?: booking_seatsOrderByRelationAggregateInput
     shows?: ShowOrderByWithRelationInput
@@ -13937,6 +13955,7 @@ export namespace Prisma {
     show_id?: IntFilter<"Seat"> | number
     seat_name?: StringFilter<"Seat"> | string
     seat_type?: StringNullableFilter<"Seat"> | string | null
+    seat_price?: DecimalNullableFilter<"Seat"> | Decimal | DecimalJsLike | number | string | null
     status?: Enumseats_statusNullableFilter<"Seat"> | $Enums.seats_status | null
     booking_seats?: Booking_seatsListRelationFilter
     shows?: XOR<ShowScalarRelationFilter, ShowWhereInput>
@@ -13947,6 +13966,7 @@ export namespace Prisma {
     show_id?: SortOrder
     seat_name?: SortOrder
     seat_type?: SortOrderInput | SortOrder
+    seat_price?: SortOrderInput | SortOrder
     status?: SortOrderInput | SortOrder
     _count?: SeatCountOrderByAggregateInput
     _avg?: SeatAvgOrderByAggregateInput
@@ -13963,6 +13983,7 @@ export namespace Prisma {
     show_id?: IntWithAggregatesFilter<"Seat"> | number
     seat_name?: StringWithAggregatesFilter<"Seat"> | string
     seat_type?: StringNullableWithAggregatesFilter<"Seat"> | string | null
+    seat_price?: DecimalNullableWithAggregatesFilter<"Seat"> | Decimal | DecimalJsLike | number | string | null
     status?: Enumseats_statusNullableWithAggregatesFilter<"Seat"> | $Enums.seats_status | null
   }
 
@@ -14624,6 +14645,7 @@ export namespace Prisma {
   export type SeatCreateInput = {
     seat_name: string
     seat_type?: string | null
+    seat_price?: Decimal | DecimalJsLike | number | string | null
     status?: $Enums.seats_status | null
     booking_seats?: booking_seatsCreateNestedManyWithoutSeatsInput
     shows: ShowCreateNestedOneWithoutSeatsInput
@@ -14634,6 +14656,7 @@ export namespace Prisma {
     show_id: number
     seat_name: string
     seat_type?: string | null
+    seat_price?: Decimal | DecimalJsLike | number | string | null
     status?: $Enums.seats_status | null
     booking_seats?: booking_seatsUncheckedCreateNestedManyWithoutSeatsInput
   }
@@ -14641,6 +14664,7 @@ export namespace Prisma {
   export type SeatUpdateInput = {
     seat_name?: StringFieldUpdateOperationsInput | string
     seat_type?: NullableStringFieldUpdateOperationsInput | string | null
+    seat_price?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     status?: NullableEnumseats_statusFieldUpdateOperationsInput | $Enums.seats_status | null
     booking_seats?: booking_seatsUpdateManyWithoutSeatsNestedInput
     shows?: ShowUpdateOneRequiredWithoutSeatsNestedInput
@@ -14651,6 +14675,7 @@ export namespace Prisma {
     show_id?: IntFieldUpdateOperationsInput | number
     seat_name?: StringFieldUpdateOperationsInput | string
     seat_type?: NullableStringFieldUpdateOperationsInput | string | null
+    seat_price?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     status?: NullableEnumseats_statusFieldUpdateOperationsInput | $Enums.seats_status | null
     booking_seats?: booking_seatsUncheckedUpdateManyWithoutSeatsNestedInput
   }
@@ -14660,12 +14685,14 @@ export namespace Prisma {
     show_id: number
     seat_name: string
     seat_type?: string | null
+    seat_price?: Decimal | DecimalJsLike | number | string | null
     status?: $Enums.seats_status | null
   }
 
   export type SeatUpdateManyMutationInput = {
     seat_name?: StringFieldUpdateOperationsInput | string
     seat_type?: NullableStringFieldUpdateOperationsInput | string | null
+    seat_price?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     status?: NullableEnumseats_statusFieldUpdateOperationsInput | $Enums.seats_status | null
   }
 
@@ -14674,6 +14701,7 @@ export namespace Prisma {
     show_id?: IntFieldUpdateOperationsInput | number
     seat_name?: StringFieldUpdateOperationsInput | string
     seat_type?: NullableStringFieldUpdateOperationsInput | string | null
+    seat_price?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     status?: NullableEnumseats_statusFieldUpdateOperationsInput | $Enums.seats_status | null
   }
 
@@ -15552,6 +15580,17 @@ export namespace Prisma {
     _max?: NestedEnumshows_Show_dimensionFilter<$PrismaModel>
   }
 
+  export type DecimalNullableFilter<$PrismaModel = never> = {
+    equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel> | null
+    in?: Decimal[] | DecimalJsLike[] | number[] | string[] | null
+    notIn?: Decimal[] | DecimalJsLike[] | number[] | string[] | null
+    lt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    lte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    not?: NestedDecimalNullableFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string | null
+  }
+
   export type Enumseats_statusNullableFilter<$PrismaModel = never> = {
     equals?: $Enums.seats_status | Enumseats_statusFieldRefInput<$PrismaModel> | null
     in?: $Enums.seats_status[] | null
@@ -15585,12 +15624,14 @@ export namespace Prisma {
     show_id?: SortOrder
     seat_name?: SortOrder
     seat_type?: SortOrder
+    seat_price?: SortOrder
     status?: SortOrder
   }
 
   export type SeatAvgOrderByAggregateInput = {
     seat_id?: SortOrder
     show_id?: SortOrder
+    seat_price?: SortOrder
   }
 
   export type SeatMaxOrderByAggregateInput = {
@@ -15598,6 +15639,7 @@ export namespace Prisma {
     show_id?: SortOrder
     seat_name?: SortOrder
     seat_type?: SortOrder
+    seat_price?: SortOrder
     status?: SortOrder
   }
 
@@ -15606,12 +15648,30 @@ export namespace Prisma {
     show_id?: SortOrder
     seat_name?: SortOrder
     seat_type?: SortOrder
+    seat_price?: SortOrder
     status?: SortOrder
   }
 
   export type SeatSumOrderByAggregateInput = {
     seat_id?: SortOrder
     show_id?: SortOrder
+    seat_price?: SortOrder
+  }
+
+  export type DecimalNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel> | null
+    in?: Decimal[] | DecimalJsLike[] | number[] | string[] | null
+    notIn?: Decimal[] | DecimalJsLike[] | number[] | string[] | null
+    lt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    lte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    not?: NestedDecimalNullableWithAggregatesFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedDecimalNullableFilter<$PrismaModel>
+    _sum?: NestedDecimalNullableFilter<$PrismaModel>
+    _min?: NestedDecimalNullableFilter<$PrismaModel>
+    _max?: NestedDecimalNullableFilter<$PrismaModel>
   }
 
   export type Enumseats_statusNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -16377,6 +16437,14 @@ export namespace Prisma {
     connect?: booking_seatsWhereUniqueInput | booking_seatsWhereUniqueInput[]
   }
 
+  export type NullableDecimalFieldUpdateOperationsInput = {
+    set?: Decimal | DecimalJsLike | number | string | null
+    increment?: Decimal | DecimalJsLike | number | string
+    decrement?: Decimal | DecimalJsLike | number | string
+    multiply?: Decimal | DecimalJsLike | number | string
+    divide?: Decimal | DecimalJsLike | number | string
+  }
+
   export type NullableEnumseats_statusFieldUpdateOperationsInput = {
     set?: $Enums.seats_status | null
   }
@@ -16929,11 +16997,38 @@ export namespace Prisma {
     _max?: NestedEnumshows_Show_dimensionFilter<$PrismaModel>
   }
 
+  export type NestedDecimalNullableFilter<$PrismaModel = never> = {
+    equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel> | null
+    in?: Decimal[] | DecimalJsLike[] | number[] | string[] | null
+    notIn?: Decimal[] | DecimalJsLike[] | number[] | string[] | null
+    lt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    lte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    not?: NestedDecimalNullableFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string | null
+  }
+
   export type NestedEnumseats_statusNullableFilter<$PrismaModel = never> = {
     equals?: $Enums.seats_status | Enumseats_statusFieldRefInput<$PrismaModel> | null
     in?: $Enums.seats_status[] | null
     notIn?: $Enums.seats_status[] | null
     not?: NestedEnumseats_statusNullableFilter<$PrismaModel> | $Enums.seats_status | null
+  }
+
+  export type NestedDecimalNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel> | null
+    in?: Decimal[] | DecimalJsLike[] | number[] | string[] | null
+    notIn?: Decimal[] | DecimalJsLike[] | number[] | string[] | null
+    lt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    lte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    not?: NestedDecimalNullableWithAggregatesFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedDecimalNullableFilter<$PrismaModel>
+    _sum?: NestedDecimalNullableFilter<$PrismaModel>
+    _min?: NestedDecimalNullableFilter<$PrismaModel>
+    _max?: NestedDecimalNullableFilter<$PrismaModel>
   }
 
   export type NestedEnumseats_statusNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -17452,6 +17547,7 @@ export namespace Prisma {
   export type SeatCreateWithoutShowsInput = {
     seat_name: string
     seat_type?: string | null
+    seat_price?: Decimal | DecimalJsLike | number | string | null
     status?: $Enums.seats_status | null
     booking_seats?: booking_seatsCreateNestedManyWithoutSeatsInput
   }
@@ -17460,6 +17556,7 @@ export namespace Prisma {
     seat_id?: number
     seat_name: string
     seat_type?: string | null
+    seat_price?: Decimal | DecimalJsLike | number | string | null
     status?: $Enums.seats_status | null
     booking_seats?: booking_seatsUncheckedCreateNestedManyWithoutSeatsInput
   }
@@ -17610,6 +17707,7 @@ export namespace Prisma {
     show_id?: IntFilter<"Seat"> | number
     seat_name?: StringFilter<"Seat"> | string
     seat_type?: StringNullableFilter<"Seat"> | string | null
+    seat_price?: DecimalNullableFilter<"Seat"> | Decimal | DecimalJsLike | number | string | null
     status?: Enumseats_statusNullableFilter<"Seat"> | $Enums.seats_status | null
   }
 
@@ -18072,6 +18170,7 @@ export namespace Prisma {
   export type SeatCreateWithoutBooking_seatsInput = {
     seat_name: string
     seat_type?: string | null
+    seat_price?: Decimal | DecimalJsLike | number | string | null
     status?: $Enums.seats_status | null
     shows: ShowCreateNestedOneWithoutSeatsInput
   }
@@ -18081,6 +18180,7 @@ export namespace Prisma {
     show_id: number
     seat_name: string
     seat_type?: string | null
+    seat_price?: Decimal | DecimalJsLike | number | string | null
     status?: $Enums.seats_status | null
   }
 
@@ -18133,6 +18233,7 @@ export namespace Prisma {
   export type SeatUpdateWithoutBooking_seatsInput = {
     seat_name?: StringFieldUpdateOperationsInput | string
     seat_type?: NullableStringFieldUpdateOperationsInput | string | null
+    seat_price?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     status?: NullableEnumseats_statusFieldUpdateOperationsInput | $Enums.seats_status | null
     shows?: ShowUpdateOneRequiredWithoutSeatsNestedInput
   }
@@ -18142,6 +18243,7 @@ export namespace Prisma {
     show_id?: IntFieldUpdateOperationsInput | number
     seat_name?: StringFieldUpdateOperationsInput | string
     seat_type?: NullableStringFieldUpdateOperationsInput | string | null
+    seat_price?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     status?: NullableEnumseats_statusFieldUpdateOperationsInput | $Enums.seats_status | null
   }
 
@@ -18455,6 +18557,7 @@ export namespace Prisma {
     seat_id?: number
     seat_name: string
     seat_type?: string | null
+    seat_price?: Decimal | DecimalJsLike | number | string | null
     status?: $Enums.seats_status | null
   }
 
@@ -18489,6 +18592,7 @@ export namespace Prisma {
   export type SeatUpdateWithoutShowsInput = {
     seat_name?: StringFieldUpdateOperationsInput | string
     seat_type?: NullableStringFieldUpdateOperationsInput | string | null
+    seat_price?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     status?: NullableEnumseats_statusFieldUpdateOperationsInput | $Enums.seats_status | null
     booking_seats?: booking_seatsUpdateManyWithoutSeatsNestedInput
   }
@@ -18497,6 +18601,7 @@ export namespace Prisma {
     seat_id?: IntFieldUpdateOperationsInput | number
     seat_name?: StringFieldUpdateOperationsInput | string
     seat_type?: NullableStringFieldUpdateOperationsInput | string | null
+    seat_price?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     status?: NullableEnumseats_statusFieldUpdateOperationsInput | $Enums.seats_status | null
     booking_seats?: booking_seatsUncheckedUpdateManyWithoutSeatsNestedInput
   }
@@ -18505,6 +18610,7 @@ export namespace Prisma {
     seat_id?: IntFieldUpdateOperationsInput | number
     seat_name?: StringFieldUpdateOperationsInput | string
     seat_type?: NullableStringFieldUpdateOperationsInput | string | null
+    seat_price?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     status?: NullableEnumseats_statusFieldUpdateOperationsInput | $Enums.seats_status | null
   }
 

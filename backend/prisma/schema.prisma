@@ -88,6 +88,7 @@ model Seat {
   show_id       Int
   seat_name     String          @db.VarChar(5)
   seat_type     String?         @db.VarChar(20)
+  seat_price    Decimal?        @db.Decimal(10, 2)
   status        seats_status?   @default(available)
   booking_seats booking_seats[]
   shows         Show            @relation(fields: [show_id], references: [Show_Id], onDelete: NoAction, onUpdate: NoAction, map: "seats_ibfk_1")

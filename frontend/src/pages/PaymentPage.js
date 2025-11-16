@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { UserContext } from '../contexts/UserContext';
@@ -10,19 +10,47 @@ const PaymentPage = () => {
   const { user } = useContext(UserContext);
   const { selectedShow, selectedSeatType, selectedSeatCount, movieName, selectedSeats } = location.state || {};
 
-  // Function to get price based on row
-  const getSeatPrice = (seatId) => {
-    const row = seatId.charAt(0);
-    if (row === 'A') return 280; // Platinum
-    if (['B', 'C', 'D', 'E'].includes(row)) return 220; // Gold
-    if (['I', 'J'].includes(row)) return 220; // Silver
-    return 0;
-  };
+  const [seatPrices, setSeatPrices] = useState({});
+  const [donationChecked, setDonationChecked] = useState(false);
 
-  const totalCost = selectedSeats.reduce((sum, seat) => sum + getSeatPrice(seat), 0);
-  const convenienceFee = (totalCost * 0.16).toFixed(2); // example convenience fee 16%
-  const donation = 2.00; // example donation amount
-  const orderTotal = (totalCost + parseFloat(convenienceFee) + donation).toFixed(2);
+  // Fetch seat prices from API
+  useEffect(() => {
+    const fetchSeatPrices = async () => {
+      if (!selectedShow || !selectedSeats || selectedSeats.length === 0) return;
+
+      try {
+        const response = await axios.get('http://localhost:5000/api/seats/prices', {
+          params: {
+            show_id: selectedShow.show.show_id,
+            seat_names: selectedSeats.join(',')
+          }
+        });
+
+        if (response.data.success) {
+          setSeatPrices(response.data.prices);
+        }
+      } catch (error) {
+        console.error('Error fetching seat prices:', error);
+        // Fallback to hardcoded prices if API fails
+        const fallbackPrices = {};
+        selectedSeats.forEach(seat => {
+          const row = seat.charAt(0);
+          if (row === 'A') fallbackPrices[seat] = 280;
+          else if (['B', 'C', 'D', 'E'].includes(row)) fallbackPrices[seat] = 220;
+          else if (['I', 'J'].includes(row)) fallbackPrices[seat] = 180;
+          else fallbackPrices[seat] = 0;
+        });
+        setSeatPrices(fallbackPrices);
+      }
+    };
+
+    fetchSeatPrices();
+  }, [selectedShow, selectedSeats]);
+
+  const totalCost = selectedSeats.reduce((sum, seat) => sum + (seatPrices[seat] || 0), 0);
+  const convenienceFee = (totalCost * 0.16).toFixed(2);
+  const donationAmount = donationChecked ? 2.00 : 0;
+  const orderTotal = (totalCost + parseFloat(convenienceFee) + donationAmount).toFixed(2);
 
   const handlePayment = async () => {
     if (!user) {
@@ -125,10 +153,13 @@ const PaymentPage = () => {
             selectedShow={selectedShow}
             totalCost={totalCost}
             convenienceFee={convenienceFee}
-            donation={donation}
+            donationAmount={donationAmount}
+            donationChecked={donationChecked}
+            setDonationChecked={setDonationChecked}
             orderTotal={orderTotal}
             handlePayment={handlePayment}
             canClickPayNow={true}
+            user={user}
           />
         </div>
       </div>

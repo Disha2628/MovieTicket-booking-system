@@ -9,6 +9,7 @@ const customersRouter = require('./routes/customers');
 const showsRouter = require('./routes/shows');
 const paymentsRouter = require('./routes/payments');
 const bookingsRouter = require('./routes/bookings');
+const seatsRouter = require('./routes/seats');
 
 const app = express();
 
@@ -38,5 +39,6 @@ app.use('/auth', authRouter); // Add this for Google OAuth routes
 app.use('/api/customers', customersRouter);
 app.use('/api/payments', paymentsRouter);
 app.use('/api/bookings', bookingsRouter);
+app.use('/api/seats', seatsRouter);
 
 module.exports = app;
