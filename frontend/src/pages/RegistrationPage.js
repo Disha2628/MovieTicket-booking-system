@@ -27,7 +27,7 @@ const RegistrationPage = () => {
     setMessage('');
     setError('');
     try {
-      const response = await axios.post('http://localhost:5000/api/register', formData);
+      const response = await axios.post('http://process.env.REACT_APP_API_URL/api/register', formData);
       if (response.status === 201) {
         setMessage('Registration successful!');
         login(response.data.user, response.data.token);

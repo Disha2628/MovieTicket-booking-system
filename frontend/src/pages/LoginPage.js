@@ -51,7 +51,7 @@ const LoginPage = () => {
     setError('');
   
     try {
-      const response = await axios.post('http://localhost:5000/api/login', {
+      const response = await axios.post('http://process.env.REACT_APP_API_URL/api/login', {
         Email: formData.email,      // ✅ match backend variable names
         Password: formData.password
       });
@@ -119,7 +119,7 @@ const LoginPage = () => {
           {/* Google Login Button */}
           <button
             type="button"
-            onClick={() => window.location.href = 'http://localhost:5000/auth/google'}
+            onClick={() => window.location.href = 'http://process.env.REACT_APP_API_URL/auth/google'}
             className="w-full py-4 bg-blue-600 rounded-full text-white text-xl font-bold font-poppins cursor-pointer border-none hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-blue-500/50"
           >
             Login with Google

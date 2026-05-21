@@ -75,7 +75,7 @@ const SeatLayoutPage = () => {
       try {
         const showId = selectedShow?.show?.show_id;
         const response = await fetch(
-          `http://localhost:5000/api/shows/seats/${showId}`
+          `http://process.env.REACT_APP_API_URL/api/shows/seats/${showId}`
         );
 
         if (response.ok) {
