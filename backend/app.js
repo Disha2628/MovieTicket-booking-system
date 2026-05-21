@@ -13,6 +13,7 @@ const seatsRouter = require('./routes/seats');
 const adminRouter = require('./routes/admin');
 
 const app = express();
+app.set('trust proxy', 1);
 
 
 // Session middleware for Passport
@@ -20,14 +21,24 @@ app.use(session({
   secret: process.env.SESSION_SECRET || 'your-secret-key',
   resave: false,
   saveUninitialized: false,
-  cookie: { secure: false } // Set to true in production with HTTPS
+  cookie: {
+  secure: process.env.NODE_ENV === 'production',
+  sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax'
+}// Set to true in production with HTTPS
 }));
 
 // Initialize Passport
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use(cors());
+app.use(cors({
+  origin: [
+    'http://localhost:3000',
+    'https://YOUR-VERCEL-URL.vercel.app'
+  ],
+  credentials: true
+}));
+
 app.use(express.json());
 
 // Serve static files from frontend/public/Movies_posters
