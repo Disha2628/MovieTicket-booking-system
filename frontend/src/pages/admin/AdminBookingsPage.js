@@ -32,6 +32,12 @@ const AdminBookingsPage = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [adminToken]);
 
+  const sortedBookings = [...bookings].sort((a, b) => {
+    const dateA = new Date(`${a.date} ${a.time}`);
+    const dateB = new Date(`${b.date} ${b.time}`);
+    return dateB - dateA; // newest first
+  });
+
   return (
     <div>
       <h2 className="text-2xl font-bold mb-4">Bookings</h2>
@@ -67,23 +73,29 @@ const AdminBookingsPage = () => {
               </tr>
             </thead>
             <tbody>
-              {[...bookings].reverse().map((b) => (
-                <tr key={b.id} className="border-b border-white/10">
-                  <td className="py-2">{b.id}</td>
-                  <td className="py-2">{b.movieName}</td>
-                  <td className="py-2">{String(b.date).slice(0, 10)}</td>
-                  <td className="py-2">{b.time}</td>
-                  <td className="py-2">{b.theatre}</td>
-                  <td className="py-2">{b.seats}</td>
-                  <td className="py-2">₹{b.totalAmount}</td>
-                </tr>
-              ))}
-              {bookings.length === 0 && (
-                <tr>
-                  <td colSpan={7} className="py-6 text-gray-400">No bookings</td>
-                </tr>
-              )}
-            </tbody>
+  {sortedBookings.map((b, index) => (
+    <tr key={`${b.date}-${b.time}-${index}`} className="border-b border-white/10">
+      
+      {/* SERIAL NUMBER (bottom = 1, top = N) */}
+      <td className="py-2">
+        {sortedBookings.length - index}
+      </td>
+
+      <td className="py-2">{b.movieName}</td>
+      <td className="py-2">{String(b.date).slice(0, 10)}</td>
+      <td className="py-2">{b.time}</td>
+      <td className="py-2">{b.theatre}</td>
+      <td className="py-2">{b.seats}</td>
+      <td className="py-2">₹{b.totalAmount}</td>
+    </tr>
+  ))}
+
+  {sortedBookings.length === 0 && (
+    <tr>
+      <td colSpan={7} className="py-6 text-gray-400">No bookings</td>
+    </tr>
+  )}
+</tbody>
           </table>
         </div>
       )}
