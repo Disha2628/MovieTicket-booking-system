@@ -195,7 +195,11 @@ const MovieDescription = ({ movieId }) => {
     const fetchCast = async () => {
       try {
         const castResponse = await axios.get(`/api/movies/${movieId || id}/cast`);
-        setCast(castResponse.data);
+        const castData = castResponse.data;
+        const normalizedCast = Array.isArray(castData)
+          ? castData
+          : (castData?.cast ?? []);
+        setCast(normalizedCast);
       } catch (err) {
         console.error('Failed to fetch cast:', err);
         setCast([]);
@@ -205,7 +209,11 @@ const MovieDescription = ({ movieId }) => {
     const fetchReviews = async () => {
       try {
         const reviewsResponse = await axios.get(`/api/movies/${movieId || id}/reviews`);
-        setReviews(reviewsResponse.data);
+        const reviewsData = reviewsResponse.data;
+        const normalizedReviews = Array.isArray(reviewsData)
+          ? reviewsData
+          : (reviewsData?.reviews ?? []);
+        setReviews(normalizedReviews);
       } catch (err) {
         console.error('Failed to fetch reviews:', err);
         setReviews([]);
