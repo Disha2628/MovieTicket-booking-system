@@ -8,7 +8,7 @@ const PaymentPage = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { user } = useContext(UserContext);
-  const { selectedShow, selectedSeatType, selectedSeatCount, movieName, selectedSeats } = location.state || {};
+  const { selectedShow, movieName, selectedSeats } = location.state || {};
 
   const [seatPrices, setSeatPrices] = useState({});
   const [donationChecked, setDonationChecked] = useState(false);
@@ -97,7 +97,7 @@ const PaymentPage = () => {
             });
 
             // Create booking
-            const bookingResponse = await axios.post(`${process.env.REACT_APP_API_URL}/api/bookings`, {
+            await axios.post(`${process.env.REACT_APP_API_URL}/api/bookings`, {
               customerId: user.id,
               showId: selectedShow.show.show_id,
               amount: parseFloat(orderTotal),

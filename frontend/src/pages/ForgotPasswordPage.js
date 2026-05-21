@@ -24,7 +24,7 @@ const ForgotPasswordPage = () => {
     setError('');
 
     try {
-      const response = await axios.post(`${process.env.REACT_APP_API_URL}/api/forgot-password`, {
+      await axios.post(`${process.env.REACT_APP_API_URL}/api/forgot-password`, {
         email: formData.email,
         phone: formData.phone
       });
@@ -50,7 +50,7 @@ const ForgotPasswordPage = () => {
     }
 
     try {
-      const response = await axios.post(`${process.env.REACT_APP_API_URL}/api/reset-password`, {
+      await axios.post(`${process.env.REACT_APP_API_URL}/api/reset-password`, {
         email: formData.email,
         phone: formData.phone,
         otp: formData.otp,

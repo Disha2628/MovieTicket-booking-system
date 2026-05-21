@@ -1,5 +1,7 @@
-import React, { useContext } from 'react';
+import React from 'react';
+
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+
 import LandingPage from './pages/LandingPage';
 import MovieDescription from './pages/MovieDescription';
 import Footer from './components/Footer';
@@ -14,14 +16,15 @@ import BookingConfirmationPage from './pages/BookingConfirmationPage';
 import PaymentPage from './pages/PaymentPage';
 import BookingHistoryPage from './pages/BookingHistoryPage';
 import About from './components/About';
-import { UserProvider, UserContext } from './contexts/UserContext';
+import { UserProvider } from './contexts/UserContext';
+
 import { AdminProvider } from './contexts/AdminContext';
 import AdminLoginPage from './pages/admin/AdminLoginPage';
 import AdminDashboardPage from './pages/admin/AdminDashboardPage';
 
 
 function AppContent() {
-  const { user } = useContext(UserContext);
+  
 
   return (
     <BrowserRouter>
