@@ -14,17 +14,22 @@ router.get('/', async (req, res) => {
         poster_url AS poster,
         Release_date AS release_date,
         trailer_url AS trailer_url
-      FROM movies
-      WHERE Movie_Id BETWEEN ? AND ?
-    `;
+FROM movies
+      WHERE status IN (?, ?) 
+
+    `
     const params = [];
 
-    // Determine movie ID range based on comingSoon
+    // status split: coming soon => 0, available => 1
+    // If comingSoon=true, return only status=0. Otherwise return only status=1.
     if (comingSoon === 'true') {
-      params.push(9, 25); // Coming soon: IDs 9-25
+      params.push(0);
+      params.push(0);
     } else {
-      params.push(1, 8); // All movies: IDs 1-8
+      params.push(1);
+      params.push(1);
     }
+
 
     if (search) {
       query += ' AND Title LIKE ?';
@@ -70,9 +75,11 @@ router.get('/:id', async (req, res) => {
         Duration AS duration,
         poster_url AS poster,
         trailer_url AS trailer_url
-      FROM movies
+FROM movies
       WHERE Movie_Id = ?
     `, [req.params.id]);
+
+
 
     if (rows.length > 0) {
       const movie = rows[0];
@@ -111,6 +118,7 @@ router.get('/:id/cast', async (req, res) => {
   try {
     const [rows] = await pool.execute(`
       SELECT
+
         a.Name AS name,
         ma.Role_Name AS role,
         CONCAT('/', a.actor_pic) AS img

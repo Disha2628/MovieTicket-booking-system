@@ -3,7 +3,7 @@ const router = express.Router();
 const pool = require('../config/database');
 const QRCode = require('qrcode');
 
-// Create booking
+// Create booking (atomic seat locking)
 router.post('/', async (req, res) => {
   const connection = await pool.getConnection();
   try {
@@ -62,7 +62,23 @@ router.post('/', async (req, res) => {
       seatIds.push(seatRows[0].seat_id);
     }
 
-    // Insert into booking_seats table
+    // Atomic seat locking first (prevents double booking + wasted inserts)
+    const placeholders = seatIds.map(() => "?").join(",");
+
+    const [lockResult] = await connection.execute(
+      `UPDATE seats
+       SET status = 'unavailable'
+       WHERE seat_id IN (${placeholders}) AND status = 'available'`,
+      seatIds
+    );
+
+    // If not all requested seats were available, fail to prevent double bookings.
+    const affectedRows = lockResult?.affectedRows ?? 0;
+    if (affectedRows !== seatIds.length) {
+      throw new Error('Some seats were no longer available. Please try again.');
+    }
+
+    // Insert into booking_seats table (only after locking succeeded)
     for (const seatId of seatIds) {
       await connection.execute(
         `INSERT INTO booking_seats (booking_Id, seat_id) VALUES (?, ?)`,
@@ -70,12 +86,7 @@ router.post('/', async (req, res) => {
       );
     }
 
-    // Mark seats as booked
-    const placeholders = seatIds.map(() => "?").join(",");
-    await connection.execute(
-      `UPDATE seats SET status = 'unavailable' WHERE seat_id IN (${placeholders})`,
-      seatIds
-    );
+
 
     await connection.commit();
 

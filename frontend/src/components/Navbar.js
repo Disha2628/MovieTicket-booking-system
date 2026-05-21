@@ -23,7 +23,11 @@ const Navbar = () => {
         <a href="/about">About Us</a>
       </div>
       <div>
+        <a href="/admin/login" style={{ display: 'inline-block', marginRight: '10px', color: '#ffffff' }}>
+          Admin
+        </a>
         {user ? (
+
           <>
             <a href="/profile" style={{ display: 'flex', alignItems: 'center', gap: '5px', color: '#ffffff' }}>
               <div style={{

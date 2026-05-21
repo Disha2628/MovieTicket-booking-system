@@ -41,8 +41,7 @@ const OrderSummary = ({ movieName, selectedShow, totalCost, convenienceFee, dona
       <div className="mb-4 text-sm text-gray-400">
         <strong className="text-white">Your details</strong>
         <div>{user?.first_name} {user?.last_name}</div>
-        <div>Email - {user?.email }</div>
-        <div>Phone - {user?.phn_no }</div>
+        <div>Email - {user?.email }</div> 
       </div> 
       <hr className="border-gray-600 mb-4" />
       <div className="mb-4 text-xs text-gray-400">

@@ -10,8 +10,10 @@ const showsRouter = require('./routes/shows');
 const paymentsRouter = require('./routes/payments');
 const bookingsRouter = require('./routes/bookings');
 const seatsRouter = require('./routes/seats');
+const adminRouter = require('./routes/admin');
 
 const app = express();
+
 
 // Session middleware for Passport
 app.use(session({
@@ -40,5 +42,7 @@ app.use('/api/customers', customersRouter);
 app.use('/api/payments', paymentsRouter);
 app.use('/api/bookings', bookingsRouter);
 app.use('/api/seats', seatsRouter);
+app.use('/api/admin', adminRouter);
 
 module.exports = app;
+

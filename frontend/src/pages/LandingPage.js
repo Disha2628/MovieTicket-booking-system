@@ -197,7 +197,7 @@ const LandingPage = () => {
       </div>
 
       {/* Updated heading color to a deep blue for professionalism */}
-      <h2 className="text-center text-white-400 text-4xl my-8 font-extrabold tracking-wide drop-shadow-lg">{comingSoon ? 'Coming Soon...' : 'Recommended Movies...'}</h2>
+      <h2 className="text-center text-white-400 text-4xl my-8 font-extrabold tracking-wide drop-shadow-lg">{comingSoon ? 'Coming Soon...' : 'Available for booking...'}</h2>
 
         <main className="w-full p-5">
           <MovieGrid movies={movies} comingSoon={comingSoon} />

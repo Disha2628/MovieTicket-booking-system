@@ -15,6 +15,10 @@ import PaymentPage from './pages/PaymentPage';
 import BookingHistoryPage from './pages/BookingHistoryPage';
 import About from './components/About';
 import { UserProvider, UserContext } from './contexts/UserContext';
+import { AdminProvider } from './contexts/AdminContext';
+import AdminLoginPage from './pages/admin/AdminLoginPage';
+import AdminDashboardPage from './pages/admin/AdminDashboardPage';
+
 
 function AppContent() {
   const { user } = useContext(UserContext);
@@ -42,7 +46,11 @@ function AppContent() {
         <Route path="/payment" element={<><PaymentPage /></>} />
         <Route path="/forgot-password" element={<><ForgotPasswordPage /></>} />
         <Route path="/booking-history" element={<><BookingHistoryPage /></>} />
+
+        <Route path="/admin/login" element={<AdminLoginPage />} />
+        <Route path="/admin/dashboard/*" element={<AdminDashboardPage />} />
       </Routes>
+
     </BrowserRouter>
   );
 }
@@ -50,11 +58,14 @@ function AppContent() {
 function App() {
   return (
     <UserProvider>
-      <div className="min-h-screen bg-gray-900 text-white">
-        <AppContent />
-      </div>
+      <AdminProvider>
+        <div className="min-h-screen bg-gray-900 text-white">
+          <AppContent />
+        </div>
+      </AdminProvider>
     </UserProvider>
   );
 }
+
 
 export default App;
