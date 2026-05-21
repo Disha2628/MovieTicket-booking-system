@@ -16,7 +16,7 @@ const otpStore = new Map();
 passport.use(new GoogleStrategy({
   clientID: process.env.GOOGLE_CLIENT_ID  ,
   clientSecret: process.env.GOOGLE_CLIENT_SECRET  ,
-  callbackURL: "http://localhost:5000/auth/google/callback"
+  callbackURL: "https://api-movieticket-booking-system.onrender.com/auth/google/callback"
 },
 async (accessToken, refreshToken, profile, done) => {
   try {
@@ -329,20 +329,20 @@ router.get("/google",
 );
 
 router.get("/google/callback",
-  passport.authenticate("google", { failureRedirect: "http://localhost:3000/login" }),
+  passport.authenticate("google", { failureRedirect: "https://client-movieticket-booking-system.vercel.app/login" }),
   async (req, res) => {
     try {
       console.log("Google OAuth callback - req.user:", req.user);
       if (!req.user) {
         console.error("No user found in req.user");
-        return res.redirect("http://localhost:3000/login?error=no_user");
+        return res.redirect("http://https://client-movieticket-booking-system.vercel.app/login?error=no_user");
       }
 
       const token = generateToken({ id: req.user.customer_Id, email: req.user.Email });
       console.log("Generated token for user:", req.user.Email);
 
       // Redirect to frontend with token
-      const redirectUrl = `http://localhost:3000/login?token=${token}&user=${encodeURIComponent(JSON.stringify({
+      const redirectUrl = `http://https://client-movieticket-booking-system.vercel.app/login?token=${token}&user=${encodeURIComponent(JSON.stringify({
         id: req.user.customer_Id,
         first_name: req.user.F_Name,
         last_name: req.user.L_Name,
@@ -352,7 +352,7 @@ router.get("/google/callback",
       res.redirect(redirectUrl);
     } catch (error) {
       console.error("Error during Google OAuth callback:", error);
-      res.redirect("http://localhost:3000/login?error=google_auth_failed");
+      res.redirect("http://https://client-movieticket-booking-system.vercel.app/login?error=google_auth_failed");
     }
   }
 );

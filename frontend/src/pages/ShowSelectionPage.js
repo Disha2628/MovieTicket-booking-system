@@ -18,6 +18,7 @@ const ShowSelectionPage = () => {
   const [movieId, setMovieId] = useState(null);
   const [showsData, setShowsData] = useState([]);
   const [loading, setLoading] = useState(false);
+  const API_URL = process.env.REACT_APP_API_URL;
 
 
   const days = useMemo(() => {
@@ -67,7 +68,7 @@ const ShowSelectionPage = () => {
     let cancelled = false;
     const fetchMovieId = async () => {
       try {
-        const res = await axios.get(`/api/movies/by-title/${encodeURIComponent(finalMovieName)}`);
+        const res = await axios.get(`${API_URL}/api/movies/by-title/${encodeURIComponent(finalMovieName)}`);
         if (!cancelled) {
           // adapt to your API response shape: I assume { id: ... } like earlier
           setMovieId(res.data.id ?? res.data.movie_id ?? null);
