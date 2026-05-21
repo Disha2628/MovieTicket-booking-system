@@ -25,7 +25,7 @@ const ProfilePage = () => {
 
   const fetchProfile = async () => {
     try {
-      const response = await axios.get(`http://process.env.REACT_APP_API_URL/api/customers/${user.id}`);
+      const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/customers/${user.id}`);
       setProfile(response.data);
       setEditForm({
         first_name: response.data.first_name,
@@ -45,7 +45,7 @@ const ProfilePage = () => {
 
   const handleSave = async () => {
     try {
-      await axios.put(`http://process.env.REACT_APP_API_URL/api/customers/${user.id}`, editForm);
+      await axios.put(`${process.env.REACT_APP_API_URL}/api/customers/${user.id}`, editForm);
 
       // Update local state
       const updatedProfile = { ...profile, ...editForm };

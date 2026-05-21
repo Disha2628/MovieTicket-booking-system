@@ -5,7 +5,7 @@ import { UserContext } from '../contexts/UserContext';
 import jsPDF from 'jspdf';
 import QRCode from 'qrcode';
 
-const API_BASE_URL = 'http://process.env.REACT_APP_API_URL/api';
+const API_BASE_URL = `${process.env.REACT_APP_API_URL}/api`;
 
 const BookingHistoryPage = () => {
   const { user, token } = useContext(UserContext);

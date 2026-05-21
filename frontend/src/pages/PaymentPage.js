@@ -19,7 +19,7 @@ const PaymentPage = () => {
       if (!selectedShow || !selectedSeats || selectedSeats.length === 0) return;
 
       try {
-        const response = await axios.get('http://process.env.REACT_APP_API_URL/api/seats/prices', {
+        const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/seats/prices`, {
           params: {
             show_id: selectedShow.show.show_id,
             seat_names: selectedSeats.join(',')
@@ -60,7 +60,7 @@ const PaymentPage = () => {
 
     try {
       // Create Razorpay order
-      const orderResponse = await axios.post('http://process.env.REACT_APP_API_URL/api/payments/create-order', {
+      const orderResponse = await axios.post(`${process.env.REACT_APP_API_URL}/api/payments/create-order`, {
         amount: parseFloat(orderTotal),
         currency: 'INR',
         receipt: `receipt_${Date.now()}`,
@@ -90,14 +90,14 @@ const PaymentPage = () => {
         handler: async (response) => {
           try {
             // Verify payment
-            await axios.post('http://process.env.REACT_APP_API_URL/api/payments/verify-payment', {
+            await axios.post(`${process.env.REACT_APP_API_URL}/api/payments/verify-payment`, {
               razorpay_order_id: response.razorpay_order_id,
               razorpay_payment_id: response.razorpay_payment_id,
               razorpay_signature: response.razorpay_signature,
             });
 
             // Create booking
-            const bookingResponse = await axios.post('http://process.env.REACT_APP_API_URL/api/bookings', {
+            const bookingResponse = await axios.post(`${process.env.REACT_APP_API_URL}/api/bookings`, {
               customerId: user.id,
               showId: selectedShow.show.show_id,
               amount: parseFloat(orderTotal),
