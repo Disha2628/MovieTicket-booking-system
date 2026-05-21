@@ -34,7 +34,7 @@ app.use(passport.session());
 app.use(cors({
   origin: [
     'http://localhost:3000',
-    'https://movie-ticket-booking-system.vercel.app'
+    'client-movieticket-booking-system.vercel.app'
   ],
   credentials: true
 }));
