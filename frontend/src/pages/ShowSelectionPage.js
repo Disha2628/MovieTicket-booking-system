@@ -4,7 +4,7 @@ import DateSelector from '../components/DateSelector';
 import TheatreShows from '../components/TheatreShows';
 import SeatSelection from '../components/SeatSelection';
 import axios from 'axios';
-
+const API_URL = process.env.REACT_APP_API_URL;
 const ShowSelectionPage = () => {
   const location = useLocation();
   const { movieName } = useParams();
@@ -136,7 +136,7 @@ const ShowSelectionPage = () => {
       try {
         const fullDate = days[selectedDateIndex].fullDate;
         const selectedDate = `${fullDate.getFullYear()}-${String(fullDate.getMonth() + 1).padStart(2, '0')}-${String(fullDate.getDate()).padStart(2, '0')}`;
-        const res = await axios.get(`/api/shows/movie/${movieId}/date/${selectedDate}`, {
+        const res = await axios.get(`${API_URL}/api/shows/movie/${movieId}/date/${selectedDate}`, {
           signal: controller.signal
         });
 

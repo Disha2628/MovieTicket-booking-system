@@ -4,6 +4,7 @@ import MovieGrid from '../components/MovieGrid';
 import Footer from '../components/Footer';
 import About from '../components/About';
 import axios from 'axios';
+const API_URL = process.env.REACT_APP_API_URL;
 
 const LandingPage = () => {
   const [movies, setMovies] = useState([]);
@@ -34,7 +35,7 @@ const LandingPage = () => {
 
   const fetchMovies = async () => {
     try {
-      let url = '/api/movies';
+      let url = `${API_URL}/api/movies`;
       const params = [];
 
       if (genreFilter) params.push(`genre=${encodeURIComponent(genreFilter)}`);
@@ -69,10 +70,10 @@ const LandingPage = () => {
 
       for (const title of titles) {
         const response = await axios.get(
-          `/api/movies/by-title/${encodeURIComponent(title)}`
+          `${API_URL}/api/movies/by-title/${encodeURIComponent(title)}`
         );
         const movieId = response.data.id;
-        const movieResponse = await axios.get(`/api/movies/${movieId}`);
+        const movieResponse = await axios.get(`${API_URL}/api/movies/${movieId}`);
         fetchedMovies.push(movieResponse.data);
       }
 

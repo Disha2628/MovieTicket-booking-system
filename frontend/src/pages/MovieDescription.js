@@ -2,7 +2,7 @@ import React, { useEffect, useState, useContext } from 'react';
 import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
 import { UserContext } from '../contexts/UserContext';
-
+const API_URL = process.env.REACT_APP_API_URL;
 
 
 // Trailer Modal Component
@@ -184,7 +184,7 @@ const MovieDescription = ({ movieId }) => {
   useEffect(() => {
     const fetchMovie = async () => {
       try {
-        const response = await axios.get(`/api/movies/${movieId || id}`);
+        const response = await axios.get(`${API_URL}/api/movies/${movieId || id}`);
         setMovie(response.data);
       } catch (err) {
         setError('Failed to fetch movie details.');
@@ -194,7 +194,7 @@ const MovieDescription = ({ movieId }) => {
 
     const fetchCast = async () => {
       try {
-        const castResponse = await axios.get(`/api/movies/${movieId || id}/cast`);
+        const castResponse = await axios.get(`${API_URL}/api/movies/${movieId || id}/cast`);
         const castData = castResponse.data;
         const normalizedCast = Array.isArray(castData)
           ? castData
@@ -208,7 +208,7 @@ const MovieDescription = ({ movieId }) => {
 
     const fetchReviews = async () => {
       try {
-        const reviewsResponse = await axios.get(`/api/movies/${movieId || id}/reviews`);
+        const reviewsResponse = await axios.get(`${API_URL}/api/movies/${movieId || id}/reviews`);
         const reviewsData = reviewsResponse.data;
         const normalizedReviews = Array.isArray(reviewsData)
           ? reviewsData
