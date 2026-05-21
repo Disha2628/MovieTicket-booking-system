@@ -43,7 +43,7 @@ const LandingPage = () => {
       if (searchQuery) params.push(`search=${encodeURIComponent(searchQuery)}`);
       if (params.length) url += '?' + params.join('&');
       const response = await axios.get(url);
-      setMovies(response.data);
+      setMovies(Array.isArray(response.data) ? response.data : response.data.movies || []);
     } catch (error) {
       console.error('Error fetching movies:', error);
     }
@@ -117,7 +117,7 @@ const LandingPage = () => {
      
         <div className="w-full min-h-[70vh] relative overflow-hidden rounded-3xl shadow-2xl shadow-black/50 mx-auto max-w-7xl my-5 z-10">
         <div className="flex w-full h-full overflow-x-auto scroll-smooth" ref={heroWrapperRef}>
-          {heroMovies.map((movie, index) => (
+          {Array.isArray(heroMovies) && heroMovies.map((movie, index) => (
             <div key={movie.id} className="relative flex-shrink-0 w-full min-h-[70vh] flex items-center justify-start">
               <div className="absolute inset-0 -z-20">
                 <img src={`/banner${index + 1}.png`} alt="bg" className="w-full h-full object-cover brightness-80 blur-2xs" />
@@ -200,7 +200,7 @@ const LandingPage = () => {
       <h2 className="text-center text-white-400 text-4xl my-8 font-extrabold tracking-wide drop-shadow-lg">{comingSoon ? 'Coming Soon...' : 'Available for booking...'}</h2>
 
         <main className="w-full p-5">
-          <MovieGrid movies={movies} comingSoon={comingSoon} />
+        <MovieGrid movies={Array.isArray(movies) ? movies : []} comingSoon={comingSoon} />
         </main>
 
         <About />
