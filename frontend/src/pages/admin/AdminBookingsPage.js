@@ -67,7 +67,7 @@ const AdminBookingsPage = () => {
               </tr>
             </thead>
             <tbody>
-              {bookings.map((b) => (
+              {[...bookings].reverse().map((b) => (
                 <tr key={b.id} className="border-b border-white/10">
                   <td className="py-2">{b.id}</td>
                   <td className="py-2">{b.movieName}</td>
