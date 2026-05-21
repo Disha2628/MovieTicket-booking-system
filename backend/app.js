@@ -44,5 +44,9 @@ app.use('/api/bookings', bookingsRouter);
 app.use('/api/seats', seatsRouter);
 app.use('/api/admin', adminRouter);
 
+app.get('/', (req, res) => {
+  res.send('Movie Booking API Running');
+});
+
 module.exports = app;
 
