@@ -2,7 +2,6 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { useLocation, useParams, useNavigate } from 'react-router-dom';
 import DateSelector from '../components/DateSelector';
 import TheatreShows from '../components/TheatreShows';
-import MovieDescription from './MovieDescription';
 import SeatSelection from '../components/SeatSelection';
 import axios from 'axios';
 
@@ -85,6 +84,47 @@ const ShowSelectionPage = () => {
   }, [finalMovieName]);
 
   // fetch shows for selected movie + date
+ 
+
+  const formatTime = (timeString) => {
+    if (!timeString) return '';
+    // handle 'HH:MM:SS' or 'HH:MM'
+    const parts = timeString.split(':');
+    if (parts.length < 2) return timeString;
+    const hour = Number(parts[0]);
+    const minute = parts[1].slice(0,2);
+    const ampm = hour >= 12 ? 'PM' : 'AM';
+    const displayHour = hour % 12 || 12;
+    return `${displayHour}:${minute} ${ampm}`;
+  };
+
+  const groupShowsByTheatre = useMemo(() => (shows) => {
+  const grouped = {};
+
+  (shows || []).forEach(show => {
+    const theatreName = show.theatre_name || show.theatre || 'Unknown Theatre';
+
+    if (!grouped[theatreName]) {
+      grouped[theatreName] = [];
+    }
+
+    grouped[theatreName].push({
+      time: formatTime(show.start_time || show.time || ''),
+      status: 'available',
+      show_id: show.show_id || show.id || null,
+      screen_name: show.screen_name || show.screen || '',
+      show_dimension: show.show_dimension || '',
+      layout_structure: show.layout_structure || null,
+      no_of_seats: show.no_of_seats || null
+    });
+  });
+
+  return Object.keys(grouped).map(theatre => ({
+    theatre,
+    shows: grouped[theatre]
+  }));
+}, []);
+
   useEffect(() => {
     if (!movieId || selectedDateIndex === null) return;
 
@@ -124,43 +164,9 @@ const ShowSelectionPage = () => {
       mounted = false;
       controller.abort();
     };
-  }, [movieId, selectedDateIndex, days]); // days is memoized, safe to include (optional)
+  }, [movieId, selectedDateIndex, days, groupShowsByTheatre]); // days is memoized, safe to include (optional)
 
-  const groupShowsByTheatre = (shows) => {
-    const grouped = {};
-    (shows || []).forEach(show => {
-      const theatreName = show.theatre_name || show.theatre || 'Unknown Theatre';
-      if (!grouped[theatreName]) {
-        grouped[theatreName] = [];
-      }
-      grouped[theatreName].push({
-        time: formatTime(show.start_time || show.time || ''),
-        status: 'available', // backend can provide actual status later
-        show_id: show.show_id || show.id || null,
-        screen_name: show.screen_name || show.screen || '',
-        show_dimension: show.show_dimension || '',
-        layout_structure: show.layout_structure || null,
-        no_of_seats: show.no_of_seats || null
-      });
-    });
-
-    return Object.keys(grouped).map(theatre => ({
-      theatre,
-      shows: grouped[theatre]
-    }));
-  };
-
-  const formatTime = (timeString) => {
-    if (!timeString) return '';
-    // handle 'HH:MM:SS' or 'HH:MM'
-    const parts = timeString.split(':');
-    if (parts.length < 2) return timeString;
-    const hour = Number(parts[0]);
-    const minute = parts[1].slice(0,2);
-    const ampm = hour >= 12 ? 'PM' : 'AM';
-    const displayHour = hour % 12 || 12;
-    return `${displayHour}:${minute} ${ampm}`;
-  };
+  
 
   const seatTypes = [
     { type: 'Platinum', price: 280 },
