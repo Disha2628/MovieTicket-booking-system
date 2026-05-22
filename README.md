@@ -60,8 +60,7 @@ Create required environment variables (see **Environment Variables** below), the
 ```bash
 npm run dev
 ```
-
-Backend runs on: **http://localhost:5000** (default)
+ 
 
 ### 2) Frontend
 
@@ -71,9 +70,6 @@ npm install
 npm start
 ```
 
-Frontend runs on the standard CRA dev server (commonly **http://localhost:3000**).
-
-> The frontend uses a proxy to the backend: `proxy: "http://localhost:5000"`.
  
 ## 🧠 Booking Reliability: Atomic Seat Locking
 
