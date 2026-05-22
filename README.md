@@ -1,4 +1,6 @@
-# 🎬 Movie Ticket Booking System (BookMyShow-style)
+# 🎬 Movie Ticket Booking System (MOVIE_MATRIX)
+
+## Live demo - https://servermovieticket-booking-system.vercel.app
 
 A full-stack web application for browsing movies and booking seats for showtimes. Includes a secure customer flow (login, registration, password reset via OTP, booking with QR codes) and an admin dashboard for managing movies, shows, bookings, and analytics.
 
